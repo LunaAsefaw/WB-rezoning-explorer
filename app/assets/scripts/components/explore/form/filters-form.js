@@ -25,8 +25,7 @@ import Dropdown from '../../common/dropdown';
 const { BOOL } = INPUT_CONSTANTS;
 
 const DropdownWide = styled(Dropdown)`
-  max-width: 22rem;
-  max-width: max-content;
+  max-width: 40rem;
 `;
 
 /* Filters info table
@@ -40,16 +39,17 @@ function FilterInfoTable (props) {
   const { filter_data } = props;
   
   return (
-    <table>
+    <table style={{"border": "1px solid"}}>
       <thead>
-          <b>Filter Info</b>
+          <b style={{"padding": "5px"}}>Filter Info</b>
       </thead>
       <tbody>
-          {filter_data.map( (info) => (
+          {filter_data.map( (info) => ( info.info ?
             <tr>
-              <td>{info.label}</td>
-              <td style={{"padding-left": "10px"}}>{info.info}</td>
+              <td style={{"padding": "5px", "border": "1px solid"}}>{info.label}</td>
+              <td style={{"padding": "5px", "border": "1px solid"}}>{info.info}</td>
             </tr>
+            : null
           ) )}
       </tbody>
     </table>
@@ -184,7 +184,9 @@ function FiltersForm (props) {
                                     )}
                                   </PanelOptionTitle>
                                   {filter.info && (
-                                    <DropdownWide id={filter.name} data-tip data-for={filter.name}
+                                    <DropdownWide
+                                      alignment='center'
+                                      direction='down'
                                       triggerElement={
                                         <Button
                                           hideText
