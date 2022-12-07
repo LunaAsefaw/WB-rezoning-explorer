@@ -1,5 +1,7 @@
 import React, { useCallback } from 'react';
 import T from 'prop-types';
+import styled from 'styled-components';
+import Button from '../../../styles/button/button';
 
 import {
   FormWrapper,
@@ -14,13 +16,49 @@ import { Accordion, AccordionFold, AccordionFoldTrigger } from '../../../compone
 import Heading from '../../../styles/type/heading';
 import { makeTitleCase } from '../../../styles/utils/general';
 
-import InfoButton from '../../common/info-button';
 import { FormSwitch } from '../../../styles/form/switch';
 import { INPUT_CONSTANTS } from '../panel-data';
 
 import FormInput from './form-input';
+import Dropdown from '../../common/dropdown';
 
 const { BOOL } = INPUT_CONSTANTS;
+
+const DropdownWide = styled(Dropdown)`
+  max-width: 22rem;
+  max-width: max-content;
+`;
+
+/* Filters info table
+ * @param filter_data is an array of shape
+ *  [
+ *    {label: String, info: String},
+ *    ...
+ *  ]
+ */
+function FilterInfoTable (props) {
+  const { filter_data } = props;
+  
+  return (
+    <table>
+      <thead>
+          <b>Filter Info</b>
+      </thead>
+      <tbody>
+          {filter_data.map( (info) => (
+            <tr>
+              <td>{info.label}</td>
+              <td style={{"padding-left": "10px"}}>{info.info}</td>
+            </tr>
+          ) )}
+      </tbody>
+    </table>
+  );
+}
+
+FilterInfoTable.propTypes = {
+  filter_data: T.array,
+};
 
 /* Filters form
  * @param outputFilters is an array of shape
@@ -146,12 +184,28 @@ function FiltersForm (props) {
                                     )}
                                   </PanelOptionTitle>
                                   {filter.info && (
-                                    <InfoButton
-                                      info={filter.info}
-                                      id={filter.name}
-                                    >
-                                      Info
-                                    </InfoButton>
+                                    <DropdownWide id={filter.name} data-tip data-for={filter.name}
+                                      triggerElement={
+                                        <Button
+                                          hideText
+                                          useIcon='circle-information'
+                                          className='info-button'
+                                          title={filter.info}
+                                        >
+                                          Info
+                                        </Button>
+                                      }>
+                                      <FilterInfoTable filter_data={[
+                                        {label: "Title: ", info: filter.title}, 
+                                        {label: "Description: ", info: filter.description}, 
+                                        {label: "Secondary description: ", info: filter.secondary_description},
+                                        {label: "Energy type: ", info: filter.energy_type},
+                                        {label: "Unit: ", info: filter.unit},
+                                        {label: "Category: ", info: filter.category},
+                                        {label: "Secondary category: ", info: filter.secondary_category},
+                                        {label: "Layer: ", info: filter.layer},
+                                      ]}/>
+                                    </DropdownWide>
                                   )}
 
                                   {filter.input.type === BOOL && (
