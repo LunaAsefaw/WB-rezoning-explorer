@@ -25,7 +25,7 @@ import Dropdown from '../../common/dropdown';
 const { BOOL } = INPUT_CONSTANTS;
 
 const DropdownWide = styled(Dropdown)`
-  max-width: 40rem;
+max-width: 40rem;
 `;
 
 /* Filters info table
@@ -39,13 +39,17 @@ function FilterInfoTable (props) {
   const { filter_data } = props;
   
   return (
-    <table style={{"border": "1px solid"}}>
+    <table style={{"border": "1px solid", "margin": "auto"}}>
       <thead>
-          <b style={{"padding": "5px"}}>Filter Info</b>
+        <tr>
+          <td>
+            <b style={{"padding": "5px"}}>Filter Info</b>
+          </td>
+        </tr>
       </thead>
       <tbody>
           {filter_data.map( (info) => ( info.info ?
-            <tr>
+            <tr key={info.info+"-label"}>
               <td style={{"padding": "5px", "border": "1px solid"}}>{info.label}</td>
               <td style={{"padding": "5px", "border": "1px solid"}}>{info.info}</td>
             </tr>
@@ -201,7 +205,7 @@ function FiltersForm (props) {
                                         {label: "Title: ", info: filter.title}, 
                                         {label: "Description: ", info: filter.description}, 
                                         {label: "Secondary description: ", info: filter.secondary_description},
-                                        {label: "Energy type: ", info: filter.energy_type},
+                                        {label: "Energy type: ", info: filter.energy_type.join( ", " )},
                                         {label: "Unit: ", info: filter.unit},
                                         {label: "Category: ", info: filter.category},
                                         {label: "Secondary category: ", info: filter.secondary_category},
