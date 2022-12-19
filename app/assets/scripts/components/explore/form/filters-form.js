@@ -25,7 +25,7 @@ import Dropdown from '../../common/dropdown';
 const { BOOL } = INPUT_CONSTANTS;
 
 const DropdownWide = styled(Dropdown)`
-max-width: 40rem;
+max-width: max-content;
 `;
 
 /* Filters info table
@@ -37,24 +37,21 @@ max-width: 40rem;
  */
 function FilterInfoTable (props) {
   const { filter_data } = props;
-  
   return (
     <table style={{"border": "1px solid", "margin": "auto"}}>
-      <thead>
-        <tr>
-          <td>
-            <b style={{"padding": "5px"}}>Filter Info</b>
-          </td>
-        </tr>
-      </thead>
       <tbody>
-          {filter_data.map( (info) => ( info.info ?
-            <tr key={info.info+"-label"}>
-              <td style={{"padding": "5px", "border": "1px solid"}}>{info.label}</td>
-              <td style={{"padding": "5px", "border": "1px solid"}}>{info.info}</td>
-            </tr>
-            : null
-          ) )}
+          <tr key={filter_data.filter_title+"-label"}>
+            <td style={{"padding": "5px", "border": "1px solid"}}>Filter title</td>
+            <td style={{"padding": "5px", "border": "1px solid"}}>{filter_data.filter_title}</td>
+          </tr>
+          <tr key={filter_data.filter_title+"-description"}>
+            <td style={{"padding": "5px", "border": "1px solid"}}>Filter description</td>
+            <td style={{"padding": "5px", "border": "1px solid"}}>{filter_data.filter_description}</td>
+          </tr>
+          <tr key={filter_data.filter_title+"-source_url"}>
+            <td style={{"padding": "5px", "border": "1px solid"}}>Data source</td>
+            <td style={{"padding": "5px", "border": "1px solid"}}><a href={filter_data.filter_source} target="_blank"> {filter_data.filter_source} </a></td>
+          </tr>
       </tbody>
     </table>
   );
@@ -201,16 +198,11 @@ function FiltersForm (props) {
                                           Info
                                         </Button>
                                       }>
-                                      <FilterInfoTable filter_data={[
-                                        {label: "Title: ", info: filter.title}, 
-                                        {label: "Description: ", info: filter.description}, 
-                                        {label: "Secondary description: ", info: filter.secondary_description},
-                                        {label: "Energy type: ", info: filter.energy_type.join( ", " )},
-                                        {label: "Unit: ", info: filter.unit},
-                                        {label: "Category: ", info: filter.category},
-                                        {label: "Secondary category: ", info: filter.secondary_category},
-                                        {label: "Layer: ", info: filter.layer},
-                                      ]}/>
+                                      <FilterInfoTable filter_data={{
+                                        filter_title: filter.title, 
+                                        filter_description: filter.description,
+                                        filter_source: filter.source_url, 
+                                      }}/>
                                     </DropdownWide>
                                   )}
 
