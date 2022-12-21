@@ -34,7 +34,7 @@ function ModalSelectZoneType (props) {
       </ModalHeadline>
     )}
     renderCard={(zoneType) => (
-      <CardWrapper id={`resource-${zoneType.name}-card`} size='large' 
+      <CardWrapper id={`resource-${zoneType.name}-card`} key={zoneType.name} size='large' 
       >
         <Button style={{width: "100%", height:"100%"}} 
           useIcon={[ ( zoneType.type === GRID ?  'layout-grid-3x3' : 'globe') , 'before' ]}
