@@ -302,8 +302,6 @@ const addInputLayersToMap = (map, layers, selectedArea, resource) => {
   // Off-shore mask flag
   const offshoreWindMask = resource === RESOURCES.OFFSHORE ? '&offshore=true' : '';
 
-  console.log( "addInputLayersToMap", selectedArea );
-
   // If area of country type, prepare country & resource path string to add to URL
   const countryResourcePath = `/${selectedArea.id}/${apiResourceNameMap[resource]}`;
 
