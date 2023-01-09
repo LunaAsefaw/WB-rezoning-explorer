@@ -26,6 +26,8 @@ const { BOOL } = INPUT_CONSTANTS;
 
 const DropdownWide = styled(Dropdown)`
 max-width: max-content;
+background: rgba(0,0,0,0.8);
+color: white;
 `;
 
 /* Filters info table
