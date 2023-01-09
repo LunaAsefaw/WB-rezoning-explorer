@@ -30,39 +30,6 @@ background: rgba(0,0,0,0.8);
 color: white;
 `;
 
-/* Filters info table
- * @param filter_data is an array of shape
- *  [
- *    {label: String, info: String},
- *    ...
- *  ]
- */
-function FilterInfoTable (props) {
-  const { filter_data } = props;
-  return (
-    <table style={{"border": "1px solid", "margin": "auto"}}>
-      <tbody>
-          <tr key={filter_data.filter_title+"-label"}>
-            <td style={{"padding": "5px", "border": "1px solid"}}>Filter title</td>
-            <td style={{"padding": "5px", "border": "1px solid"}}>{filter_data.filter_title}</td>
-          </tr>
-          <tr key={filter_data.filter_title+"-description"}>
-            <td style={{"padding": "5px", "border": "1px solid"}}>Filter description</td>
-            <td style={{"padding": "5px", "border": "1px solid"}}>{filter_data.filter_description}</td>
-          </tr>
-          <tr key={filter_data.filter_title+"-source_url"}>
-            <td style={{"padding": "5px", "border": "1px solid"}}>Data source</td>
-            <td style={{"padding": "5px", "border": "1px solid"}}><a href={filter_data.filter_source} target="_blank"> {filter_data.filter_source} </a></td>
-          </tr>
-      </tbody>
-    </table>
-  );
-}
-
-FilterInfoTable.propTypes = {
-  filter_data: T.array,
-};
-
 /* Filters form
  * @param outputFilters is an array of shape
  *  [
@@ -200,11 +167,12 @@ function FiltersForm (props) {
                                           Info
                                         </Button>
                                       }>
-                                      <FilterInfoTable filter_data={{
-                                        filter_title: filter.title, 
-                                        filter_description: filter.description,
-                                        filter_source: filter.source_url, 
-                                      }}/>
+                                      <div>
+                                        Filter description: &nbsp;
+                                        {filter.description}<br/>
+                                        Source: &nbsp;
+                                        <a href={filter.source_url} target="_blank"> {filter.source_url} </a>
+                                      </div>
                                     </DropdownWide>
                                   )}
 
