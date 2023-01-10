@@ -168,9 +168,9 @@ function FiltersForm (props) {
                                         </Button>
                                       }>
                                       <div>
-                                        Filter description: &nbsp;
+                                        Usage: &nbsp;
                                         {filter.description}<br/>
-                                        Source: &nbsp;
+                                        Data Source: &nbsp;
                                         <a href={filter.source_url} target="_blank"> {filter.source_url} </a>
                                       </div>
                                     </DropdownWide>
