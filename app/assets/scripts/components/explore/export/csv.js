@@ -39,6 +39,21 @@ export default async function exportZonesCsv(selectedArea, zones) {
         'Installed Capacity Potential (MW)': summary.icp,
         'Capacity Factor': round(summary.cf, indicatorsDecimals.cf)
       };
+      if ( summary.criterion_average )
+      {
+        for ( const [label, data] of Object.entries( summary.criterion_average ) )
+        {
+          zone[`Average of ${label}`] = data;
+        }
+      }
+
+      if ( summary.criterion_contribution )
+      {
+        for ( const [label, data] of Object.entries( summary.criterion_contribution ) )
+        {
+          zone[`Contribution of ${label}`] = data;
+        }
+      }
 
       // Add name if available
       if (name) zone = { Name: name, ...zone };
