@@ -8,6 +8,13 @@ import { themeVal } from '../../styles/utils/general';
 import { formatThousands, toTitleCase } from '../../utils/format.js';
 import config from '../../config';
 const { indicatorsDecimals } = config;
+import Heading from '../../styles/type/heading';
+import { makeTitleCase } from '../../styles/utils/general';
+import {
+  Accordion,
+  AccordionFold,
+  AccordionFoldTrigger
+} from '../../components/accordion';
 
 const Details = styled.div`
   /* stylelint-disable */
@@ -107,13 +114,102 @@ export function renderZoneDetailsList (zone, detailsList) {
     name: zone.name || properties.name || id,
     ...summary
   };
+  
+  let lst = [];
 
-  return Object.entries(flatZone).map(([label, data]) => (
-    <Dl key={`${id}-${label}`}>
-      <dt>{formatLabel(label)}</dt>
-      <dd>{formatIndicator(label, data)}</dd>
-    </Dl>
-  ));
+  for (const [label, data] of Object.entries(flatZone))
+  {
+    if ( label != "criterion_average" && label != "criterion_contribution" )
+    {
+      lst.push(
+        <Dl key={`${id}-${label}`}>
+          <dt>{formatLabel(label)}</dt>
+          <dd>{formatIndicator(label, data)}</dd>
+        </Dl> );
+    };
+  };
+
+  if ( flatZone.criterion_average )
+  {
+    let avg_list = [];
+    for (const [label, data] of Object.entries(flatZone.criterion_average) )
+    {
+      avg_list.push(
+        <Dl key={`${id}-${label}`}>
+          <dt>{formatLabel( "Average of " + label)}</dt>
+          <dd>{formatIndicator(label, data)}</dd>
+        </Dl>
+      );
+    };
+    let avg_accordion = (
+      <Accordion
+        initialState={[false]}
+      >
+      {({ checkExpanded, setExpanded }) => (
+        <AccordionFold
+          // forwardedAs={FormGroupWrapper}
+          isFoldExpanded={checkExpanded(0)}
+          setFoldExpanded={(v) => setExpanded(0, v)}
+          renderHeader={({ isFoldExpanded, setFoldExpanded }) => (
+            <AccordionFoldTrigger
+              isExpanded={isFoldExpanded}
+              onClick={() => setFoldExpanded(!isFoldExpanded)}
+            >
+              <Heading size='small' variation='primary'>
+                {makeTitleCase('Weights average')}
+              </Heading>
+            </AccordionFoldTrigger>
+          )}
+          renderBody={({ isFoldExpanded }) => (
+            isFoldExpanded ? avg_list : null
+          )}
+        />
+      )}
+    </Accordion> );
+    lst.push( avg_accordion );
+  }
+
+  if ( flatZone.criterion_contribution )
+  {
+    let contrib_lst = [];
+    for (const [label, data] of Object.entries(flatZone.criterion_contribution) )
+    {
+      contrib_lst.push(
+        <Dl key={`${id}-${label}`}>
+          <dt>{formatLabel( "Contribution of " + label)}</dt>
+          <dd>{formatIndicator(label, data)}</dd>
+        </Dl>
+      );
+    };
+    let contrib_accordion = (
+      <Accordion
+        initialState={[false]}
+      >
+      {({ checkExpanded, setExpanded }) => (
+        <AccordionFold
+          // forwardedAs={FormGroupWrapper}
+          isFoldExpanded={checkExpanded(0)}
+          setFoldExpanded={(v) => setExpanded(0, v)}
+          renderHeader={({ isFoldExpanded, setFoldExpanded }) => (
+            <AccordionFoldTrigger
+              isExpanded={isFoldExpanded}
+              onClick={() => setFoldExpanded(!isFoldExpanded)}
+            >
+              <Heading size='small' variation='primary'>
+                {makeTitleCase('Weights contribution')}
+              </Heading>
+            </AccordionFoldTrigger>
+          )}
+          renderBody={({ isFoldExpanded }) => (
+            isFoldExpanded ? contrib_lst : null
+          )}
+        />
+      )}
+    </Accordion> );
+    lst.push( contrib_accordion );
+  }
+
+  return lst;
 }
 
 function FocusZone (props) {
