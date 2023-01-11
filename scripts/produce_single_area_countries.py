@@ -18,7 +18,7 @@ while line:
     single_area["type"] = "Feature"
     single_area["properties"] = { 
         "id": country_id,
-        "name": country["properties"]["NAME_0"]
+        "name": country["properties"]["COUNTRY"]
         }
     single_area["geometry"] = country["geometry"]
     res["features"] = [single_area]

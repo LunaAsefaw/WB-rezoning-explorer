@@ -20,20 +20,20 @@ mkdir -p $REGIONS_PATH/quantized
 mkdir -p $PUBLIC_ZONES_PATH/region # output dir
 
 # Download original file, if not already downloaded
-wget -c https://biogeo.ucdavis.edu/data/gadm3.6/gadm36_levels_shp.zip -P $GADM_PATH
+wget -c https://geodata.ucdavis.edu/gadm/gadm4.1/gadm_410-levels.zip -P $GADM_PATH
 
-# Expand
-unzip -o $GADM_PATH/gadm36_levels_shp.zip -d $GEO_PATH/gadm_unzipped 
+# Convert GeoPackage to multiple ESRI Shapefiles
+ogr2ogr -f "ESRI Shapefile" $GADM_UNZIPPED_PATH $GADM_PATH/gadm_410-levels.gpkg
 
 ################### 
 # PROCESS REGIONS
 ###################
 
 # Parse shapes to GeoJSON
-./node_modules/.bin/shp2json --newline-delimited $GADM_UNZIPPED_PATH/gadm36_0.shp > $GADM_UNZIPPED_PATH/gadm36_0.geojson
+./node_modules/.bin/shp2json --newline-delimited $GADM_UNZIPPED_PATH/ADM_0.shp > $GADM_UNZIPPED_PATH/ADM_0.geojson
 
-# Split gadm36_0 GeoJSON into regions
-node ./scripts/split-gadm36_0.js $GADM_UNZIPPED_PATH/gadm36_0.geojson $REGIONS_PATH
+# Split gadm41_0 GeoJSON into regions
+node ./scripts/split-gadm41_0.js $GADM_UNZIPPED_PATH/ADM_0.geojson $REGIONS_PATH
 
 # For each country, generate optimized TopoJSON
 for region in $REGIONS_PATH/*.geojson; do
@@ -52,13 +52,13 @@ done
 #####################
 
 # Parse shapes to GeoJSON
-./node_modules/.bin/shp2json --newline-delimited $GADM_UNZIPPED_PATH/gadm36_1.shp > $GADM_UNZIPPED_PATH/gadm36_1.geojson
+./node_modules/.bin/shp2json --newline-delimited $GADM_UNZIPPED_PATH/ADM_1.shp > $GADM_UNZIPPED_PATH/ADM_1.geojson
 
 # Explode into countries
-node ./scripts/split-gadm36_1.js $GADM_UNZIPPED_PATH/gadm36_1.geojson $COUNTRIES_PATH
+node ./scripts/split-gadm41_1.js $GADM_UNZIPPED_PATH/ADM_1.geojson $COUNTRIES_PATH
 
 # Generate single area countries
-cat $GADM_UNZIPPED_PATH/gadm36_0.geojson | python ./scripts/produce_single_area_countries.py $COUNTRIES_PATH
+cat $GADM_UNZIPPED_PATH/ADM_0.geojson | python ./scripts/produce_single_area_countries.py $COUNTRIES_PATH
 
 # For each country, generate optimized TopoJSON
 for country in $COUNTRIES_PATH/*.geojson; do
