@@ -25,6 +25,7 @@ import { PanelBlock, PanelBlockBody, PanelBlockHeader } from '../common/panel-bl
 import { HeadOption, HeadOptionHeadline } from '../../styles/form/form';
 import Prose from '../../styles/type/prose';
 import { themeVal } from '../../styles/utils/general';
+import { RESOURCES, BOUNDARIES } from "./panel-data";
 
 const PrimePanel = styled(Panel)`
   ${media.largeUp`
@@ -374,7 +375,9 @@ function ExpMapPrimePanel (props) {
 
       <ModalSelectZoneType
         revealed={!showSelectAreaModal && !showSelectResourceModal && showSelectZoneTypeModal}
-        availableZoneTypes={availableZoneTypes}
+        availableZoneTypes={ availableZoneTypes.filter( zoneType =>
+            selectedResource !== RESOURCES.OFFSHORE || zoneType?.type !== BOUNDARIES
+        ) }
         selectedZoneType={selectedZoneType}
         setSelectedZoneType={setSelectedZoneType}
         setShowSelectZoneTypeModal={setShowSelectZoneTypeModal}

@@ -259,7 +259,6 @@ export function ExploreProvider (props) {
         ...nextArea,
         bounds: newBounds
       };
-      setSelectedZoneType( zoneTypesList[1] );
     }
 
     setSelectedArea(nextArea);
