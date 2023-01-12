@@ -15,6 +15,8 @@ import {
   AccordionFold,
   AccordionFoldTrigger
 } from '../../components/accordion';
+import { useContext } from 'react';
+import FormContext from '../../context/form-context';
 
 const Details = styled.div`
   /* stylelint-disable */
@@ -96,6 +98,8 @@ export function renderZoneDetailsList (zone, detailsList) {
 
   let summary = properties.summary;
 
+  const { weightsList } = useContext(FormContext);
+
   // Some feature summaries are JSON strings
   if (typeof summary === 'string' || summary instanceof String) {
     summary = JSON.parse(summary);
@@ -134,9 +138,10 @@ export function renderZoneDetailsList (zone, detailsList) {
     let avg_list = [];
     for (const [label, data] of Object.entries(flatZone.criterion_average) )
     {
+      let weight_ind = weightsList.find( w => w.id == label );
       avg_list.push(
-        <Dl key={`${id}-${label}`}>
-          <dt>{formatLabel( "Average of " + label)}</dt>
+        <Dl key={`${id}-${label}-mean`}>
+          <dt>{ `Average ${weight_ind?.title}`}</dt>
           <dd>{formatIndicator(label, data)}</dd>
         </Dl>
       );
@@ -174,9 +179,10 @@ export function renderZoneDetailsList (zone, detailsList) {
     let contrib_lst = [];
     for (const [label, data] of Object.entries(flatZone.criterion_contribution) )
     {
+      let weight_ind = weightsList.find( w => w.id == label );
       contrib_lst.push(
-        <Dl key={`${id}-${label}`}>
-          <dt>{formatLabel( "Contribution of " + label)}</dt>
+        <Dl key={`${id}-${label}-contrib`}>
+          <dt>{ `Contribution of ${weight_ind?.title}`}</dt>
           <dd>{formatIndicator(label, data)}</dd>
         </Dl>
       );
