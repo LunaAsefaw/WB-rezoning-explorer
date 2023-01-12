@@ -141,7 +141,7 @@ export function renderZoneDetailsList (zone, detailsList) {
       let weight_ind = weightsList.find( w => w.id == label );
       avg_list.push(
         <Dl key={`${id}-${label}-mean`}>
-          <dt>{ `Average ${weight_ind?.title}`}</dt>
+          <dt>{`Average ${weight_ind?.title}`}</dt>
           <dd>{formatIndicator(label, data)}</dd>
         </Dl>
       );
@@ -182,7 +182,7 @@ export function renderZoneDetailsList (zone, detailsList) {
       let weight_ind = weightsList.find( w => w.id == label );
       contrib_lst.push(
         <Dl key={`${id}-${label}-contrib`}>
-          <dt>{ `Contribution of ${weight_ind?.title}`}</dt>
+          <dt>{`Contribution of ${weight_ind?.title}`}</dt>
           <dd>{formatIndicator(label, data)}</dd>
         </Dl>
       );
