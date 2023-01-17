@@ -172,6 +172,18 @@ function ExploreZones (props) {
   maxZoneScore = Math.ceil( maxZoneScore * 1000.0 ) / 1000.0;
 
   return (
+    currentZones.length == 0 ?
+    <Card
+      size='large'
+    >
+      <CardIcon color='red'>
+        <div>Error</div>
+      </CardIcon>
+      <CardDetails>
+        All zones are filtered out, please check your filters ranges or disable some filters
+      </CardDetails>
+    </Card>
+    :
     <ZonesWrapper active={active}>
       <ColorScale steps={10} heading='Weighted Zone Score' minLabel={minZoneScore} maxLabel={maxZoneScore} colorFunction={zoneScoreColor} />
       {focusZone ? (
