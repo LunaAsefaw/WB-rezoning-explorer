@@ -167,6 +167,18 @@ function ExploreZones (props) {
   const [sortId, setSortId] = useState('lcoe');
 
   return (
+    currentZones.length == 0 ?
+    <Card
+      size='large'
+    >
+      <CardIcon color='red'>
+        <div>Error</div>
+      </CardIcon>
+      <CardDetails>
+        All zones are filtered out, please check your filters ranges or disable some filters
+      </CardDetails>
+    </Card>
+    :
     <ZonesWrapper active={active}>
       <ColorScale steps={10} heading='Weighted Zone Score' min={0} max={1} colorFunction={zoneScoreColor} />
       {focusZone ? (
