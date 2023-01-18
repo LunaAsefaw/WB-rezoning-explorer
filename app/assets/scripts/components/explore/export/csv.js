@@ -79,6 +79,37 @@ export async function exportEconomicParametersCsv(selectedArea, lcoeValues) {
   });
 }
 
+export async function exportZoneWeightsCsv(selectedArea, weightsValues) {
+  const doc = format({ headers: true });
+
+  const stream = doc.pipe(blobStream());
+
+  // Parse economic parameters
+  const rows = Object.entries(weightsValues)
+    .map(([param_id, param]) => {
+      return {
+        id: param_id,
+        title: param.title,
+        description: param.description.replace(';', ' '),
+        isPercentage: true,
+        value: JSON.stringify( param.input.value ),
+      };
+    });
+
+  // Add economic parameters to CSV
+  rows.forEach((z) => doc.write(z) );
+
+
+  doc.end();
+
+  return stream.on('finish', () => {
+    saveAs(
+      stream.toBlob('text/plain;charset=utf-8'),
+      `WBG-REZoning-${selectedArea.id}-zone-weights-${getTimestamp()}.csv`
+    );
+  });
+}
+
 export async function exportZonesCsv(selectedArea, zones) {
 
   const doc = format({ headers: true });

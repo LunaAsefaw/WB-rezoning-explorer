@@ -28,7 +28,7 @@ import QsState from '../../../utils/qs-state';
 import toasts from '../../common/toasts';
 import GlobalContext from '../../../context/global-context';
 import { toTitleCase } from '../../../utils/format';
-import { exportZonesCsv, exportSpatialFiltersCsv, exportEconomicParametersCsv } from './csv';
+import { exportZonesCsv, exportSpatialFiltersCsv, exportEconomicParametersCsv, exportZoneWeightsCsv } from './csv';
 import exportZonesGeoJSON from './geojson';
 import exportCountryMap from './country-map';
 import MapContext from '../../../context/map-context';
@@ -308,6 +308,23 @@ const ExportZonesButton = (props) => {
     await exportEconomicParametersCsv( selectedArea, lcoeValues );
   }
 
+  async function onExportZoneWeightsCsvClick() {
+    // Get weights values
+    const weightsSchema = weightsList.reduce((acc, w) => {
+      acc[w.id] = {
+        accessor: w.id,
+        hydrator: weightQsSchema(w).hydrator
+      };
+      return acc;
+    }, {});
+    const weightsQsState = new QsState(weightsSchema);
+    const weightsValues = weightsQsState.getState(
+      props.location.search.substr(1)
+    );
+
+    await exportZoneWeightsCsv( selectedArea, weightsValues );
+  }
+
   // Conditional resource link for linking to GWA/GSA download pages
   let ResourceLink;
   if (selectedArea.type === 'country') {
@@ -379,6 +396,13 @@ const ExportZonesButton = (props) => {
             onClick={onExportEconomicParametersCsvClick}
           >
             Economic parameters (.csv)
+          </DropMenuItem>
+          <DropMenuItem
+            data-dropdown='click.close'
+            useIcon='table'
+            onClick={onExportZoneWeightsCsvClick}
+          >
+            Zone weights (.csv)
           </DropMenuItem>
           <DropMenuItem
             data-dropdown='click.close'
