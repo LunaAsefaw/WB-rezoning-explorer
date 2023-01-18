@@ -28,7 +28,7 @@ import QsState from '../../../utils/qs-state';
 import toasts from '../../common/toasts';
 import GlobalContext from '../../../context/global-context';
 import { toTitleCase } from '../../../utils/format';
-import { exportZonesCsv, exportSpatialFiltersCsv, exportEconomicParametersCsv, exportZoneWeightsCsv } from './csv';
+import { exportZonesCsv } from './csv';
 import exportZonesGeoJSON from './geojson';
 import exportCountryMap from './country-map';
 import MapContext from '../../../context/map-context';
@@ -277,54 +277,6 @@ const ExportZonesButton = (props) => {
     exportZonesGeoJSON(selectedArea, currentZones.getData(), selectedResource, filtersValues);
   }
 
-  async function onExportSpatialFiltersCsvClick() {
-    // Get filters values
-    const filtersSchema = filtersLists.reduce((acc, w) => {
-      acc[w.id] = {
-        accessor: w.id,
-        hydrator: filterQsSchema(w, filterRanges, selectedResource).hydrator
-      };
-      return acc;
-    }, {});
-    const filtersQsState = new QsState(filtersSchema);
-    const filtersValues = filtersQsState.getState(
-      props.location.search.substr(1)
-    );
-    await exportSpatialFiltersCsv( selectedArea, filtersValues );
-  }
-
-  async function onExportEconomicParametersCsvClick() {
-    // Get LCOE values
-    const lcoeSchema = lcoeList.reduce((acc, l) => {
-      acc[l.id] = {
-        accessor: l.id,
-        hydrator: lcoeQsSchema(l, selectedResource).hydrator
-      };
-      return acc;
-    }, {});
-    const lcoeQsState = new QsState(lcoeSchema);
-    const lcoeValues = lcoeQsState.getState(props.location.search.substr(1));
-
-    await exportEconomicParametersCsv( selectedArea, lcoeValues );
-  }
-
-  async function onExportZoneWeightsCsvClick() {
-    // Get weights values
-    const weightsSchema = weightsList.reduce((acc, w) => {
-      acc[w.id] = {
-        accessor: w.id,
-        hydrator: weightQsSchema(w).hydrator
-      };
-      return acc;
-    }, {});
-    const weightsQsState = new QsState(weightsSchema);
-    const weightsValues = weightsQsState.getState(
-      props.location.search.substr(1)
-    );
-
-    await exportZoneWeightsCsv( selectedArea, weightsValues );
-  }
-
   // Conditional resource link for linking to GWA/GSA download pages
   let ResourceLink;
   if (selectedArea.type === 'country') {
@@ -382,27 +334,6 @@ const ExportZonesButton = (props) => {
             }}
           >
             Zones (.csv)
-          </DropMenuItem>
-          <DropMenuItem
-            data-dropdown='click.close'
-            useIcon='table'
-            onClick={onExportSpatialFiltersCsvClick}
-          >
-            Spatial filters (.csv)
-          </DropMenuItem>
-          <DropMenuItem
-            data-dropdown='click.close'
-            useIcon='table'
-            onClick={onExportEconomicParametersCsvClick}
-          >
-            Economic parameters (.csv)
-          </DropMenuItem>
-          <DropMenuItem
-            data-dropdown='click.close'
-            useIcon='table'
-            onClick={onExportZoneWeightsCsvClick}
-          >
-            Zone weights (.csv)
           </DropMenuItem>
           <DropMenuItem
             data-dropdown='click.close'

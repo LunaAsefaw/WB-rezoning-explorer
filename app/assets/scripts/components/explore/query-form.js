@@ -372,6 +372,7 @@ function QueryForm(props) {
           filters={filtersInd}
           checkIncluded={checkIncluded}
           resource={resource}
+          selectedArea={area}
         />
         <LCOEForm
           id='economics-tab'
@@ -379,6 +380,7 @@ function QueryForm(props) {
           icon='disc-dollar'
           lcoe={lcoeInd}
           disabled={!area || !resource}
+          selectedArea={area}
         />
         <WeightsForm
           id='weights-tab'
@@ -388,6 +390,7 @@ function QueryForm(props) {
           disabled={!area || !resource}
           weightsLocks={weightsLocks}
           setWeightLocks={setWeightLocks}
+          selectedArea={area}
         />
       </TabbedBlockBody>
       <SubmissionSection>

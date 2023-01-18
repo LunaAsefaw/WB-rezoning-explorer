@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import T from 'prop-types';
+import styled from 'styled-components';
 
 import {
   FormWrapper,
@@ -20,6 +21,9 @@ import { INPUT_CONSTANTS } from '../panel-data';
 
 import FormInput from './form-input';
 
+import Button from '../../../styles/button/button';
+import { exportSpatialFiltersCsv } from '../export/csv';
+
 const { BOOL } = INPUT_CONSTANTS;
 
 /* Filters form
@@ -37,7 +41,8 @@ function FiltersForm (props) {
     checkIncluded,
     resource,
     active,
-    disabled
+    disabled,
+    selectedArea,
   } = props;
 
   return (
@@ -183,6 +188,15 @@ function FiltersForm (props) {
             </>
           )}
         </Accordion>
+        <Button
+          size='large'
+          style={{"width": "100%"}}
+          onClick={() => { exportSpatialFiltersCsv( selectedArea, filters.map( f => f[0] ) ) }}
+          variation='primary-raised-light'
+          useIcon='download'
+        >
+          Export (.csv)
+        </Button>
       </FormWrapper>
     </>
   );

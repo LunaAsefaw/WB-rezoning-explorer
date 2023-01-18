@@ -11,8 +11,8 @@ export async function exportSpatialFiltersCsv(selectedArea, filters) {
   const stream = doc.pipe(blobStream());
 
   // Parse filters
-  const rows = Object.entries(filters)
-    .map(([filter_id, filter]) => {
+  const rows = filters
+    .map(filter => {
       let filter_row = {
         id: filter.id,
         title: filter.title,
@@ -51,10 +51,10 @@ export async function exportEconomicParametersCsv(selectedArea, lcoeValues) {
   const stream = doc.pipe(blobStream());
 
   // Parse economic parameters
-  const rows = Object.entries(lcoeValues)
-    .map(([param_id, param]) => {
+  const rows = lcoeValues
+    .map(param => {
       return {
-        id: param_id,
+        id: param.id,
         title: param.title,
         description: param.description.replace(';', ' '),
         category: param.category,
@@ -85,10 +85,10 @@ export async function exportZoneWeightsCsv(selectedArea, weightsValues) {
   const stream = doc.pipe(blobStream());
 
   // Parse economic parameters
-  const rows = Object.entries(weightsValues)
-    .map(([param_id, param]) => {
+  const rows = weightsValues
+    .map( param => {
       return {
-        id: param_id,
+        id: param.id,
         title: param.title,
         description: param.description.replace(';', ' '),
         isPercentage: true,
