@@ -28,7 +28,7 @@ import QsState from '../../../utils/qs-state';
 import toasts from '../../common/toasts';
 import GlobalContext from '../../../context/global-context';
 import { toTitleCase } from '../../../utils/format';
-import { exportZonesCsv, exportFiltersCsv } from './csv';
+import { exportZonesCsv, exportSpatialFiltersCsv, exportEconomicParametersCsv } from './csv';
 import exportZonesGeoJSON from './geojson';
 import exportCountryMap from './country-map';
 import MapContext from '../../../context/map-context';
@@ -277,7 +277,7 @@ const ExportZonesButton = (props) => {
     exportZonesGeoJSON(selectedArea, currentZones.getData(), selectedResource, filtersValues);
   }
 
-  async function onExportFiltersCsvClick() {
+  async function onExportSpatialFiltersCsvClick() {
     // Get filters values
     const filtersSchema = filtersLists.reduce((acc, w) => {
       acc[w.id] = {
@@ -290,7 +290,22 @@ const ExportZonesButton = (props) => {
     const filtersValues = filtersQsState.getState(
       props.location.search.substr(1)
     );
-    await exportFiltersCsv( selectedArea, filtersValues );
+    await exportSpatialFiltersCsv( selectedArea, filtersValues );
+  }
+
+  async function onExportEconomicParametersCsvClick() {
+    // Get LCOE values
+    const lcoeSchema = lcoeList.reduce((acc, l) => {
+      acc[l.id] = {
+        accessor: l.id,
+        hydrator: lcoeQsSchema(l, selectedResource).hydrator
+      };
+      return acc;
+    }, {});
+    const lcoeQsState = new QsState(lcoeSchema);
+    const lcoeValues = lcoeQsState.getState(props.location.search.substr(1));
+
+    await exportEconomicParametersCsv( selectedArea, lcoeValues );
   }
 
   // Conditional resource link for linking to GWA/GSA download pages
@@ -354,9 +369,16 @@ const ExportZonesButton = (props) => {
           <DropMenuItem
             data-dropdown='click.close'
             useIcon='table'
-            onClick={onExportFiltersCsvClick}
+            onClick={onExportSpatialFiltersCsvClick}
           >
-            Used filters (.csv)
+            Spatial filters (.csv)
+          </DropMenuItem>
+          <DropMenuItem
+            data-dropdown='click.close'
+            useIcon='table'
+            onClick={onExportEconomicParametersCsvClick}
+          >
+            Economic parameters (.csv)
           </DropMenuItem>
           <DropMenuItem
             data-dropdown='click.close'

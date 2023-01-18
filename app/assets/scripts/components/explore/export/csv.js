@@ -5,12 +5,12 @@ import { getTimestamp, round } from '../../../utils/format';
 import config from '../../../config';
 const { indicatorsDecimals } = config;
 
-export async function exportFiltersCsv(selectedArea, filters) {
+export async function exportSpatialFiltersCsv(selectedArea, filters) {
   const doc = format({ headers: true });
 
   const stream = doc.pipe(blobStream());
 
-  // Parse zones
+  // Parse filters
   const rows = Object.entries(filters)
     .map(([filter_id, filter]) => {
       let filter_row = {
@@ -40,7 +40,41 @@ export async function exportFiltersCsv(selectedArea, filters) {
   return stream.on('finish', () => {
     saveAs(
       stream.toBlob('text/plain;charset=utf-8'),
-      `WBG-REZoning-${selectedArea.id}-filters-${getTimestamp()}.csv`
+      `WBG-REZoning-${selectedArea.id}-spatial-filters-${getTimestamp()}.csv`
+    );
+  });
+}
+
+export async function exportEconomicParametersCsv(selectedArea, lcoeValues) {
+  const doc = format({ headers: true });
+
+  const stream = doc.pipe(blobStream());
+
+  // Parse economic parameters
+  const rows = Object.entries(lcoeValues)
+    .map(([param_id, param]) => {
+      return {
+        id: param_id,
+        title: param.title,
+        description: param.description.replace(';', ' '),
+        category: param.category,
+        input: JSON.stringify( param.input ),
+        type: param.type,
+        priority: param.priority,
+        value: JSON.stringify( param.input.value ),
+      };
+    });
+
+  // Add economic parameters to CSV
+  rows.forEach((z) => doc.write(z) );
+
+
+  doc.end();
+
+  return stream.on('finish', () => {
+    saveAs(
+      stream.toBlob('text/plain;charset=utf-8'),
+      `WBG-REZoning-${selectedArea.id}-economic-parameters-${getTimestamp()}.csv`
     );
   });
 }
