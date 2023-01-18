@@ -28,7 +28,7 @@ import QsState from '../../../utils/qs-state';
 import toasts from '../../common/toasts';
 import GlobalContext from '../../../context/global-context';
 import { toTitleCase } from '../../../utils/format';
-import exportZonesCsv from './csv';
+import { exportZonesCsv, exportFiltersCsv } from './csv';
 import exportZonesGeoJSON from './geojson';
 import exportCountryMap from './country-map';
 import MapContext from '../../../context/map-context';
@@ -260,6 +260,39 @@ const ExportZonesButton = (props) => {
       hideGlobalLoading();
     }
   }
+
+  async function onExportGeojsonClick() {
+    // Get filters values
+    const filtersSchema = filtersLists.reduce((acc, w) => {
+      acc[w.id] = {
+        accessor: w.id,
+        hydrator: filterQsSchema(w, filterRanges, selectedResource).hydrator
+      };
+      return acc;
+    }, {});
+    const filtersQsState = new QsState(filtersSchema);
+    const filtersValues = filtersQsState.getState(
+      props.location.search.substr(1)
+    );
+    exportZonesGeoJSON(selectedArea, currentZones.getData(), selectedResource, filtersValues);
+  }
+
+  async function onExportFiltersCsvClick() {
+    // Get filters values
+    const filtersSchema = filtersLists.reduce((acc, w) => {
+      acc[w.id] = {
+        accessor: w.id,
+        hydrator: filterQsSchema(w, filterRanges, selectedResource).hydrator
+      };
+      return acc;
+    }, {});
+    const filtersQsState = new QsState(filtersSchema);
+    const filtersValues = filtersQsState.getState(
+      props.location.search.substr(1)
+    );
+    await exportFiltersCsv( selectedArea, filtersValues );
+  }
+
   // Conditional resource link for linking to GWA/GSA download pages
   let ResourceLink;
   if (selectedArea.type === 'country') {
@@ -320,10 +353,15 @@ const ExportZonesButton = (props) => {
           </DropMenuItem>
           <DropMenuItem
             data-dropdown='click.close'
+            useIcon='table'
+            onClick={onExportFiltersCsvClick}
+          >
+            Used filters (.csv)
+          </DropMenuItem>
+          <DropMenuItem
+            data-dropdown='click.close'
             useIcon='map'
-            onClick={() => {
-              exportZonesGeoJSON(selectedArea, currentZones.getData());
-            }}
+            onClick={onExportGeojsonClick}
           >
             Zones (.geojson)
           </DropMenuItem>
