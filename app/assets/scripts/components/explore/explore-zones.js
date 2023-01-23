@@ -180,7 +180,7 @@ function ExploreZones (props) {
         <div>Error</div>
       </CardIcon>
       <CardDetails>
-        All zones are filtered out, please check your filters ranges or disable some filters
+      Unfortunately, your analysis did not yield results. If this does not look correct, please double check the filter range but also the data layers you have activated, which might actually not have data for your country of interest.
       </CardDetails>
     </Card>
     :
