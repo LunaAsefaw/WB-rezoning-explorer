@@ -28,7 +28,7 @@ import QsState from '../../../utils/qs-state';
 import toasts from '../../common/toasts';
 import GlobalContext from '../../../context/global-context';
 import { toTitleCase } from '../../../utils/format';
-import exportZonesCsv from './csv';
+import { exportZonesCsv } from './csv';
 import exportZonesGeoJSON from './geojson';
 import exportCountryMap from './country-map';
 import MapContext from '../../../context/map-context';
@@ -125,7 +125,7 @@ function getFilterValues(
  * The component
  */
 const ExportZonesButton = (props) => {
-  const { selectedResource, selectedArea, currentZones, selectedZoneType, maxZoneScore, maxLCOE } = useContext(
+  const { selectedResource, selectedArea, currentZones, gridMode, gridSize, maxZoneScore, maxLCOE } = useContext(
     ExploreContext
   );
 
@@ -180,7 +180,8 @@ const ExportZonesButton = (props) => {
     const data = {
       selectedResource,
       selectedArea,
-      selectedZoneType,
+      gridMode,
+      gridSize,
       zones: currentZones.getData().filter(z => {
         // Filter by zone min/max lcoe/score
         /* eslint-disable camelcase */
@@ -214,7 +215,7 @@ const ExportZonesButton = (props) => {
         `${apiEndpoint}/export/${operation}/${selectedArea.id}/${apiResourceNameMap[selectedResource]}`,
         {
           method: 'POST',
-          headers: { "Content-type": "application/json" },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             lcoe: getLcoeValues(props.location, selectedResource, lcoeList),
             weights: getWeightValues(
@@ -259,6 +260,23 @@ const ExportZonesButton = (props) => {
       hideGlobalLoading();
     }
   }
+
+  async function onExportGeojsonClick() {
+    // Get filters values
+    const filtersSchema = filtersLists.reduce((acc, w) => {
+      acc[w.id] = {
+        accessor: w.id,
+        hydrator: filterQsSchema(w, filterRanges, selectedResource).hydrator
+      };
+      return acc;
+    }, {});
+    const filtersQsState = new QsState(filtersSchema);
+    const filtersValues = filtersQsState.getState(
+      props.location.search.substr(1)
+    );
+    exportZonesGeoJSON(selectedArea, currentZones.getData(), selectedResource, filtersValues);
+  }
+
   // Conditional resource link for linking to GWA/GSA download pages
   let ResourceLink;
   if (selectedArea.type === 'country') {
@@ -288,7 +306,7 @@ const ExportZonesButton = (props) => {
           <DropMenuItem
             data-dropdown='click.close'
             useIcon='picture'
-            onClick={() => exportCountryMap(selectedArea, selectedResource, selectedZoneType, map, setMap)}
+            onClick={() => exportCountryMap(selectedArea, selectedResource, gridMode, gridSize, map, setMap)}
           >
             Map (.pdf)
           </DropMenuItem>
@@ -312,7 +330,7 @@ const ExportZonesButton = (props) => {
             data-dropdown='click.close'
             useIcon='table'
             onClick={() => {
-              exportZonesCsv(selectedArea, currentZones.getData(), weightsList);
+              exportZonesCsv(selectedArea, currentZones.getData());
             }}
           >
             Zones (.csv)
@@ -320,9 +338,7 @@ const ExportZonesButton = (props) => {
           <DropMenuItem
             data-dropdown='click.close'
             useIcon='map'
-            onClick={() => {
-              exportZonesGeoJSON(selectedArea, currentZones.getData());
-            }}
+            onClick={onExportGeojsonClick}
           >
             Zones (.geojson)
           </DropMenuItem>

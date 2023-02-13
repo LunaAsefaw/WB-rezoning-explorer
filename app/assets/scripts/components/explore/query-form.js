@@ -13,6 +13,8 @@ import TabbedBlockBody from '../common/tabbed-block-body';
 import Button from '../../styles/button/button';
 import Heading, { Subheading } from '../../styles/type/heading';
 
+import GridSetter from './grid-setter';
+
 import { INPUT_CONSTANTS, checkIncluded, apiResourceNameMap } from './panel-data';
 import { HeadOption, HeadOptionHeadline } from '../../styles/form/form';
 import { FiltersForm, WeightsForm, LCOEForm } from './form';
@@ -66,8 +68,9 @@ function QueryForm(props) {
     onResourceEdit,
     onInputTouched,
     onSelectionChange,
-    selectedZoneType,
-    onZoneTypeEdit,
+    gridMode,
+    setGridMode,
+    gridSize, setGridSize,
 
     firstLoad
   } = props;
@@ -188,7 +191,7 @@ function QueryForm(props) {
   }, [filterRanges, resource]);
 
   useEffect(onInputTouched, [area, resource]);
-  useEffect(onSelectionChange, [area, resource, selectedZoneType]);
+  useEffect(onSelectionChange, [area, resource, gridSize]);
 
   /* Update capacity factor options based on
    * what the current resource is
@@ -251,16 +254,18 @@ function QueryForm(props) {
               <Subheading>Zone Type and Size: </Subheading>
               <Subheading variation='primary'>
                 <Subheadingstrong>
-                  { selectedZoneType ? selectedZoneType.size > 0 ? `${selectedZoneType.size} km²` : 'Boundaries' : "Select Zone Type And Size"}
+                  {gridMode ? `${gridSize} km²` : 'Boundaries'}
                 </Subheadingstrong>
               </Subheading>
-              <EditButton
-                id='select-zone-type-button'
-                onClick={onZoneTypeEdit}
-                title='Edit Zone Type'
-              >
-                Edit Zone Type Selection
-              </EditButton>
+
+              <GridSetter
+                gridOptions={GRID_OPTIONS}
+                gridSize={gridSize}
+                setGridSize={setGridSize}
+                gridMode={gridMode}
+                setGridMode={setGridMode}
+                disableBoundaries={resource === 'Off-Shore Wind'}
+              />
             </HeadOptionHeadline>
           </HeadOption>
         </PanelBlockHeader>
@@ -342,17 +347,18 @@ function QueryForm(props) {
             <Subheading>Zone Type and Size: </Subheading>
             <Subheading variation='primary'>
               <Subheadingstrong>
-                { selectedZoneType ? selectedZoneType.size > 0 ? `${selectedZoneType.size} km²` : 'Boundaries' : "Select Zone Type And Size"}
+                {gridMode ? `${gridSize} km²` : 'Boundaries'}
               </Subheadingstrong>
             </Subheading>
 
-            <EditButton
-              id='select-zone-type-button'
-              onClick={onZoneTypeEdit}
-              title='Edit Zone Type'
-            >
-              Edit Zone Type Selection
-            </EditButton>
+            <GridSetter
+              gridOptions={GRID_OPTIONS}
+              gridSize={gridSize}
+              setGridSize={setGridSize}
+              gridMode={gridMode}
+              setGridMode={setGridMode}
+              disableBoundaries={resource === 'Off-Shore Wind'}
+            />
           </HeadOptionHeadline>
         </HeadOption>
       </PanelBlockHeader>
@@ -366,6 +372,7 @@ function QueryForm(props) {
           filters={filtersInd}
           checkIncluded={checkIncluded}
           resource={resource}
+          selectedArea={area}
         />
         <LCOEForm
           id='economics-tab'
@@ -373,6 +380,7 @@ function QueryForm(props) {
           icon='disc-dollar'
           lcoe={lcoeInd}
           disabled={!area || !resource}
+          selectedArea={area}
         />
         <WeightsForm
           id='weights-tab'
@@ -382,6 +390,7 @@ function QueryForm(props) {
           disabled={!area || !resource}
           weightsLocks={weightsLocks}
           setWeightLocks={setWeightLocks}
+          selectedArea={area}
         />
       </TabbedBlockBody>
       <SubmissionSection>
@@ -428,8 +437,10 @@ QueryForm.propTypes = {
   onAreaEdit: T.func,
   onInputTouched: T.func,
   onSelectionChange: T.func,
-  selectedZoneType: T.object,
-  onZoneTypeEdit: T.func,
+  gridMode: T.bool,
+  setGridMode: T.func,
+  gridSize: T.number,
+  setGridSize: T.func,
   firstLoad: T.object
 };
 

@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import T from 'prop-types';
 import styled from 'styled-components';
-import Button from '../../../styles/button/button';
 
 import {
   FormWrapper,
@@ -16,19 +15,16 @@ import { Accordion, AccordionFold, AccordionFoldTrigger } from '../../../compone
 import Heading from '../../../styles/type/heading';
 import { makeTitleCase } from '../../../styles/utils/general';
 
+import InfoButton from '../../common/info-button';
 import { FormSwitch } from '../../../styles/form/switch';
 import { INPUT_CONSTANTS } from '../panel-data';
 
 import FormInput from './form-input';
-import Dropdown from '../../common/dropdown';
+
+import Button from '../../../styles/button/button';
+import { exportSpatialFiltersCsv } from '../export/csv';
 
 const { BOOL } = INPUT_CONSTANTS;
-
-const DropdownWide = styled(Dropdown)`
-max-width: max-content;
-background: rgba(0,0,0,0.8);
-color: white;
-`;
 
 /* Filters form
  * @param outputFilters is an array of shape
@@ -45,11 +41,9 @@ function FiltersForm (props) {
     checkIncluded,
     resource,
     active,
-    disabled
+    disabled,
+    selectedArea,
   } = props;
-
-  console.log( "active", active );
-  console.log( "disabled", disabled );
 
   return (
     <>
@@ -90,8 +84,6 @@ function FiltersForm (props) {
                 }, {})
               ).map(([group, list], idx) => {
                 /* Filters, built as AccordionFolds for each category */
-                console.log( "group", group );
-                console.log( "group list", list );
                 return (
                   <AccordionFold
                     key={group}
@@ -159,40 +151,28 @@ function FiltersForm (props) {
                                     )}
                                   </PanelOptionTitle>
                                   {filter.info && (
-                                    <DropdownWide
-                                      alignment='center'
-                                      direction='down'
-                                      triggerElement={
-                                        <Button
-                                          hideText
-                                          useIcon='circle-information'
-                                          className='info-button'
-                                          title={filter.info}
-                                        >
-                                          Info
-                                        </Button>
-                                      }>
-                                      <div>
-                                        Usage: &nbsp;
-                                        {filter.description}<br/>
-                                        Data Source: &nbsp;
-                                        <a href={filter.source_url} target="_blank"> {filter.source_url} </a>
-                                      </div>
-                                    </DropdownWide>
+                                    <InfoButton
+                                      info={filter.info}
+                                      id={filter.name}
+                                    >
+                                      Info
+                                    </InfoButton>
                                   )}
 
-                                  <FormSwitch
-                                    hideText
-                                    name={`toggle-${filter.name.replace(
-                                      / /g,
-                                      '-'
-                                    )}`}
-                                    disabled={filter.disabled}
-                                    checked={filter.active}
-                                    onChange={switchOnChange}
-                                  >
-                                    Toggle filter
-                                  </FormSwitch>
+                                  {filter.input.type === BOOL && (
+                                    <FormSwitch
+                                      hideText
+                                      name={`toggle-${filter.name.replace(
+                                        / /g,
+                                        '-'
+                                      )}`}
+                                      disabled={filter.disabled}
+                                      checked={filter.active}
+                                      onChange={switchOnChange}
+                                    >
+                                      Toggle filter
+                                    </FormSwitch>
+                                  )}
                                 </OptionHeadline>
                                 <FormInput
                                   option={filter}
@@ -208,6 +188,15 @@ function FiltersForm (props) {
             </>
           )}
         </Accordion>
+        <Button
+          size='large'
+          style={{"width": "100%"}}
+          onClick={() => { exportSpatialFiltersCsv( selectedArea, filters.map( f => f[0] ) ) }}
+          variation='primary-raised-light'
+          useIcon='download'
+        >
+          Export (.csv)
+        </Button>
       </FormWrapper>
     </>
   );
