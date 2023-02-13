@@ -5,7 +5,7 @@ import { getTimestamp, round } from '../../../utils/format';
 import config from '../../../config';
 const { indicatorsDecimals } = config;
 
-export default async function exportZonesCsv(selectedArea, zones) {
+export default async function exportZonesCsv(selectedArea, zones, weightsList=null) {
   const doc = format({ headers: true });
 
   const stream = doc.pipe(blobStream());
@@ -39,6 +39,33 @@ export default async function exportZonesCsv(selectedArea, zones) {
         'Installed Capacity Potential (MW)': summary.icp,
         'Capacity Factor': round(summary.cf, indicatorsDecimals.cf)
       };
+      if ( summary.criterion_average )
+      {
+        for ( const [label, data] of Object.entries( summary.criterion_average ) )
+        {
+          let avg_label = `Average of ${label}`;
+          if ( weightsList )
+          {
+            let weight_ind = weightsList.find( w => w.id == label );
+            avg_label = weight_ind?.title;
+          }
+          zone[avg_label] = data;
+        }
+      }
+
+      if ( summary.criterion_contribution )
+      {
+        for ( const [label, data] of Object.entries( summary.criterion_contribution ) )
+        {
+          let contributionLabel = `Contribution of ${label}`;
+          if ( weightsList )
+          {
+            let weight_ind = weightsList.find( w => w.id == label );
+            contributionLabel = `Contribution of ${weight_ind?.title}`;
+          }
+          zone[contributionLabel] = data;
+        }
+      }
 
       // Add name if available
       if (name) zone = { Name: name, ...zone };

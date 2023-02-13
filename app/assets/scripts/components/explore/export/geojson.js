@@ -25,7 +25,9 @@ export default async function exportZonesGeoJSON (selectedArea, zones) {
             indicatorsDecimals.zone_output_density
           ),
           installed_capacity_potential_mw: summary.icp,
-          capacity_factor: round(summary.cf, indicatorsDecimals.cf)
+          capacity_factor: round(summary.cf, indicatorsDecimals.cf),
+          criterion_average: summary.criterion_average,
+          criterion_contribution: summary.criterion_contribution,
         }
       };
     })
