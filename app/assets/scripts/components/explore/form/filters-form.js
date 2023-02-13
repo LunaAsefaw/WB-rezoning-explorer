@@ -48,6 +48,9 @@ function FiltersForm (props) {
     disabled
   } = props;
 
+  console.log( "active", active );
+  console.log( "disabled", disabled );
+
   return (
     <>
       {disabled && (
@@ -87,6 +90,8 @@ function FiltersForm (props) {
                 }, {})
               ).map(([group, list], idx) => {
                 /* Filters, built as AccordionFolds for each category */
+                console.log( "group", group );
+                console.log( "group list", list );
                 return (
                   <AccordionFold
                     key={group}
@@ -176,20 +181,18 @@ function FiltersForm (props) {
                                     </DropdownWide>
                                   )}
 
-                                  {filter.input.type === BOOL && (
-                                    <FormSwitch
-                                      hideText
-                                      name={`toggle-${filter.name.replace(
-                                        / /g,
-                                        '-'
-                                      )}`}
-                                      disabled={filter.disabled}
-                                      checked={filter.active}
-                                      onChange={switchOnChange}
-                                    >
-                                      Toggle filter
-                                    </FormSwitch>
-                                  )}
+                                  <FormSwitch
+                                    hideText
+                                    name={`toggle-${filter.name.replace(
+                                      / /g,
+                                      '-'
+                                    )}`}
+                                    disabled={filter.disabled}
+                                    checked={filter.active}
+                                    onChange={switchOnChange}
+                                  >
+                                    Toggle filter
+                                  </FormSwitch>
                                 </OptionHeadline>
                                 <FormInput
                                   option={filter}
