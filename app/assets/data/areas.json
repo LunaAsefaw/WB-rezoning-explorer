@@ -62,16 +62,42 @@
       ]
   },
   {
-      "gid": "AFG",
-      "alpha2": "AF",
-      "name": "Afghanistan",
-      "type": "country",
-      "bounds": "60.505,29.362,74.894,38.491",
-      "available_resources": [
-          "Solar PV",
-          "Onshore Wind",
-          "Off-Shore Wind"
-      ]
+    "gid": "ABW",
+    "alpha2": "AW",
+    "name": "Aruba",
+    "type": "country",
+    "bounds": "-70.063,12.412,-69.865,12.624",
+    "available_resources": [
+      "Solar PV",
+      "Onshore Wind",
+      "Off-Shore Wind"
+  ]
+  },
+  {
+    "gid": "ABW",
+    "alpha2": "AW",
+    "name": "Aruba",
+    "type": "country",
+    "bounds": "-70.063,12.412,-69.865,12.624",
+    "available_resources": [
+      "Solar PV",
+      "Onshore Wind",
+      "Off-Shore Wind"
+    ]
+  },
+  {
+    "gid": "ABW",
+    "alpha2": "AW",
+    "name": "Aruba",
+    "type": "country",
+    "bounds": "-70.063,12.412,-69.865,12.624"
+  },
+  {
+    "gid": "AFG",
+    "alpha2": "AF",
+    "name": "Afghanistan",
+    "type": "country",
+    "bounds": "60.505,29.362,74.894,38.491"
   },
   {
       "gid": "AGO",
@@ -86,16 +112,28 @@
       ]
   },
   {
-      "gid": "ALB",
-      "alpha2": "AL",
-      "name": "Albania",
-      "type": "country",
-      "bounds": "19.263,39.65,21.05,42.661",
-      "available_resources": [
-          "Solar PV",
-          "Onshore Wind",
-          "Off-Shore Wind"
-      ]
+    "gid": "AIA",
+    "alpha2": "AI",
+    "name": "Anguilla",
+    "type": "country",
+    "bounds": "-63.43,18.154,-62.924,18.595",
+    "available_resources": [
+      "Solar PV",
+      "Onshore Wind",
+      "Off-Shore Wind"
+    ]
+  },
+  {
+    "gid": "ALB",
+    "alpha2": "AL",
+    "name": "Albania",
+    "type": "country",
+    "bounds": "19.263,39.65,21.05,42.661",
+    "available_resources": [
+      "Solar PV",
+      "Onshore Wind",
+      "Off-Shore Wind"
+    ]
   },
   {
       "gid": "AND",
@@ -158,16 +196,23 @@
       ]
   },
   {
-      "gid": "ATF",
-      "alpha2": "TF",
-      "name": "French Southern Territories",
-      "type": "country",
-      "bounds": "40.328,-50.019,77.603,-11.514",
-      "available_resources": [
-          "Solar PV",
-          "Onshore Wind",
-          "Off-Shore Wind"
-      ]
+    "gid": "ATA",
+    "alpha2": "AQ",
+    "name": "Antarctica",
+    "type": "country",
+    "bounds": "-180,-90,180,-59.594"
+  },
+  {
+    "gid": "ATF",
+    "alpha2": "TF",
+    "name": "French Southern Territories",
+    "type": "country",
+    "bounds": "40.328,-50.019,77.603,-11.514",
+    "available_resources": [
+      "Solar PV",
+      "Onshore Wind",
+      "Off-Shore Wind"
+    ]
   },
   {
       "gid": "ATG",
@@ -578,16 +623,23 @@
       ]
   },
   {
-      "gid": "COL",
-      "alpha2": "CO",
-      "name": "Colombia",
-      "type": "country",
-      "bounds": "-81.842,-4.228,-66.87,15.912",
-      "available_resources": [
-          "Solar PV",
-          "Onshore Wind",
-          "Off-Shore Wind"
-      ]
+    "gid": "COK",
+    "alpha2": "CK",
+    "name": "Cook Islands",
+    "type": "country",
+    "bounds": "-165.879,-21.959,-157.321,-8.915"
+  },
+  {
+    "gid": "COL",
+    "alpha2": "CO",
+    "name": "Colombia",
+    "type": "country",
+    "bounds": "-81.842,-4.228,-66.87,15.912",
+    "available_resources": [
+      "Solar PV",
+      "Onshore Wind",
+      "Off-Shore Wind"
+    ]
   },
   {
       "gid": "COM",
@@ -866,16 +918,23 @@
       ]
   },
   {
-      "gid": "FLK",
-      "alpha2": "FK",
-      "name": "Falkland Islands",
-      "type": "country",
-      "bounds": "-61.46,-52.919,-57.687,-50.996",
-      "available_resources": [
-          "Solar PV",
-          "Onshore Wind",
-          "Off-Shore Wind"
-      ]
+    "gid": "FJI",
+    "alpha2": "FJ",
+    "name": "Fiji",
+    "type": "country",
+    "bounds": "-183.09555054,-21.03111076,-178.2333374,-12.46233463"
+  },
+  {
+    "gid": "FLK",
+    "alpha2": "FK",
+    "name": "Falkland Islands",
+    "type": "country",
+    "bounds": "-61.46,-52.919,-57.687,-50.996",
+    "available_resources": [
+      "Solar PV",
+      "Onshore Wind",
+      "Off-Shore Wind"
+    ]
   },
   {
       "gid": "FRA",
@@ -1418,16 +1477,28 @@
       ]
   },
   {
-      "gid": "KNA",
-      "alpha2": "KN",
-      "name": "Saint Kitts and Nevis",
-      "type": "country",
-      "bounds": "-62.864,17.093,-62.539,17.418",
-      "available_resources": [
-          "Solar PV",
-          "Onshore Wind",
-          "Off-Shore Wind"
-      ]
+    "gid": "KIR",
+    "alpha2": "KI",
+    "name": "Kiribati",
+    "type": "country",
+    "bounds": "-174.543,-17.852,176.849,4.699",
+    "available_resources": [
+      "Solar PV",
+      "Onshore Wind",
+      "Off-Shore Wind"
+    ]
+  },
+  {
+    "gid": "KNA",
+    "alpha2": "KN",
+    "name": "Saint Kitts and Nevis",
+    "type": "country",
+    "bounds": "-62.864,17.093,-62.539,17.418",
+    "available_resources": [
+      "Solar PV",
+      "Onshore Wind",
+      "Off-Shore Wind"
+    ]
   },
   {
       "gid": "KOR",
@@ -1682,16 +1753,23 @@
       ]
   },
   {
-      "gid": "MKD",
-      "alpha2": "MK",
-      "name": "Macedonia",
-      "type": "country",
-      "bounds": "20.456,40.855,23.006,42.339",
-      "available_resources": [
-          "Solar PV",
-          "Onshore Wind",
-          "Off-Shore Wind"
-      ]
+    "gid": "MHL",
+    "alpha2": "MH",
+    "name": "Marshall Islands",
+    "type": "country",
+    "bounds": "160.795,4.573,172.173,14.723"
+  },
+  {
+    "gid": "MKD",
+    "alpha2": "MK",
+    "name": "Macedonia",
+    "type": "country",
+    "bounds": "20.456,40.855,23.006,42.339",
+    "available_resources": [
+      "Solar PV",
+      "Onshore Wind",
+      "Off-Shore Wind"
+    ]
   },
   {
       "gid": "MLI",
@@ -1934,16 +2012,28 @@
       ]
   },
   {
-      "gid": "NLD",
-      "alpha2": "NL",
-      "name": "Netherlands",
-      "type": "country",
-      "bounds": "3.361,50.723,7.227,53.555",
-      "available_resources": [
-          "Solar PV",
-          "Onshore Wind",
-          "Off-Shore Wind"
-      ]
+    "gid": "NIU",
+    "alpha2": "NU",
+    "name": "Niue",
+    "type": "country",
+    "bounds": "-169.951,-19.156,-169.774,-18.952",
+    "available_resources": [
+      "Solar PV",
+      "Onshore Wind",
+      "Off-Shore Wind"
+    ]
+  },
+  {
+    "gid": "NLD",
+    "alpha2": "NL",
+    "name": "Netherlands",
+    "type": "country",
+    "bounds": "3.361,50.723,7.227,53.555",
+    "available_resources": [
+        "Solar PV",
+        "Onshore Wind",
+        "Off-Shore Wind"
+    ]
   },
   {
       "gid": "NOR",
@@ -2210,16 +2300,16 @@
       ]
   },
   {
-      "gid": "RWA",
-      "alpha2": "RW",
-      "name": "Rwanda",
-      "type": "country",
-      "bounds": "28.862,-2.84,30.899,-1.047",
-      "available_resources": [
-          "Solar PV",
-          "Onshore Wind",
-          "Off-Shore Wind"
-      ]
+    "gid": "RWA",
+    "alpha2": "RW",
+    "name": "Rwanda",
+    "type": "country",
+    "bounds": "28.862,-2.84,30.899,-1.047",
+    "available_resources": [
+      "Solar PV",
+      "Onshore Wind",
+      "Off-Shore Wind"
+    ]
   },
   {
       "gid": "SAU",
@@ -2714,40 +2804,40 @@
       ]
   },
   {
-      "gid": "URY",
-      "alpha2": "UY",
-      "name": "Uruguay",
-      "type": "country",
-      "bounds": "-58.443,-34.974,-53.094,-30.08",
-      "available_resources": [
-          "Solar PV",
-          "Onshore Wind",
-          "Off-Shore Wind"
-      ]
+    "gid": "URY",
+    "alpha2": "UY",
+    "name": "Uruguay",
+    "type": "country",
+    "bounds": "-58.443,-34.974,-53.094,-30.08",
+    "available_resources": [
+      "Solar PV",
+      "Onshore Wind",
+      "Off-Shore Wind"
+    ]
   },
   {
-      "gid": "UZB",
-      "alpha2": "UZ",
-      "name": "Uzbekistan",
-      "type": "country",
-      "bounds": "55.998,37.177,73.135,45.571",
-      "available_resources": [
-          "Solar PV",
-          "Onshore Wind",
-          "Off-Shore Wind"
-      ]
+    "gid": "UZB",
+    "alpha2": "UZ",
+    "name": "Uzbekistan",
+    "type": "country",
+    "bounds": "55.998,37.177,73.135,45.571",
+    "available_resources": [
+      "Solar PV",
+      "Onshore Wind",
+      "Off-Shore Wind"
+    ]
   },
   {
-      "gid": "VCT",
-      "alpha2": "VC",
-      "name": "Saint Vincent and the Grenadines",
-      "type": "country",
-      "bounds": "-61.461,12.579,-61.114,13.383",
-      "available_resources": [
-          "Solar PV",
-          "Onshore Wind",
-          "Off-Shore Wind"
-      ]
+    "gid": "VCT",
+    "alpha2": "VC",
+    "name": "Saint Vincent and the Grenadines",
+    "type": "country",
+    "bounds": "-61.461,12.579,-61.114,13.383",
+    "available_resources": [
+      "Solar PV",
+      "Onshore Wind",
+      "Off-Shore Wind"
+    ]
   },
   {
       "gid": "VEN",
@@ -2810,16 +2900,16 @@
       ]
   },
   {
-      "gid": "WSM",
-      "alpha2": "WS",
-      "name": "Samoa",
-      "type": "country",
-      "bounds": "-172.804,-14.077,-171.398,-13.44",
-      "available_resources": [
-          "Solar PV",
-          "Onshore Wind",
-          "Off-Shore Wind"
-      ]
+    "gid": "WSM",
+    "alpha2": "WS",
+    "name": "Samoa",
+    "type": "country",
+    "bounds": "-172.804,-14.077,-171.398,-13.44",
+    "available_resources": [
+      "Solar PV",
+      "Onshore Wind",
+      "Off-Shore Wind"
+    ]
   },
   {
       "gid": "YEM",
