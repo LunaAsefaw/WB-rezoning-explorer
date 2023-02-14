@@ -19,6 +19,7 @@ import { Card } from '../common/card-list';
 
 import QueryForm, { EditButton } from './query-form';
 import RasterTray from './raster-tray';
+import SubmitIssueTray from './submit-issue-tray';
 import { ZONES_BOUNDARIES_LAYER_ID } from '../common/mb-map/mb-map';
 import Heading, { Subheading } from '../../styles/type/heading';
 import { PanelBlock, PanelBlockBody, PanelBlockHeader } from '../common/panel-block';
@@ -51,6 +52,11 @@ const RasterTrayWrapper = styled.div`
   }
 
   > .raster-tray {
+    grid-column: 1 /span 2;
+    ${({ show }) => !show && 'display: none;'}
+  }
+
+  > .submit-issue-tray {
     grid-column: 1 /span 2;
     ${({ show }) => !show && 'display: none;'}
 
@@ -112,6 +118,7 @@ function ExpMapPrimePanel (props) {
   } = useContext(MapContext);
 
   const [showRasterPanel, setShowRasterPanel] = useState(false);
+  const [showSubmitIssuePanel, setShowSubmitIssuePanel] = useState(false);
 
   const onAreaEdit= () => {
     setShowSelectAreaModal(true);
@@ -147,7 +154,7 @@ function ExpMapPrimePanel (props) {
             <span>Open Tour</span>
           </Button>,
 
-          <RasterTrayWrapper key='toggle-raster-tray' show={showRasterPanel}>
+          <RasterTrayWrapper key='toggle-raster-tray' id='toggle-raster-tray' show={showRasterPanel}>
             <InfoButton
               id='toggle-raster-tray'
               className='info-button'
@@ -267,6 +274,28 @@ function ExpMapPrimePanel (props) {
                   setMapLayers( ml );
                 }
               }}
+            />
+          </RasterTrayWrapper>,
+
+          <RasterTrayWrapper key='toggle-submit-issue-tray' id='toggle-submit-issue-tray' show={showSubmitIssuePanel}>
+            <InfoButton
+              id='toggle-submit-issue-tray'
+              className='info-button'
+              variation='base-plain'
+              useIcon='warning'
+              info='Toggle submit issue panel'
+              width='20rem'
+              hideText
+              onClick={() => {
+                setShowSubmitIssuePanel(!showSubmitIssuePanel);
+              }}
+            >
+              <span>Submit issue</span>
+            </InfoButton>
+            <Subheading>Submit issue</Subheading>
+            <SubmitIssueTray 
+              show={showSubmitIssuePanel}
+              className='submit-issue-tray'
             />
           </RasterTrayWrapper>
         ]}
