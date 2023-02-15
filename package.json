@@ -31,7 +31,7 @@
     "cy:run": "NODE_ENV=production cypress run"
   },
   "engines": {
-    "node": "16.x"
+    "node": "12.x"
   },
   "browserify": {
     "transform": [
