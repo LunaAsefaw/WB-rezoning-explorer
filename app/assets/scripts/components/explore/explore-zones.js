@@ -99,6 +99,16 @@ const CardDetails = styled.ul`
   text-align: center;
   text-transform: uppercase;
 `;
+
+const NoResultsCard = styled.ul`
+  grid-column: span 3;
+  display: grid;
+  grid-template-columns: '1fr';
+  font-size: 0.875rem;
+  text-align: center;
+  text-transform: uppercase;
+`;
+
 const Detail = styled.dl`
   dt,
   dd {
@@ -176,12 +186,9 @@ function ExploreZones (props) {
     <Card
       size='large'
     >
-      <CardIcon color='red'>
-        <div>Error</div>
-      </CardIcon>
-      <CardDetails>
+      <NoResultsCard>
       Unfortunately, your analysis did not yield results. If this does not look correct, please double check the filter range but also the data layers you have activated, which might actually not have data for your country of interest.
-      </CardDetails>
+      </NoResultsCard>
     </Card>
     :
     <ZonesWrapper active={active}>
