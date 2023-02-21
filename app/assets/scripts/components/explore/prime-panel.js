@@ -282,7 +282,7 @@ function ExpMapPrimePanel (props) {
               id='toggle-submit-issue-tray'
               className='info-button'
               variation='base-plain'
-              useIcon='warning'
+              useIcon='link'
               info='Toggle submit issue panel'
               width='20rem'
               hideText
