@@ -114,7 +114,7 @@ function SubmitIssueTray (props) {
                 cols={40}
                 onChange={e => { setIssueDetails(e.target.value) }}
               />
-            <Button type="submit">Submit feedback</Button>
+            <Button style={{width: "100%"}} type="submit">Submit feedback</Button>
           </form>
         </FormWrapper>
       </LayersWrapper>
