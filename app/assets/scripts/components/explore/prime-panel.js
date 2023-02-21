@@ -283,7 +283,7 @@ function ExpMapPrimePanel (props) {
               className='info-button'
               variation='base-plain'
               useIcon='link'
-              info='Toggle submit issue panel'
+              info='Toggle submit feedback panel'
               width='20rem'
               hideText
               onClick={() => {
@@ -292,7 +292,7 @@ function ExpMapPrimePanel (props) {
             >
               <span>Submit issue</span>
             </InfoButton>
-            <Subheading>Submit issue</Subheading>
+            <Subheading>Submit feedback</Subheading>
             <SubmitIssueTray 
               show={showSubmitIssuePanel}
               className='submit-issue-tray'
