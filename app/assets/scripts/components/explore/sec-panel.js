@@ -69,21 +69,24 @@ function ExpMapSecPanel (props) {
 
             </PanelBlockBody>
             <PanelBlockFooter>
-              <Button
-                  id='toggle-submit-issue-tray'
-                  variation='base-plain'
-                  width='100%'
-                  style={{align: "center"}}
-                  onClick={() => {
-                    setShowSubmitIssuePanel(!showSubmitIssuePanel);
-                  }}
-                >
-                  <span>Show Feedback Form</span>
-              </Button>
-              <SubmitIssueTray 
-                  show={showSubmitIssuePanel}
-                  className='submit-issue-tray'
-                />
+              <div style={{align: "center", display:'grid'}}>
+                <hr /> 
+                <Button
+                    id='toggle-feedback-tray'
+                    variation='base-plain'
+                    width='100%'
+                    style={{align: "center"}}
+                    onClick={() => {
+                      setShowSubmitIssuePanel(!showSubmitIssuePanel);
+                    }}
+                  >
+                    <span >{showSubmitIssuePanel ? "Hide" : "Show"} Feedback Form</span>
+                </Button>
+                <SubmitIssueTray 
+                    show={showSubmitIssuePanel}
+                    className='submit-issue-tray'
+                  />
+              </div>
               </PanelBlockFooter>
           </PanelBlock>
         </>

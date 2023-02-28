@@ -314,12 +314,6 @@ function QueryForm(props) {
     );
   }
 
-  let currentTab = 0;
-  let setCurrentTabCallback = (current) => {
-    currentTab = current;
-  };
-  let tabbedBlockRef = React.createRef();
-
   return (
     <PanelBlock>
       <PanelBlockHeader>
@@ -377,7 +371,7 @@ function QueryForm(props) {
         </HeadOption>
       </PanelBlockHeader>
 
-      <TabbedBlockBody ref={tabbedBlockRef} onCurrentTabCahnged={setCurrentTabCallback}>
+      <TabbedBlockBody>
         <FiltersForm
           id='filters-tab'
           name='Filters'
@@ -409,12 +403,13 @@ function QueryForm(props) {
       </TabbedBlockBody>
       <SubmissionSection>
         <ExportButton
+            id="export-tour-target"
             size='large'
             style={{"width": "100%"}}
             onClick={() => { 
-              if ( currentTab == 0 ) exportSpatialFiltersCsv( area, filtersInd.map( f => f[0] ) ) 
-              else if ( currentTab == 1 ) exportEconomicParametersCsv( area, lcoeInd.map( f => f[0] ) )
-              else if ( currentTab == 2 ) exportZoneWeightsCsv( area, weightsInd.map( f => f[0] ) );
+              exportSpatialFiltersCsv( area, filtersInd.map( f => f[0] ) ) 
+              exportEconomicParametersCsv( area, lcoeInd.map( f => f[0] ) )
+              exportZoneWeightsCsv( area, weightsInd.map( f => f[0] ) );
             }}
             variation='primary-raised-light'
             useIcon='download'
