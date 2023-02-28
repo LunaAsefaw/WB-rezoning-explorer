@@ -416,7 +416,6 @@ function QueryForm(props) {
               else if ( currentTab == 1 ) exportEconomicParametersCsv( area, lcoeInd.map( f => f[0] ) )
               else if ( currentTab == 2 ) exportZoneWeightsCsv( area, weightsInd.map( f => f[0] ) );
             }}
-            onClick={() => {console.log(  )}}
             variation='primary-raised-light'
             useIcon='download'
           >

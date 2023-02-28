@@ -276,28 +276,6 @@ function ExpMapPrimePanel (props) {
               }}
             />
           </RasterTrayWrapper>,
-
-          <RasterTrayWrapper key='toggle-submit-issue-tray' id='toggle-submit-issue-tray' show={showSubmitIssuePanel}>
-            <InfoButton
-              id='toggle-submit-issue-tray'
-              className='info-button'
-              variation='base-plain'
-              useIcon={`\\1F4AC`}
-              info='Toggle submit feedback panel'
-              width='20rem'
-              hideText
-              onClick={() => {
-                setShowSubmitIssuePanel(!showSubmitIssuePanel);
-              }}
-            >
-              <span>Submit issue</span>
-            </InfoButton>
-            <Subheading>Submit feedback</Subheading>
-            <SubmitIssueTray 
-              show={showSubmitIssuePanel}
-              className='submit-issue-tray'
-            />
-          </RasterTrayWrapper>
         ]}
         direction='left'
         onPanelChange={onPanelChange}
