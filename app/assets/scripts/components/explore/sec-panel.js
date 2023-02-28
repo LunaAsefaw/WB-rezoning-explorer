@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import T from 'prop-types';
 import styled from 'styled-components';
 
@@ -6,8 +6,11 @@ import Panel from '../common/panel';
 import {
   PanelBlock,
   PanelBlockHeader,
-  PanelBlockBody
+  PanelBlockBody,
+  PanelBlockFooter
 } from '../common/panel-block';
+
+import SubmitIssueTray from './submit-issue-tray';
 
 import Heading from '../../styles/type/heading';
 
@@ -18,6 +21,8 @@ import ExploreContext from '../../context/explore-context';
 import FormContext from '../../context/form-context';
 
 import ZoneAnalysisPanel from './zone-analysis-panel';
+
+import Button from '../../styles/button/button';
 
 const SecPanel = styled(Panel)`
   ${media.largeUp`
@@ -36,6 +41,7 @@ function ExpMapSecPanel (props) {
   const { onPanelChange } = props;
   const { currentZones } = useContext(ExploreContext);
   const { inputTouched } = useContext(FormContext);
+  const [showSubmitIssuePanel, setShowSubmitIssuePanel] = useState(false);
 
   return (
     <SecPanel
@@ -60,7 +66,25 @@ function ExpMapSecPanel (props) {
                   />) : (
                   <PreAnalysisMessage>{currentZones.fetching ? 'Loading...' : 'Apply parameters (Spatial filters, Weights & LCOE Economic inputs) and click "Generate Zones" to load zone analysis.'}</PreAnalysisMessage>
                 )}
+
             </PanelBlockBody>
+            <PanelBlockFooter>
+              <Button
+                  id='toggle-submit-issue-tray'
+                  variation='base-plain'
+                  width='100%'
+                  style={{align: "center"}}
+                  onClick={() => {
+                    setShowSubmitIssuePanel(!showSubmitIssuePanel);
+                  }}
+                >
+                  <span>Show Feedback Form</span>
+              </Button>
+              <SubmitIssueTray 
+                  show={showSubmitIssuePanel}
+                  className='submit-issue-tray'
+                />
+              </PanelBlockFooter>
           </PanelBlock>
         </>
       }

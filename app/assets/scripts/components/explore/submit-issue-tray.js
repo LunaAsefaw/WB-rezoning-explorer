@@ -20,6 +20,7 @@ import FormInput from '../../styles/form/input';
 const TrayWrapper = styled(ShadowScrollbar)`
   padding: 0.25rem;
   height: 20rem;
+  height: ${({ show }) => show ? 20 : 0}rem;
 `;
 
 const LayersWrapper = styled.div`
@@ -76,6 +77,7 @@ function SubmitIssueTray (props) {
   return (
     <TrayWrapper
       className={className}
+      show={show}
     >
       <LayersWrapper show={show}>
         <FormWrapper active={true} disabled={false}>

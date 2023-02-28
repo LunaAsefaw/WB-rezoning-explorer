@@ -23,7 +23,6 @@ import FormInput from './form-input';
 import Dropdown from '../../common/dropdown';
 
 import Button from '../../../styles/button/button';
-import { exportSpatialFiltersCsv } from '../export/csv';
 
 const { BOOL } = INPUT_CONSTANTS;
 
@@ -54,7 +53,7 @@ function FiltersForm (props) {
   } = props;
 
   return (
-    <>
+    <div>
       {disabled && (
         <EmptyState>
           Select Area and Resource to view and interact with input parameters.
@@ -208,17 +207,8 @@ function FiltersForm (props) {
             </>
           )}
         </Accordion>
-        <Button
-          size='large'
-          style={{"width": "100%"}}
-          onClick={() => { exportSpatialFiltersCsv( selectedArea, filters.map( f => f[0] ) ) }}
-          variation='primary-raised-light'
-          useIcon='download'
-        >
-          Export (.csv)
-        </Button>
       </FormWrapper>
-    </>
+    </div>
   );
 }
 
