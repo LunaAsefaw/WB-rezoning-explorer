@@ -49,9 +49,25 @@ const steps = [
     spotlightClicks: true
   },
   {
+    title: 'Export Tour',
+    target: '#export-tour-target',
+    content: 'Click here to download 3 CSV files representing the input parameters of the app',
+    disableBeacon: true,
+    placement: 'bottom',
+    spotlightClicks: true
+  },
+  {
     title: 'Guided Tour',
     target: '#open-tour-trigger',
     content: 'Click here to reopen this guided tour at any time.',
+    disableBeacon: true,
+    placement: 'right',
+    spotlightClicks: true
+  },
+  {
+    title: 'Feedback Tour',
+    target: '#toggle-feedback-tray',
+    content: 'Click here to send us your feedback',
     disableBeacon: true,
     placement: 'right',
     spotlightClicks: true

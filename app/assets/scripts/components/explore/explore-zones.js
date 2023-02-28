@@ -99,15 +99,6 @@ const CardDetails = styled.ul`
   text-align: center;
   text-transform: uppercase;
 `;
-
-const NoResultsCard = styled.ul`
-  grid-column: span 3;
-  display: grid;
-  grid-template-columns: '1fr';
-  font-size: 0.875rem;
-  text-align: center;
-`;
-
 const Detail = styled.dl`
   dt,
   dd {
@@ -185,9 +176,15 @@ function ExploreZones (props) {
     <Card
       size='large'
     >
-      <NoResultsCard>
+      <CardIcon color='white'>
+        <img
+          alt='WBG Logo'
+          src='/assets/icons/warning-signs-svgrepo-com.svg'
+        />
+      </CardIcon>
+      <CardDetails>
       Unfortunately, your analysis did not yield results. If this does not look correct, please double check the filter range but also the data layers you have activated, which might actually not have data for your country of interest.
-      </NoResultsCard>
+      </CardDetails>
     </Card>
     :
     <ZonesWrapper active={active}>
@@ -292,7 +289,6 @@ function ExploreZones (props) {
                         )
                       : 'Zone unavailable'}
                   </CardDetails>
-
                 </Card>
               );
             }}
