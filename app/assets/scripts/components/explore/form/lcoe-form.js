@@ -14,7 +14,6 @@ import { Accordion, AccordionFold, AccordionFoldTrigger } from '../../../compone
 import Heading from '../../../styles/type/heading';
 import { makeTitleCase } from '../../../styles/utils/general';
 import Button from '../../../styles/button/button';
-import { exportEconomicParametersCsv } from '../export/csv';
 
 function LCOEForm (props) {
   const { lcoe, active, selectedArea } = props;
@@ -102,15 +101,6 @@ function LCOEForm (props) {
           );
         }}
       </Accordion>
-      <Button
-        size='large'
-        style={{"width": "100%"}}
-        onClick={() => { exportEconomicParametersCsv( selectedArea, lcoe.map( f => f[0] ) ) }}
-        variation='primary-raised-light'
-        useIcon='download'
-      >
-        Export (.csv)
-      </Button>
       {/* lcoe.map(([cost, setCost], ind) => {
         const onChange = useCallback(
           (v) => setCost({

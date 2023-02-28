@@ -3,7 +3,7 @@
 # Set path references
 GEO_PATH=./.geo
 GADM_PATH=$GEO_PATH/gadm
-GADM_UNZIPPED_PATH=$GEO_PATH/gadm_unzipped
+GADM_UNZIPPED_PATH=$GEO_PATH/ 
 COUNTRIES_PATH=$GEO_PATH/country
 REGIONS_PATH=$GEO_PATH/region
 PUBLIC_ZONES_PATH=app/public/zones
@@ -20,10 +20,15 @@ mkdir -p $REGIONS_PATH/quantized
 mkdir -p $PUBLIC_ZONES_PATH/region # output dir
 
 # Download original file, if not already downloaded
-wget -c https://geodata.ucdavis.edu/gadm/gadm4.1/gadm_410-levels.zip -P $GADM_PATH
+# wget -c https://geodata.ucdavis.edu/gadm/gadm4.1/gadm_410-levels.zip -P $GADM_PATH
+
+# Expand
+unzip -o $GADM_PATH/gadm_410-levels.zip -d $GADM_PATH/
 
 # Convert GeoPackage to multiple ESRI Shapefiles
 ogr2ogr -f "ESRI Shapefile" $GADM_UNZIPPED_PATH $GADM_PATH/gadm_410-levels.gpkg
+
+echo "ogr2ogr done"
 
 ################### 
 # PROCESS REGIONS

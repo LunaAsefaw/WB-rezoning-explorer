@@ -28,6 +28,8 @@ import {
   lcoeQsSchema
 } from '../../context/qs-state-schema';
 
+import { exportSpatialFiltersCsv, exportEconomicParametersCsv, exportZoneWeightsCsv } from './export/csv';
+
 const { GRID_OPTIONS } = INPUT_CONSTANTS;
 
 const Subheadingstrong = styled.strong`
@@ -47,12 +49,18 @@ export const EditButton = styled(Button).attrs({
 const SubmissionSection = styled(PanelBlockFooter)`
   display: grid;
   grid-template-columns: 0.5fr 1fr;
-  gap: 0rem 1rem;
+  grid-template-rows: 1fr 1fr;
+  gap: 1.5rem 1rem;
 `;
 
 const PreAnalysisMessage = styled(Prose)`
   padding: 1rem 1.5rem;
   text-align: center;
+`;
+
+const ExportButton = styled(Button)`
+  grid-column-start: 1;
+  grid-column-end: 3;
 `;
 
 function QueryForm(props) {
@@ -306,6 +314,12 @@ function QueryForm(props) {
     );
   }
 
+  let currentTab = 0;
+  let setCurrentTabCallback = (current) => {
+    currentTab = current;
+  };
+  let tabbedBlockRef = React.createRef();
+
   return (
     <PanelBlock>
       <PanelBlockHeader>
@@ -363,7 +377,7 @@ function QueryForm(props) {
         </HeadOption>
       </PanelBlockHeader>
 
-      <TabbedBlockBody>
+      <TabbedBlockBody ref={tabbedBlockRef} onCurrentTabCahnged={setCurrentTabCallback}>
         <FiltersForm
           id='filters-tab'
           name='Filters'
@@ -394,6 +408,20 @@ function QueryForm(props) {
         />
       </TabbedBlockBody>
       <SubmissionSection>
+        <ExportButton
+            size='large'
+            style={{"width": "100%"}}
+            onClick={() => { 
+              if ( currentTab == 0 ) exportSpatialFiltersCsv( area, filtersInd.map( f => f[0] ) ) 
+              else if ( currentTab == 1 ) exportEconomicParametersCsv( area, lcoeInd.map( f => f[0] ) )
+              else if ( currentTab == 2 ) exportZoneWeightsCsv( area, weightsInd.map( f => f[0] ) );
+            }}
+            onClick={() => {console.log(  )}}
+            variation='primary-raised-light'
+            useIcon='download'
+          >
+          Export parameters (.csv)
+        </ExportButton>
         <Button
           size='small'
           type='reset'

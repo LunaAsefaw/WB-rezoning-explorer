@@ -116,7 +116,7 @@ const ContentInner = styled.div`
 `;
 
 function TabbedBlock (props) {
-  const { children } = props;
+  const { children, onCurrentTabCahnged } = props;
   const childArray = Children.toArray(children);
   const [activeTab, setActiveTab] = useState(0);
   const [activeContent, setActiveContent] = useState(childArray[activeTab]);
@@ -146,6 +146,10 @@ function TabbedBlock (props) {
                     onClick={(e) => {
                       e.preventDefault();
                       setActiveTab(ind);
+                      if ( onCurrentTabCahnged )
+                      {
+                        onCurrentTabCahnged(ind);
+                      }
                     }}
                   >
                     {name}

@@ -106,7 +106,6 @@ const NoResultsCard = styled.ul`
   grid-template-columns: '1fr';
   font-size: 0.875rem;
   text-align: center;
-  text-transform: uppercase;
 `;
 
 const Detail = styled.dl`
