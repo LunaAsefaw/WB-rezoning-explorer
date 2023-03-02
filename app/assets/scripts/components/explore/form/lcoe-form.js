@@ -1,5 +1,7 @@
 import React, { useCallback } from 'react';
 import T from 'prop-types';
+import styled from 'styled-components';
+
 import {
   FormWrapper,
   FormGroupWrapper,
@@ -14,6 +16,14 @@ import { Accordion, AccordionFold, AccordionFoldTrigger } from '../../../compone
 import Heading from '../../../styles/type/heading';
 import { makeTitleCase } from '../../../styles/utils/general';
 import Button from '../../../styles/button/button';
+
+import Dropdown from '../../common/dropdown';
+
+const DropdownWide = styled(Dropdown)`
+max-width: 600px;
+background: rgba(0,0,0,0.8);
+color: white;
+`;
 
 function LCOEForm (props) {
   const { lcoe, active, selectedArea } = props;
@@ -79,11 +89,25 @@ function LCOEForm (props) {
                               <OptionHeadline>
                                 <PanelOptionTitle>{cost.name}</PanelOptionTitle>
                                 {cost.info &&
-                            <InfoButton info={cost.info} id={cost.name}>
-                              Info
-                            </InfoButton>}
-                              </OptionHeadline>
-
+                                  <DropdownWide
+                                    alignment='center'
+                                    direction='down'
+                                    triggerElement={
+                                      <Button
+                                        hideText
+                                        useIcon='circle-information'
+                                        className='info-button'
+                                      >
+                                        Info
+                                      </Button>
+                                    }
+                                  >
+                                    <div>
+                                      {cost.info}
+                                    </div>
+                                  </DropdownWide>
+                                }
+                                </OptionHeadline>
                               <FormInput
                                 option={cost}
                                 onChange={onChange}
