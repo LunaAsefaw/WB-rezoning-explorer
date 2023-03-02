@@ -59,7 +59,7 @@ function SubmitIssueTray (props) {
         body: JSON.stringify(
           {
             "title": issueTitle,
-            "body": issueDetails.at,
+            "body": issueDetails,
             "labels":[issueType],
           }
         )
