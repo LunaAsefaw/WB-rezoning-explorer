@@ -15,7 +15,6 @@ import { Accordion, AccordionFold, AccordionFoldTrigger } from '../../../compone
 import Heading from '../../../styles/type/heading';
 import { makeTitleCase } from '../../../styles/utils/general';
 
-import InfoButton from '../../common/info-button';
 import { FormSwitch } from '../../../styles/form/switch';
 import { INPUT_CONSTANTS } from '../panel-data';
 
@@ -27,7 +26,7 @@ import Button from '../../../styles/button/button';
 const { BOOL } = INPUT_CONSTANTS;
 
 const DropdownWide = styled(Dropdown)`
-max-width: max-content;
+max-width: 600px;
 background: rgba(0,0,0,0.8);
 color: white;
 `;
@@ -166,7 +165,6 @@ function FiltersForm (props) {
                                           hideText
                                           useIcon='circle-information'
                                           className='info-button'
-                                          title={filter.info}
                                         >
                                           Info
                                         </Button>
