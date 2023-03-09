@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import T from 'prop-types';
 import styled from 'styled-components';
 import Button from '../../styles/button/button';
@@ -10,6 +10,9 @@ import { Accordion, AccordionFold, AccordionFoldTrigger } from '../../components
 import Heading from '../../styles/type/heading';
 import { makeTitleCase } from '../../styles/utils/general';
 import { apiResourceNameMap } from '../../components/explore/panel-data';
+import { ZONES_BOUNDARIES_LAYER_ID } from '../common/mb-map/mb-map';
+
+import MapContext from '../../context/map-context'
 
 const TrayWrapper = styled(ShadowScrollbar)`
   padding: 0.25rem;
@@ -70,8 +73,43 @@ const LayersWrapper = styled.div`
 `;
 
 function LayerControl (props) {
-  const { id, name, onLayerKnobChange, onVisibilityToggle, visible } = props;
-  const [knobPos, setKnobPos] = useState(75);
+  const { id, type, name, onVisibilityToggle, visible } = props;
+  
+  const {
+    map,
+    mapLayers, setMapLayers
+  } = useContext(MapContext);
+
+  const [knobPos, setKnobPos] = useState( 75 );
+
+  useEffect(() => { 
+    // Check if changes are applied to zones layer, which
+    // have conditional paint properties due to filters
+    if ( map && map.getLayer( id ) )
+    {
+      if (id === ZONES_BOUNDARIES_LAYER_ID) {
+        const paintProperty = map.getPaintProperty(
+          id,
+          'fill-opacity'
+        );
+
+        // Zone boundaries layer uses a feature-state conditional
+        // to detect hovering.
+        // Here set the 3rd element of the array, which is the
+        // non-hovered state value
+        // to be the value of the knob
+        paintProperty[3] = knobPos / 100;
+        map.setPaintProperty(id, 'fill-opacity', paintProperty);
+      } else {
+        let property = type === 'vector' ? 'fill-opacity' : type == "line" ? 'line-opacity' : type == 'symbol' ? 'icon-opacity' : 'raster-opacity';
+        map.setPaintProperty(
+          id,
+          property,
+          knobPos / 100
+        );
+      }
+    }
+  });
 
   return (
     <ControlWrapper>
@@ -110,7 +148,6 @@ function LayerControl (props) {
           value={knobPos}
           onChange={(val) => {
             setKnobPos(val);
-            onLayerKnobChange(props, val);
           }}
           range={[0, 100]}
           disabled={props.disabled || !visible}
@@ -124,14 +161,13 @@ LayerControl.propTypes = {
   id: T.string,
   name: T.string,
   disabled: T.bool,
-  onLayerKnobChange: T.func,
   onVisibilityToggle: T.func,
   info: T.string,
   visible: T.bool
 };
 
 function RasterTray (props) {
-  const { show, layers, onLayerKnobChange, onVisibilityToggle, className, resource } = props;
+  const { show, layers, onVisibilityToggle, className, resource } = props;
 
   /*
    * Reduce layers into categories.
@@ -162,7 +198,6 @@ function RasterTray (props) {
             <LayerControl
               key={l.name}
               {...l}
-              onLayerKnobChange={onLayerKnobChange}
               onVisibilityToggle={onVisibilityToggle}
             />
 
@@ -197,7 +232,6 @@ function RasterTray (props) {
                        <LayerControl
                          key={l.id}
                          {...l}
-                         onLayerKnobChange={onLayerKnobChange}
                          onVisibilityToggle={onVisibilityToggle}
                        />
                      )
@@ -218,7 +252,6 @@ RasterTray.propTypes = {
   size: T.oneOf(['small', 'medium', 'large', 'xlarge']),
   show: T.bool,
   layers: T.array,
-  onLayerKnobChange: T.func,
   onVisibilityToggle: T.func,
   className: T.string,
   resource: T.string
