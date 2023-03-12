@@ -180,6 +180,8 @@ export function ExploreProvider (props) {
   const [filteredLayerUrl, setFilteredLayerUrl] = useState(null);
   const [outputLayerUrl, setOutputLayerUrl] = useState(null);
 
+  const [filterString, setFilterString] = useState( "" );
+
   // Executed on page mount
   useEffect(() => {
     const visited = localStorage.getItem('site-tour');
@@ -288,7 +290,48 @@ export function ExploreProvider (props) {
     );
   };
 
-  const updateFilteredLayer = (filterValues, weights, lcoe) => {
+  const getLayerFilterString = (filter) => {
+    const { id, active, input, isRange } = filter;
+
+    // Bypass inactive filters
+    if (!maskTypes.includes(input.type) &&
+        (!active || !checkIncluded(filter, selectedResource))) {
+      // Skip filters that are NOT mask and are inactive
+      return null;
+    } else if (maskTypes.includes(input.type) && active) {
+      // If this is an 'active' mask filter, we don't need to send to the api. Active here means include these areas
+      return null;
+    } else if (isRange) {
+      if (input.value.min === input.range[0] &&
+        input.value.max === input.range[1]) {
+        return null;
+      }
+    }
+
+    // Add accepted filter types to the query
+    if (input.type === SLIDER) {
+      const {
+        value: { min, max }
+      } = filter.input;
+
+      // App uses km but api expects values in meters
+      const multiplier = getMultiplierByUnit(filter.unit);
+      return `${id}=${min * multiplier},${max * multiplier}`;
+    } else if (input.type === BOOL) {
+      return `${id}=${filter.input.value}`;
+    } else if (input.type === MULTI) {
+      return input.value.length === input.options.length ? null : `${id}=${input.value.join(',')}`;
+    } else if (input.type === DROPDOWN || input.type === MULTI) {
+      return `${id}=${filter.input.value.join(',')}`;
+    } else {
+    // discard non-accepted filter types
+      /* eslint-disable-next-line */
+      console.error(`Filter ${id} type not supported by api, discarding`);
+      return null;
+    }
+  }
+
+  const updateFilterString = (filterValues) => {
     // Prepare a query string to the API based from filter values
     //
     const filterString = filterValues
@@ -334,6 +377,13 @@ export function ExploreProvider (props) {
       })
       .filter((x) => x)
       .join('&');
+    
+    setFilterString( filterString );
+  }
+
+  const updateFilteredLayer = (filterValues, weights, lcoe) => {
+
+    updateFilterString( filterValues );
 
     // If area of country type, prepare country path string to add to URL
     const countryPath = `${selectedArea.id}/`;
@@ -412,7 +462,13 @@ export function ExploreProvider (props) {
           currentZones,
           generateZones,
 
+          filterString,
+          setFilterString,
+          updateFilterString,
+          getLayerFilterString,
+
           filteredLayerUrl,
+          setFilteredLayerUrl,
           updateFilteredLayer,
           outputLayerUrl,
           tourStep,

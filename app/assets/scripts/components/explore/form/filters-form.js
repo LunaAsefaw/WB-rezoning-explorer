@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import T from 'prop-types';
 import styled from 'styled-components';
 
@@ -23,7 +23,15 @@ import Dropdown from '../../common/dropdown';
 
 import Button from '../../../styles/button/button';
 
-const { BOOL } = INPUT_CONSTANTS;
+import MapContext from '../../../context/map-context'
+import ExploreContext from '../../../context/explore-context'
+
+import config from '../../../config';
+
+const {
+  BOOL,
+} = INPUT_CONSTANTS;
+
 
 const DropdownWide = styled(Dropdown)`
 max-width: 600px;
@@ -50,6 +58,50 @@ function FiltersForm (props) {
     disabled,
     selectedArea,
   } = props;
+
+  const {
+    map,
+  } = useContext(MapContext);
+
+  const {
+    getLayerFilterString,
+  } = useContext(ExploreContext);
+
+  useEffect(() => {
+    if ( map )
+    {
+      filters.map( ([filter, _]) => filter )
+            .map( (filter) => {
+                map.setLayoutProperty( filter.layer, 'visibility', filter.visible ? 'visible' : 'none' );
+            } );
+    }
+  }, [map, filters])
+
+  const updateFilterSource = ( filter ) => {
+    if ( map )
+    {
+      const oldLayer = map.getStyle().layers.find( layer => layer.id == filter.layer );
+      
+      let layerSourceId = filter.layer + "_source";
+      const source = map.getSource( layerSourceId );
+
+      const filterString = getLayerFilterString( filter );
+      
+      // TODO: probably add offshore mask
+      let newLayerSrcPath = `${config.apiEndpoint}/layers/${selectedArea.id}/${resource}/${filter.layer}/{z}/{x}/{y}.png?colormap=viridis&${filterString}`;
+
+      map.removeLayer( filter.layer );
+      map.removeSource( layerSourceId );
+      map.addSource( layerSourceId, {
+        type: source.type, 
+        tiles: [newLayerSrcPath], 
+        tileSize: source.tileSize,
+        data: source.data,
+        promoteId: source.promoteId,
+      } ); 
+      map.addLayer( oldLayer );
+    }
+  };
 
   return (
     <div>
@@ -126,6 +178,7 @@ function FiltersForm (props) {
                                   }
                                 });
                               }
+                              updateFilterSource( filter );
                             },
 
                             [filter]
@@ -151,6 +204,23 @@ function FiltersForm (props) {
                                 hidden={!isFoldExpanded}
                               >
                                 <OptionHeadline>
+                                  <Button
+                                    id='layer-visibility'
+                                    variation='base-plain'
+                                    useIcon={filter.visible ? 'eye' : 'eye-disabled'}
+                                    title={filter.visible ? 'toggle layer visibiliity' : 'Generate zones to view output layers'}
+                                    hideText
+                                    onClick={ () => {
+                                          setFilter({
+                                            ...filter,
+                                            visible: !filter.visible
+                                          });
+                                        }
+                                    }
+                                    visuallyDisabled={props.disabled}
+                                  >
+                                    <span>Toggle Layer Visibility</span>
+                                  </Button>
                                   <PanelOptionTitle>
                                     {`${filter.name}`.concat(
                                       filter.unit ? ` (${filter.unit})` : ''
