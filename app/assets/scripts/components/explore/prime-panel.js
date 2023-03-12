@@ -174,7 +174,7 @@ function ExpMapPrimePanel (props) {
             <RasterTray
               show={showRasterPanel}
               className='raster-tray'
-              layers={mapLayers}
+              layers={mapLayers.filter( layer => !filtersLists.map(filter => filter.layer).includes(layer.id) )}
               resource={selectedResource}
               onVisibilityToggle={(layer, visible) => {
                 if (visible) {

@@ -68,7 +68,8 @@ export async function fetchFilters (dispatch) {
             range: INPUT_CONSTANTS.DEFAULT_RANGE,
             type: allowedTypes.get(filter.type === 'string' ? filter.pattern : filter.type),
             ...opts
-          }
+          },
+          visible: false,
         };
       });
     dispatch({ type: 'RECEIVE_FETCH_FILTERS', data: apiFilters });
