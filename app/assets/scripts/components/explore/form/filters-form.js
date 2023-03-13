@@ -16,7 +16,7 @@ import Heading from '../../../styles/type/heading';
 import { makeTitleCase } from '../../../styles/utils/general';
 
 import { FormSwitch } from '../../../styles/form/switch';
-import { INPUT_CONSTANTS } from '../panel-data';
+import { INPUT_CONSTANTS, RESOURCES, apiResourceNameMap } from '../panel-data';
 
 import FormInput from './form-input';
 import Dropdown from '../../common/dropdown';
@@ -72,7 +72,10 @@ function FiltersForm (props) {
     {
       filters.map( ([filter, _]) => filter )
             .map( (filter) => {
+              if ( map.getStyle().layers.find( layer => layer.id == filter.layer ) )
+              {
                 map.setLayoutProperty( filter.layer, 'visibility', filter.visible ? 'visible' : 'none' );
+              }
             } );
     }
   }, [map, filters])
@@ -87,8 +90,11 @@ function FiltersForm (props) {
 
       const filterString = getLayerFilterString( filter );
       
+      // Off-shore mask flag
+      const offshoreWindMask = resource === RESOURCES.OFFSHORE ? '&offshore=true' : '';
+
       // TODO: probably add offshore mask
-      let newLayerSrcPath = `${config.apiEndpoint}/layers/${selectedArea.id}/${resource}/${filter.layer}/{z}/{x}/{y}.png?colormap=viridis&${filterString}`;
+      let newLayerSrcPath = `${config.apiEndpoint}/layers/${selectedArea.id}/${apiResourceNameMap[resource]}/${filter.layer}/{z}/{x}/{y}.png?colormap=viridis&${filterString}&${offshoreWindMask}`;
 
       map.removeLayer( filter.layer );
       map.removeSource( layerSourceId );
