@@ -58,7 +58,7 @@ export function FormProvider (props) {
     if (selectedAreaId && selectedResource && selectedZoneType) {
       // only fetch filters once, after we have resources
       if (!ff) {
-        fetchFilters(dispatchFiltersList);
+        fetchFilters(selectedResource, dispatchFiltersList);
         ff = true;
       }
 

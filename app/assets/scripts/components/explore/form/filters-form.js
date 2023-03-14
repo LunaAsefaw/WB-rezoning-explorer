@@ -39,7 +39,6 @@ background: rgba(0,0,0,0.8);
 color: white;
 `;
 
-
 /* Filters form
  * @param outputFilters is an array of shape
  *  [
@@ -71,19 +70,16 @@ function FiltersForm (props) {
     if ( map )
     {
       filters.map( ([filter, _]) => filter )
-            .map( (filter) => {
-              if ( map.getStyle().layers.find( layer => layer.id == filter.layer ) )
-              {
-                map.setLayoutProperty( filter.layer, 'visibility', filter.visible ? 'visible' : 'none' );
-              }
-            } );
+            .map( (filter) => updateFilter( filter ) );
     }
   }, [map, filters])
 
-  const updateFilterSource = ( filter ) => {
+  const updateFilter = ( filter ) => {
     if ( map )
     {
       const oldLayer = map.getStyle().layers.find( layer => layer.id == filter.layer );
+      if ( oldLayer == undefined )
+        return;
       
       let layerSourceId = filter.layer + "_source";
       const source = map.getSource( layerSourceId );
@@ -104,7 +100,11 @@ function FiltersForm (props) {
         tileSize: source.tileSize,
         data: source.data,
         promoteId: source.promoteId,
-      } ); 
+      } );
+      oldLayer.layout = {
+        ...oldLayer.layout,
+        visibility: filter.visible ? 'visible' : 'none'
+      };
       map.addLayer( oldLayer );
     }
   };
@@ -184,7 +184,6 @@ function FiltersForm (props) {
                                   }
                                 });
                               }
-                              updateFilterSource( filter );
                             },
 
                             [filter]
