@@ -320,7 +320,6 @@ const addInputLayersToMap = (map, layers, selectedArea, resource) => {
     /* If source exists, replace the tiles and return */
     if (source) {
       source.tiles = [tiles];
-      source.tiles = [tiles];
       map.style.sourceCaches[sourceId].clearTiles();
       map.style.sourceCaches[sourceId].update(map.transform);
       map.triggerRepaint();
