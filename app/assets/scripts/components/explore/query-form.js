@@ -30,6 +30,9 @@ import {
 
 import { exportSpatialFiltersCsv, exportEconomicParametersCsv, exportZoneWeightsCsv } from './export/csv';
 
+import ModalUpload from './modal-upload-files';
+import CSVReader from './csv-upload';
+
 const { GRID_OPTIONS } = INPUT_CONSTANTS;
 
 const Subheadingstrong = styled.strong`
@@ -63,6 +66,11 @@ const ExportButton = styled(Button)`
   grid-column-end: 3;
 `;
 
+const ImportButton = styled(Button)`
+  grid-column-start: 1;
+  grid-column-end: 3;
+`;
+
 function QueryForm(props) {
   const {
     area,
@@ -82,6 +90,8 @@ function QueryForm(props) {
 
     firstLoad
   } = props;
+
+  const [showUploadModal, setShowUploadModal] = useState(false)
 
   /* Generate weights qs state variables
   */
@@ -218,6 +228,33 @@ function QueryForm(props) {
       }
     }
   }, [resource]);
+
+  const handleImportCSV = (results,fileInfo) => {
+  
+    if(fileInfo.name.includes("WBG-REZoning-AFG-spatial-filters")){
+
+      let indexDict = {}
+      results.data[0].map((i, index) => indexDict[i] = index)
+
+      filtersInd.forEach(i => 
+        {
+         let reqArray = results.data.find(it => (it[indexDict["id"]] == i[0].id));
+        if (i[0].input.type == "multi-select"){
+            console.log(i[0].input.type);
+            i[0].input.value = reqArray[indexDict["value"]].split(",").map(num => +num);
+        }
+        else if(i[0].input.type == "boolean"){
+            i[0].input.value = reqArray[indexDict["value"]];
+        }
+        else {
+            i[0].input.value.max = reqArray[indexDict["max_value"]];
+            i[0].input.value.min = reqArray[indexDict["min_value"]];
+        }
+        }
+    ) 
+    }
+    setShowUploadModal(false)
+  }
 
   /* Wait until elements have mounted and been parsed to render the query form */
   if (firstLoad.current) {
@@ -403,17 +440,27 @@ function QueryForm(props) {
       </TabbedBlockBody>
       <SubmissionSection>
         <ExportButton
-            id="export-tour-target"
-            size='large'
-            style={{"width": "100%"}}
-            onClick={() => { 
-              exportSpatialFiltersCsv( area, filtersInd.map( f => f[0] ) ) 
-              exportEconomicParametersCsv( area, lcoeInd.map( f => f[0] ) )
-              exportZoneWeightsCsv( area, weightsInd.map( f => f[0] ) );
-            }}
-            variation='primary-raised-light'
-            useIcon='download'
-          >
+          id="export-tour-target"
+          size='large'
+          style={{"width": "100%"}}
+          onClick={() => {setShowUploadModal(true)}}
+          variation='primary-raised-light'
+          useIcon='download'
+        >
+          Import parameters (.csv)
+        </ExportButton>
+        <ExportButton
+          id="export-tour-target"
+          size='small'
+          style={{ "width": "50%", "white-space": "normal" }}
+          onClick={() => {
+            exportSpatialFiltersCsv(area, filtersInd.map(f => f[0]))
+            exportEconomicParametersCsv(area, lcoeInd.map(f => f[0]))
+            exportZoneWeightsCsv(area, weightsInd.map(f => f[0]));
+          }}
+          variation='primary-raised-light'
+          useIcon='download'
+        >
           Export parameters (.csv)
         </ExportButton>
         <Button
@@ -443,6 +490,17 @@ function QueryForm(props) {
           Generate Zones
         </Button>
       </SubmissionSection>
+      <ModalUpload
+        revealed={showUploadModal}
+        onOverlayClick={() => { setShowUploadModal(false) }}
+        onCloseClick={() => { setShowUploadModal(false) }}
+        data={[]}
+        renderHeadline={() => (
+          <h1>Add file to upload</h1>
+        )}
+      >
+        <CSVReader handleImportCSV={handleImportCSV} />
+      </ModalUpload>
     </PanelBlock>
   );
 }
