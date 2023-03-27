@@ -228,10 +228,10 @@ function QueryForm(props) {
 
   const handleImportCSV = (results,fileInfo) => {
   
-    if(fileInfo.name.includes("WBG-REZoning-AFG-spatial-filters")){
+    let indexDict = {}
+    results.data[0].map((i, index) => indexDict[i] = index)
 
-      let indexDict = {}
-      results.data[0].map((i, index) => indexDict[i] = index)
+    if(fileInfo.name.includes("WBG-REZoning-AFG-spatial-filters")){
 
       filtersInd.forEach(i => 
         {
@@ -249,6 +249,29 @@ function QueryForm(props) {
         }
         }
     ) 
+    } else if(fileInfo.name.includes("WBG-REZoning-AFG-economic-parameters")){
+      lcoeInd.forEach(i => 
+        {
+          let reqArray = results.data.find(it => (it[indexDict["id"]] == i[0].id));
+          if(i[0].input.type == "dropdown"){
+            let selectedOption = i[0].input.availableOptions.find(option => JSON.parse(reqArray[indexDict["value"]]).id == option.id)
+            if(selectedOption){
+              i[0].input.value = selectedOption.id
+            }
+          }else {
+            i[0].input.value = reqArray[indexDict["value"]];
+          }
+        }
+        )
+    } else if(fileInfo.name.includes("WBG-REZoning-AFG-zone-weights")){
+      weightsInd.forEach(i => 
+        {
+          let reqArray = results.data.find(it => (it[indexDict["id"]] == i[0].id));
+          i[0].input.value = reqArray[indexDict["value"]];
+        }
+    ) 
+    }else {
+      alert("invalid file")
     }
     setShowUploadModal(false)
   }
