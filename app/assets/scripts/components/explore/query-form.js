@@ -7,7 +7,8 @@ import {
   PanelBlock,
   PanelBlockHeader,
   PanelBlockBody,
-  PanelBlockFooter
+  PanelBlockFooter,
+  PanelBlockFooterRow
 } from '../common/panel-block';
 import TabbedBlockBody from '../common/tabbed-block-body';
 import Button from '../../styles/button/button';
@@ -50,10 +51,15 @@ export const EditButton = styled(Button).attrs({
 `;
 
 const SubmissionSection = styled(PanelBlockFooter)`
-  display: grid;
-  grid-template-columns: 0.5fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  grid-row-gap: 15px;
+`;
+
+const ButtonRow = styled(PanelBlockFooterRow)`
+  display: flex;
+  width: 100%; 
+  gap: 15px;
 `;
 
 const PreAnalysisMessage = styled(Prose)`
@@ -342,7 +348,7 @@ function QueryForm(props) {
             Loading...
           </PreAnalysisMessage>
         </PanelBlockBody>
-        <SubmissionSection>
+        <SubmissionSection>     
           <Button
             size='small'
             type='reset'
@@ -368,7 +374,7 @@ function QueryForm(props) {
             }
           >
             Generate Zones
-          </Button>
+          </Button>     
         </SubmissionSection>
       </PanelBlock>
     );
@@ -462,10 +468,11 @@ function QueryForm(props) {
         />
       </TabbedBlockBody>
       <SubmissionSection>
+       <ButtonRow>
         <ExportButton
-          id="export-tour-target"
-          size='large'
-          style={{"width": "100%"}}
+          id="import-tour-target"
+          size='small'
+          style={{"width": "50%", "white-space": "normal"}}
           onClick={() => {setShowUploadModal(true)}}
           variation='primary-raised-light'
           useIcon='download'
@@ -482,13 +489,16 @@ function QueryForm(props) {
             exportZoneWeightsCsv(area, weightsInd.map(f => f[0]));
           }}
           variation='primary-raised-light'
-          useIcon='download'
+          useIcon='upload'
         >
           Export parameters (.csv)
         </ExportButton>
+        </ButtonRow>
+        <ButtonRow>
         <Button
           size='small'
           type='reset'
+          style={{"width": "40%",}}
           disabled={!area || !resource}
           onClick={resetClick}
           variation='primary-raised-light'
@@ -500,6 +510,7 @@ function QueryForm(props) {
           id='generate-zones'
           size='small'
           type='submit'
+          style={{"width": "60%",}}
           disabled={!area || !resource}
           onClick={applyClick}
           variation='primary-raised-dark'
@@ -512,6 +523,7 @@ function QueryForm(props) {
         >
           Generate Zones
         </Button>
+        </ButtonRow>
       </SubmissionSection>
       <ModalUpload
         revealed={showUploadModal}
