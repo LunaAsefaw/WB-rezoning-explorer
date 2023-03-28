@@ -33,6 +33,11 @@ export const PanelBlockFooter = styled.footer`
   padding: ${glsp()} ${glsp(1.5)};
 `;
 
+export const PanelBlockFooterRow = styled.footer`
+  box-shadow: 0px -1px 1px -1px ${themeVal('color.baseAlphaD')};
+  background: ${_tint(0.02, themeVal('color.surface'))};
+`;
+
 export const PanelBlockTitle = styled(Heading).attrs({ size: 'medium' })`
   margin: 0;
 `;
