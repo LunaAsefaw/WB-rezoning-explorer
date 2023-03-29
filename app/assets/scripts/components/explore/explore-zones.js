@@ -99,6 +99,15 @@ const CardDetails = styled.ul`
   text-align: center;
   text-transform: uppercase;
 `;
+
+const ErrorCardDetails = styled.ul`
+  grid-column: span 2;
+  display: grid;
+  grid-template-columns: ${({ hasZoneScore }) => hasZoneScore ? '1fr 1fr' : '1fr'};
+  font-size: 0.875rem;
+  text-align: center;
+`;
+
 const Detail = styled.dl`
   dt,
   dd {
@@ -182,9 +191,9 @@ function ExploreZones (props) {
           src='/assets/icons/warning-signs-svgrepo-com.svg'
         />
       </CardIcon>
-      <CardDetails>
+      <ErrorCardDetails>
       Unfortunately, your analysis did not yield results. If this does not look correct, please double check the filter range but also the data layers you have activated, which might actually not have data for your country of interest.
-      </CardDetails>
+      </ErrorCardDetails>
     </Card>
     :
     <ZonesWrapper active={active}>
