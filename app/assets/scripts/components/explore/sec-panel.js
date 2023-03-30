@@ -73,7 +73,7 @@ function ExpMapSecPanel (props) {
                 <hr /> 
                 <Button
                     id='toggle-feedback-tray'
-                    variation='base-plain'
+                    variation='primary-raised-dark'
                     width='100%'
                     style={{align: "center"}}
                     onClick={() => {
