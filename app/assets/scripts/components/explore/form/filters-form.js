@@ -25,6 +25,7 @@ import Button from '../../../styles/button/button';
 
 import MapContext from '../../../context/map-context'
 import ExploreContext from '../../../context/explore-context'
+import FormContext from '../../../context/form-context'
 
 import config from '../../../config';
 
@@ -37,6 +38,26 @@ const DropdownWide = styled(Dropdown)`
 max-width: 600px;
 background: rgba(0,0,0,0.8);
 color: white;
+`;
+
+const StyledOptionHeadline = styled(OptionHeadline)`
+display: grid;
+grid-template-columns: 1fr repeat(0.05rem, 3);
+gap: 0.5rem;
+> ${PanelOptionTitle} {
+  grid-column-start: 1;
+  inline-size: 100%;
+  word-break: break-word;
+}
+> ${Button}.info-button {
+  grid-column-start: 2;
+}
+> ${FormSwitch} {
+  grid-column-start: 3;
+}
+> ${Button}.layer-visibility-button {
+  grid-column-start: 4;
+}
 `;
 
 /* Filters form
@@ -66,6 +87,11 @@ function FiltersForm (props) {
     getLayerFilterString,
   } = useContext(ExploreContext);
 
+  const {
+    filtersVisibility,
+    setFiltersVisibility,
+  } = useContext(FormContext);
+
   useEffect(() => {
     if ( map )
     {
@@ -80,6 +106,20 @@ function FiltersForm (props) {
       const oldLayer = map.getStyle().layers.find( layer => layer.id == filter.layer );
       if ( oldLayer == undefined )
         return;
+
+      // Check changed visibility
+      
+      const currentlyVisible = map.getLayoutProperty( filter.layer, 'visibility' ) === 'visible';
+
+      // Update the visibility
+      filtersVisibility[filter.layer] = filter.visible;
+      setFiltersVisibility( filtersVisibility );
+
+      if ( currentlyVisible !== filter.visible )
+      {
+        map.setLayoutProperty( filter.layer, 'visibility', filter.visible ? 'visible' : 'none' );
+        oldLayer.layout.visibility = filter.visible ? 'visible' : 'none';
+      }
       
       let layerSourceId = filter.layer + "_source";
       const source = map.getSource( layerSourceId );
@@ -89,8 +129,11 @@ function FiltersForm (props) {
       // Off-shore mask flag
       const offshoreWindMask = resource === RESOURCES.OFFSHORE ? '&offshore=true' : '';
 
-      // TODO: probably add offshore mask
       let newLayerSrcPath = `${config.apiEndpoint}/layers/${selectedArea.id}/${apiResourceNameMap[resource]}/${filter.layer}/{z}/{x}/{y}.png?colormap=viridis&${filterString}&${offshoreWindMask}`;
+      
+      // Do not update the source if it hasn't changed
+      if ( Array.isArray( source.tiles ) && (newLayerSrcPath === source.tiles[0] ) )
+        return;
 
       map.removeLayer( filter.layer );
       map.removeSource( layerSourceId );
@@ -101,10 +144,6 @@ function FiltersForm (props) {
         data: source.data,
         promoteId: source.promoteId,
       } );
-      oldLayer.layout = {
-        ...oldLayer.layout,
-        visibility: filter.visible ? 'visible' : 'none'
-      };
       map.addLayer( oldLayer );
     }
   };
@@ -208,24 +247,7 @@ function FiltersForm (props) {
                                 key={filter.name}
                                 hidden={!isFoldExpanded}
                               >
-                                <OptionHeadline>
-                                  <Button
-                                    id='layer-visibility'
-                                    variation='base-plain'
-                                    useIcon={filter.visible ? 'eye' : 'eye-disabled'}
-                                    title={filter.visible ? 'toggle layer visibiliity' : 'Generate zones to view output layers'}
-                                    hideText
-                                    onClick={ () => {
-                                          setFilter({
-                                            ...filter,
-                                            visible: !filter.visible
-                                          });
-                                        }
-                                    }
-                                    visuallyDisabled={props.disabled}
-                                  >
-                                    <span>Toggle Layer Visibility</span>
-                                  </Button>
+                                <StyledOptionHeadline>
                                   <PanelOptionTitle>
                                     {`${filter.name}`.concat(
                                       filter.unit ? ` (${filter.unit})` : ''
@@ -265,7 +287,24 @@ function FiltersForm (props) {
                                   >
                                     Toggle filter
                                   </FormSwitch>
-                                </OptionHeadline>
+                                  <Button
+                                    variation='base-plain'
+                                    useIcon={filter.visible ? 'eye' : 'eye-disabled'}
+                                    title='toggle layer visibiliity'
+                                    className='layer-visibility-button'
+                                    hideText
+                                    onClick={ () => {
+                                          setFilter({
+                                            ...filter,
+                                            visible: !filter.visible
+                                          });
+                                        }
+                                    }
+                                    visuallyDisabled={props.disabled}
+                                  >
+                                    <span>Toggle Layer Visibility</span>
+                                  </Button>
+                                </StyledOptionHeadline>
                                 <FormInput
                                   option={filter}
                                   onChange={inputOnChange}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import T from 'prop-types';
 import styled, { css } from 'styled-components';
 import get from 'lodash.get';
@@ -18,6 +18,8 @@ import { LegendLinear, LegendItem } from '@visx/legend';
 import { scaleLinear } from '@visx/scale';
 import colormap from 'colormap';
 import MakiIcon from '../maki-icon';
+
+import FormContext from '../../../context/form-context'
 
 const MapLegendSelf = styled.div`
   ${cardSkin}
@@ -113,7 +115,6 @@ function RasterLegendItem({ mapLayers, filterRanges, filtersLists, currentZones 
   const visibleRaster = mapLayers.filter(
     (layer) =>
       layer.type === 'raster' &&
-      layer.visible &&
       layer.id !== 'FILTERED_LAYER_ID' &&
       layer.id !== 'satellite'
   );
@@ -349,7 +350,6 @@ export default function MapLegend({
   filtersLists,
   filterRanges,
   currentZones
-
 }) {
   const [showMapLegend, setShowMapLegend] = useState(true);
   const landCoverVisible =
@@ -363,6 +363,10 @@ export default function MapLegend({
     minZoneScore = Math.floor( minZoneScore * 1000.0 ) / 1000.0;
     maxZoneScore = Math.ceil( maxZoneScore * 1000.0 ) / 1000.0;
   }
+
+  const { 
+    filtersVisibility
+  } = useContext(FormContext);
     
   return (
     <MapLegendSelf wide={landCoverVisible} id='map-legend' isExpanded={showMapLegend}>
@@ -405,12 +409,18 @@ export default function MapLegend({
         </LegendItemWrapper>
       )}
       <FilteredAreaLegendItem mapLayers={mapLayers} />
-      <RasterLegendItem
-        mapLayers={mapLayers}
-        filterRanges={filterRanges}
-        filtersLists={filtersLists}
-        currentZones={currentZones}
-      />
+      {
+      mapLayers.filter( (layer) => filtersVisibility[layer.id] )
+      .map( (layer) =>
+        <RasterLegendItem
+          mapLayers={[layer]}
+          filterRanges={filterRanges}
+          filtersLists={filtersLists}
+          currentZones={currentZones}
+          selectedResource={selectedResource}
+        />
+      )
+      }
       <ZoneScoreLegendItem mapLayers={mapLayers} wide={landCoverVisible} minLabel={minZoneScore} maxLabel={maxZoneScore} />
     </MapLegendSelf>
   );
@@ -421,5 +431,6 @@ MapLegend.propTypes = {
   mapLayers: T.array.isRequired,
   filtersLists: T.array.isRequired,
   filterRanges: T.object.isRequired,
-  currentZones: T.object
+  currentZones: T.object,
+  filtersVisibility: T.object,
 };

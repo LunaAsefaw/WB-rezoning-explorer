@@ -142,8 +142,6 @@ export function ExploreProvider (props) {
       // Wait for eez to be loaded before checking to see that selected resource is acceptable for this country
       return;
     }
-    console.log( "Area", area );
-    console.log( "resourceList" );
     const updatedList = resourceList.filter((r) => {
       // If no area is selected, return all resources
       if (!area) return true;
@@ -379,11 +377,12 @@ export function ExploreProvider (props) {
       .join('&');
     
     setFilterString( filterString );
+    return filterString;
   }
 
   const updateFilteredLayer = (filterValues, weights, lcoe) => {
 
-    updateFilterString( filterValues );
+    let filterString = updateFilterString( filterValues );
 
     // If area of country type, prepare country path string to add to URL
     const countryPath = `${selectedArea.id}/`;
