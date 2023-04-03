@@ -19,6 +19,7 @@ async function getZoneSummary (feature, filterString, weights, lcoe, countryReso
     lcoe: 0, zone_score: 0, generation_potential: 0, zone_output_density: 0, cf: 0
   };
 
+  let validSummary = true;
   try {
     summary = (
       await fetchJSON(`${apiEndpoint}/zone${countryResourcePath}?${filterString}`, {
@@ -34,6 +35,7 @@ async function getZoneSummary (feature, filterString, weights, lcoe, countryReso
   } catch (error) {
     // eslint-disable-next-line
     console.log(`Error fetching zone ${feature.properties.id} analysis.`);
+    validSummary = false;
   }
 
   // Set negative values to zero
@@ -48,7 +50,8 @@ async function getZoneSummary (feature, filterString, weights, lcoe, countryReso
       color: theme.main.color.base,
       ...feature.properties,
       summary
-    }
+    },
+    is_valid_summary: validSummary,
   };
 }
 
@@ -147,17 +150,20 @@ export async function fetchZones (
     updateLoadingProgress(0, 0);
     clearInterval(zoneUpdateInterval);
 
+    const validZones = zones.filter( z => z.is_valid_summary );
+
+    const minScore = Math.min(
+      ...validZones.map((z) => get(z, 'properties.summary.zone_score', 0))
+    );
     const maxScore = Math.max(
-      ...zones.map((z) => get(z, 'properties.summary.zone_score', 0))
+      ...validZones.map((z) => get(z, 'properties.summary.zone_score', 0))
     );
 
-    zones.sort( ( z1, z2 ) => get(z1, 'properties.summary.zone_score', 0.5) - get(z2, 'properties.summary.zone_score', 0.5) );
-
-    const data = zones.map((z, index) => {
+    const data = validZones.map((z, index) => {
       if (!get(z, 'properties.summary.zone_score')) return z;
 
       const zoneScore = z.properties.summary.zone_score / maxScore;
-      const color = zoneScoreColor(index, 0, zones.length - 1);
+      const color = zoneScoreColor(zoneScore, minScore, maxScore);
       return {
         ...z,
         properties: {
