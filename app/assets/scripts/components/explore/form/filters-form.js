@@ -148,6 +148,60 @@ function FiltersForm (props) {
     }
   };
 
+  const onFilterVisibilityToggle = ( toggledFilter ) => {
+    let filterObjs = filters.map( ([filter, _]) => ({...filter}) );
+    if ( toggledFilter.visible )
+    {
+      // Hide the toggled filter and show the non visible layer that has the highest timestamp
+      const currentFilterStateArrIndex = filterObjs.findIndex((filter) => filter.id === toggledFilter.id);
+      filterObjs[currentFilterStateArrIndex].visible = false;
+      
+      // If the layer is an exclusive raster layer, we find the layer that was hidden last and then show it
+      let visibilityTimeStamps = filterObjs.map( l => l?.visibilityTimeStamp ? l.visibilityTimeStamp : 0 );
+      let highestTimeStamp = Math.max( ...visibilityTimeStamps );
+
+      while ( highestTimeStamp > 0 )
+      {
+        let ind = filterObjs.findIndex((l) => l.visibilityTimeStamp === highestTimeStamp);
+        if ( ind !== -1 && !filterObjs[ind].visible )
+        {
+          filterObjs[ind].visible = true;
+          filterObjs[ind].visibilityTimeStamp = 0;
+          break;
+        }
+        else
+        {
+          highestTimeStamp--;
+        }
+      }
+    }
+    else
+    {
+      // Show the toggled filter and hide the currently visible layer and assign visiblity timestamp
+      const currentFilterStateArrIndex = filterObjs.findIndex((filter) => filter.id === toggledFilter.id);
+      let visibilityTimeStamps = filterObjs.map( l => l?.visibilityTimeStamp ? l.visibilityTimeStamp : 0 );
+      let highestTimeStamp = Math.max( ...visibilityTimeStamps );
+
+      filterObjs = filterObjs.map( (f) => {
+        if (f.visible)
+        {
+          f.visible = false;
+          f.visibilityTimeStamp = highestTimeStamp + 1;
+        }
+        return f;
+      } );
+      filterObjs[currentFilterStateArrIndex].visible = true;
+    }
+
+    for ( let i = 0; i < filters.length; ++i )
+    {
+      if ( filters[i][0].visible != filterObjs[i].visible )
+      {
+        filters[i][1]( filterObjs[i] );
+      }
+    }
+  };
+
   return (
     <div>
       {disabled && (
@@ -294,10 +348,7 @@ function FiltersForm (props) {
                                     className='layer-visibility-button'
                                     hideText
                                     onClick={ () => {
-                                          setFilter({
-                                            ...filter,
-                                            visible: !filter.visible
-                                          });
+                                          onFilterVisibilityToggle( filter );
                                         }
                                     }
                                     visuallyDisabled={props.disabled}
