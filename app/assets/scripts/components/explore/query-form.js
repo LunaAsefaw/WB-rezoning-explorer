@@ -13,8 +13,6 @@ import TabbedBlockBody from '../common/tabbed-block-body';
 import Button from '../../styles/button/button';
 import Heading, { Subheading } from '../../styles/type/heading';
 
-import GridSetter from './grid-setter';
-
 import { INPUT_CONSTANTS, checkIncluded, apiResourceNameMap } from './panel-data';
 import { HeadOption, HeadOptionHeadline } from '../../styles/form/form';
 import { FiltersForm, WeightsForm, LCOEForm } from './form';
@@ -76,9 +74,8 @@ function QueryForm(props) {
     onResourceEdit,
     onInputTouched,
     onSelectionChange,
-    gridMode,
-    setGridMode,
-    gridSize, setGridSize,
+    selectedZoneType,
+    onZoneTypeEdit,
 
     firstLoad
   } = props;
@@ -199,7 +196,7 @@ function QueryForm(props) {
   }, [filterRanges, resource]);
 
   useEffect(onInputTouched, [area, resource]);
-  useEffect(onSelectionChange, [area, resource, gridSize]);
+  useEffect(onSelectionChange, [area, resource, selectedZoneType]);
 
   /* Update capacity factor options based on
    * what the current resource is
@@ -262,18 +259,17 @@ function QueryForm(props) {
               <Subheading>Zone Type and Size: </Subheading>
               <Subheading variation='primary'>
                 <Subheadingstrong>
-                  {gridMode ? `${gridSize} km²` : 'Boundaries'}
+                  { selectedZoneType ? selectedZoneType.size > 0 ? `${selectedZoneType.size} km²` : 'Boundaries' : "Select Zone Type And Size"}
                 </Subheadingstrong>
               </Subheading>
 
-              <GridSetter
-                gridOptions={GRID_OPTIONS}
-                gridSize={gridSize}
-                setGridSize={setGridSize}
-                gridMode={gridMode}
-                setGridMode={setGridMode}
-                disableBoundaries={resource === 'Off-Shore Wind'}
-              />
+              <EditButton
+                id='select-zone-type-button'
+                onClick={onZoneTypeEdit}
+                title='Edit Zone Type'
+              >
+                Edit Zone Type Selection
+              </EditButton>
             </HeadOptionHeadline>
           </HeadOption>
         </PanelBlockHeader>
@@ -355,18 +351,17 @@ function QueryForm(props) {
             <Subheading>Zone Type and Size: </Subheading>
             <Subheading variation='primary'>
               <Subheadingstrong>
-                {gridMode ? `${gridSize} km²` : 'Boundaries'}
+                { selectedZoneType ? selectedZoneType.size > 0 ? `${selectedZoneType.size} km²` : 'Boundaries' : "Select Zone Type And Size"}
               </Subheadingstrong>
             </Subheading>
 
-            <GridSetter
-              gridOptions={GRID_OPTIONS}
-              gridSize={gridSize}
-              setGridSize={setGridSize}
-              gridMode={gridMode}
-              setGridMode={setGridMode}
-              disableBoundaries={resource === 'Off-Shore Wind'}
-            />
+            <EditButton
+                id='select-zone-type-button'
+                onClick={onZoneTypeEdit}
+                title='Edit Zone Type'
+              >
+                Edit Zone Type Selection
+            </EditButton>
           </HeadOptionHeadline>
         </HeadOption>
       </PanelBlockHeader>
@@ -459,10 +454,8 @@ QueryForm.propTypes = {
   onAreaEdit: T.func,
   onInputTouched: T.func,
   onSelectionChange: T.func,
-  gridMode: T.bool,
-  setGridMode: T.func,
-  gridSize: T.number,
-  setGridSize: T.func,
+  selectedZoneType: T.object,
+  onZoneTypeEdit: T.func,
   firstLoad: T.object
 };
 
