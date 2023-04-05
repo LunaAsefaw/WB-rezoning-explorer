@@ -80,7 +80,7 @@ function SubmitIssueTray (props) {
       show={show}
     >
       <LayersWrapper show={show}>
-        <FormWrapper active={true} disabled={false}>
+        <FormWrapper active={true} disabled={false} >
           <form method="post" onSubmit={handleSubmit}>
             <FormLabel>
               Title:
@@ -116,7 +116,8 @@ function SubmitIssueTray (props) {
                 cols={40}
                 onChange={e => { setIssueDetails(e.target.value) }}
               />
-            <Button style={{width: "100%"}} type="submit">Submit feedback</Button>
+            <Button style={{width: "100%",marginTop:'10px',border:'1px solid #dfe1e7','text-transform':'none'}} type="submit">Submit feedback</Button>
+            <hr />
           </form>
         </FormWrapper>
       </LayersWrapper>
