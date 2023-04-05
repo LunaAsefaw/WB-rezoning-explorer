@@ -82,11 +82,12 @@ function ExpMapPrimePanel (props) {
    */
   const {
     areas,
-    setSelectedAreaId,
     availableResources,
     selectedResource,
-    selectedArea,
     setSelectedResource,
+
+    selectedArea,
+    setSelectedAreaId,
 
     availableZoneTypes,
     selectedZoneType,
@@ -277,6 +278,9 @@ function ExpMapPrimePanel (props) {
               onSelectionChange={() => {
                 setZonesGenerated(false);
               }}
+              setSelectedAreaId={setSelectedAreaId}
+              setSelectedResource={setSelectedResource}
+              setSelectedZoneType={setSelectedZoneType}
             />
           ) : (
             <PanelBlock>

@@ -5,8 +5,10 @@ import { getTimestamp, round } from '../../../utils/format';
 import config from '../../../config';
 const { indicatorsDecimals } = config;
 
-export async function exportSpatialFiltersCsv(selectedArea, filters) {
+export async function exportSpatialFiltersCsv(selectedArea, selectedResource, selectedZoneType, filters) {
   const doc = format({ headers: true });
+  console.log( "selectedResource", selectedResource );
+  console.log( "selectedZoneType", selectedZoneType );
 
   const stream = doc.pipe(blobStream());
 
@@ -40,12 +42,12 @@ export async function exportSpatialFiltersCsv(selectedArea, filters) {
   return stream.on('finish', () => {
     saveAs(
       stream.toBlob('text/plain;charset=utf-8'),
-      `WBG-REZoning-${selectedArea.id}-spatial-filters-${getTimestamp()}.csv`
+      `WBG-REZoning-${selectedArea.id}-${selectedResource}-${selectedZoneType.name}-spatial-filters-${getTimestamp()}.csv`
     );
   });
 }
 
-export async function exportEconomicParametersCsv(selectedArea, lcoeValues) {
+export async function exportEconomicParametersCsv(selectedArea, selectedResource, selectedZoneType, lcoeValues) {
   const doc = format({ headers: true });
 
   const stream = doc.pipe(blobStream());
@@ -74,12 +76,12 @@ export async function exportEconomicParametersCsv(selectedArea, lcoeValues) {
   return stream.on('finish', () => {
     saveAs(
       stream.toBlob('text/plain;charset=utf-8'),
-      `WBG-REZoning-${selectedArea.id}-economic-parameters-${getTimestamp()}.csv`
+      `WBG-REZoning-${selectedArea.id}-${selectedResource}-${selectedZoneType.name}-economic-parameters-${getTimestamp()}.csv`
     );
   });
 }
 
-export async function exportZoneWeightsCsv(selectedArea, weightsValues) {
+export async function exportZoneWeightsCsv(selectedArea, selectedResource, selectedZoneType, weightsValues) {
   const doc = format({ headers: true });
 
   const stream = doc.pipe(blobStream());
@@ -160,7 +162,7 @@ export async function exportZonesCsv(selectedArea, zones) {
   return await stream.on('finish', function () {
     saveAs(
       stream.toBlob('text/plain;charset=utf-8'),
-      `WBG-REZoning-${selectedArea.id}-zones-${getTimestamp()}.csv`
+      `WBG-REZoning-${selectedArea.id}-${selectedResource}-${selectedZoneType.name}-zones-${getTimestamp()}.csv`
     );
   });
 }

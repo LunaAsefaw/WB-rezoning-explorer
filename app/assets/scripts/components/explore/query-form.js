@@ -91,6 +91,10 @@ function QueryForm(props) {
     selectedZoneType,
     onZoneTypeEdit,
 
+    setSelectedAreaId,
+    setSelectedResource,
+    setSelectedZoneType,
+
     firstLoad
   } = props;
 
@@ -232,54 +236,60 @@ function QueryForm(props) {
     }
   }, [resource]);
 
-  const handleImportCSV = (results,fileInfo) => {
+  const handleImportCSV = (results, fileInfo) => {
   
     let indexDict = {}
     results.data[0].map((i, index) => indexDict[i] = index)
-
-    if(fileInfo.name.includes("WBG-REZoning-AFG-spatial-filters")){
-
-      filtersInd.forEach(i => 
-        {
-         let reqArray = results.data.find(it => (it[indexDict["id"]] == i[0].id));
-        if (i[0].input.type == "multi-select"){
-            console.log(i[0].input.type);
-            i[0].input.value = reqArray[indexDict["value"]].split(",").map(num => +num);
-        }
-        else if(i[0].input.type == "boolean"){
-            i[0].input.value = reqArray[indexDict["value"]];
-        }
-        else {
-            i[0].input.value.max = reqArray[indexDict["max_value"]];
-            i[0].input.value.min = reqArray[indexDict["min_value"]];
-        }
-        }
-    ) 
-    } else if(fileInfo.name.includes("WBG-REZoning-AFG-economic-parameters")){
-      lcoeInd.forEach(i => 
-        {
+    try {
+      if(fileInfo.name.match(/WBG-REZoning-[A-Z]{3}-.*-.*-spatial-filters.*\.csv/g)){
+        filtersInd.forEach(i => 
+          {
           let reqArray = results.data.find(it => (it[indexDict["id"]] == i[0].id));
-          if(i[0].input.type == "dropdown"){
-            let selectedOption = i[0].input.availableOptions.find(option => JSON.parse(reqArray[indexDict["value"]]).id == option.id)
-            if(selectedOption){
-              i[0].input.value = selectedOption.id
+          if (i[0].input.type == "multi-select"){
+              console.log(i[0].input.type);
+              i[0].input.value = reqArray[indexDict["value"]].split(",").map(num => +num);
+          }
+          else if(i[0].input.type == "boolean"){
+              i[0].input.value = reqArray[indexDict["value"]];
+          }
+          else {
+              i[0].input.value.max = reqArray[indexDict["max_value"]];
+              i[0].input.value.min = reqArray[indexDict["min_value"]];
+          }
+          }
+        ) 
+      } else if(fileInfo.name.match(/WBG-REZoning-[A-Z]{3}-economic-parameters-.*\.csv/g)){
+        lcoeInd.forEach(i => 
+          {
+            let reqArray = results.data.find(it => (it[indexDict["id"]] == i[0].id));
+            if(i[0].input.type == "dropdown"){
+              let selectedOption = i[0].input.availableOptions.find(option => JSON.parse(reqArray[indexDict["value"]]).id == option.id)
+              if(selectedOption){
+                i[0].input.value = selectedOption.id
+              }
+            }else {
+              i[0].input.value = reqArray[indexDict["value"]];
             }
-          }else {
+          }
+        )
+      } else if(fileInfo.name.match(/WBG-REZoning-[A-Z]{3}-zone-weights-.*\.csv/g)){
+        weightsInd.forEach(i => 
+          {
+            let reqArray = results.data.find(it => (it[indexDict["id"]] == i[0].id));
             i[0].input.value = reqArray[indexDict["value"]];
           }
-        }
         )
-    } else if(fileInfo.name.includes("WBG-REZoning-AFG-zone-weights")){
-      weightsInd.forEach(i => 
-        {
-          let reqArray = results.data.find(it => (it[indexDict["id"]] == i[0].id));
-          i[0].input.value = reqArray[indexDict["value"]];
-        }
-    ) 
-    }else {
+      }else {
+        alert("invalid file")
+        return false;
+      }
+    } catch (error)
+    {
       alert("invalid file")
+      return false;
     }
     setShowUploadModal(false)
+    return true;
   }
 
   /* Wait until elements have mounted and been parsed to render the query form */
@@ -479,9 +489,9 @@ function QueryForm(props) {
           size='small'
           style={{ "width": "50%", "white-space": "normal" }}
           onClick={() => {
-            exportSpatialFiltersCsv(area, filtersInd.map(f => f[0]))
-            exportEconomicParametersCsv(area, lcoeInd.map(f => f[0]))
-            exportZoneWeightsCsv(area, weightsInd.map(f => f[0]));
+            exportSpatialFiltersCsv(area, resource, selectedZoneType, filtersInd.map(f => f[0]))
+            exportEconomicParametersCsv(area, resource, selectedZoneType, lcoeInd.map(f => f[0]))
+            exportZoneWeightsCsv(area, resource, selectedZoneType, weightsInd.map(f => f[0]));
           }}
           variation='primary-raised-light'
           useIcon='upload'
@@ -529,7 +539,11 @@ function QueryForm(props) {
           <h1>Add file to upload</h1>
         )}
       >
-        <CSVReader handleImportCSV={handleImportCSV} />
+        <CSVReader 
+          setSelectedAreaId={setSelectedAreaId} 
+          setSelectedResource={setSelectedResource} 
+          setSelectedZoneType={setSelectedZoneType}
+          handleImportCSV={handleImportCSV} />
       </ModalUpload>
     </PanelBlock>
   );
@@ -538,6 +552,9 @@ function QueryForm(props) {
 QueryForm.propTypes = {
   area: T.object,
   resource: T.string,
+  setSelectedAreaId: T.func,
+  setSelectedResource: T.func,
+  setSelectedZoneType: T.func,
   filtersLists: T.array,
   weightsList: T.array,
   lcoeList: T.array,
