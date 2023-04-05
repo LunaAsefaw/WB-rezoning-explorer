@@ -1,6 +1,6 @@
 {
   "name": "rezoning-web",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Frontend application for the REZoning project",
   "repository": {
     "type": "git",
@@ -31,7 +31,7 @@
     "cy:run": "NODE_ENV=production cypress run"
   },
   "engines": {
-    "node": "12.x"
+    "node": "18.x"
   },
   "browserify": {
     "transform": [

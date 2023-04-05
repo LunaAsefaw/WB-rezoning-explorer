@@ -479,8 +479,9 @@ function QueryForm(props) {
        <ButtonRow>
         <ExportButton
           id="import-tour-target"
+          key="import-button"
           size='small'
-          style={{"width": "50%", "white-space": "normal"}}
+          style={{"width": "50%", "whiteSpace": "normal"}}
           onClick={() => {setShowUploadModal(true)}}
           variation='primary-raised-light'
           useIcon='download'
@@ -489,8 +490,9 @@ function QueryForm(props) {
         </ExportButton>
         <ExportButton
           id="export-tour-target"
+          key="export-button"
           size='small'
-          style={{ "width": "50%", "white-space": "normal" }}
+          style={{ "width": "50%", "whiteSpace": "normal" }}
           onClick={() => {
             exportSpatialFiltersCsv(area, resource, selectedZoneType, filtersInd.map(f => f[0]))
             exportEconomicParametersCsv(area, resource, selectedZoneType, lcoeInd.map(f => f[0]))
