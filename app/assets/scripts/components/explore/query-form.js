@@ -237,54 +237,57 @@ function QueryForm(props) {
   }, [resource]);
 
   const handleImportCSV = (results, fileInfo) => {
-  
     let indexDict = {}
     results.data[0].map((i, index) => indexDict[i] = index)
     try {
-      if(fileInfo.name.match(/WBG-REZoning-[A-Z]{3}-.*-.*-spatial-filters.*\.csv/g)){
-        filtersInd.forEach(i => 
+      if (fileInfo.name.match(/^WBG-REZoning-([A-Z]{3})-([^-]*)-(.*)-spatial-filters.*\.csv$/g)) {
+        filtersInd.forEach(([filter, setFilter]) => 
           {
-          let reqArray = results.data.find(it => (it[indexDict["id"]] == i[0].id));
-          if (i[0].input.type == "multi-select"){
-              console.log(i[0].input.type);
-              i[0].input.value = reqArray[indexDict["value"]].split(",").map(num => +num);
-          }
-          else if(i[0].input.type == "boolean"){
-              i[0].input.value = reqArray[indexDict["value"]];
-          }
-          else {
-              i[0].input.value.max = reqArray[indexDict["max_value"]];
-              i[0].input.value.min = reqArray[indexDict["min_value"]];
-          }
+            let reqArray = results.data.find(it => (it[indexDict["id"]] == filter.id));
+            if (filter.input.type == "multi-select") {
+              filter.input.value = reqArray[indexDict["value"]].split(",").map(num => +num);
+            }
+            else if(filter.input.type == "boolean") {
+              filter.input.value = reqArray[indexDict["value"]];
+            }
+            else {
+                filter.input.value.max = reqArray[indexDict["max_value"]];
+                filter.input.value.min = reqArray[indexDict["min_value"]];
+            }
+            setFilter( filter );
           }
         ) 
-      } else if(fileInfo.name.match(/WBG-REZoning-[A-Z]{3}-economic-parameters-.*\.csv/g)){
-        lcoeInd.forEach(i => 
+      } else if(fileInfo.name.match(/^WBG-REZoning-([A-Z]{3})-([^-]*)-(.*)-economic-parameters.*\.csv$/g)){
+        lcoeInd.forEach(([filter, setFilter]) => 
           {
-            let reqArray = results.data.find(it => (it[indexDict["id"]] == i[0].id));
-            if(i[0].input.type == "dropdown"){
-              let selectedOption = i[0].input.availableOptions.find(option => JSON.parse(reqArray[indexDict["value"]]).id == option.id)
+            let reqArray = results.data.find(it => (it[indexDict["id"]] == filter.id));
+            if(filter.input.type == "dropdown"){
+              let selectedOption = filter.input.availableOptions.find(option => JSON.parse(reqArray[indexDict["value"]]).id == option.id)
               if(selectedOption){
-                i[0].input.value = selectedOption.id
+                filter.input.value = selectedOption.id
               }
             }else {
-              i[0].input.value = reqArray[indexDict["value"]];
+              filter.input.value = reqArray[indexDict["value"]];
             }
+            setFilter(filter);
           }
         )
-      } else if(fileInfo.name.match(/WBG-REZoning-[A-Z]{3}-zone-weights-.*\.csv/g)){
-        weightsInd.forEach(i => 
+      } else if(fileInfo.name.match(/^WBG-REZoning-([A-Z]{3})-([^-]*)-(.*)-zone-weights.*\.csv$/g)) {
+        weightsInd.forEach(([filter, setFilter]) => 
           {
-            let reqArray = results.data.find(it => (it[indexDict["id"]] == i[0].id));
-            i[0].input.value = reqArray[indexDict["value"]];
+            let reqArray = results.data.find(it => (it[indexDict["id"]] == filter.id));
+            filter.input.value = reqArray[indexDict["value"]];
+            setFilter( filter );
           }
         )
-      }else {
+      } else {
         alert("invalid file")
         return false;
       }
     } catch (error)
     {
+      // In case the app gets supplied a wrong csv file
+      console.error( "Error reading file:", error );
       alert("invalid file")
       return false;
     }

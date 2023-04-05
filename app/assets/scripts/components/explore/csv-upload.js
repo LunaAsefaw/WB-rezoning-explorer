@@ -90,10 +90,10 @@ export default function CSVReader({ setSelectedAreaId, setSelectedResource, setS
     <CSVReader
       onUploadAccepted={(results,fileInfo) => {
         setZoneHover(false);
-        const successful = handleImportCSV(results,fileInfo);
+        const successful = handleImportCSV(results, fileInfo);
         if ( successful )
         {
-          const parsedFileName = fileInfo.name.match(/^WBG-REZoning-([A-Z]{3})-([^-]*)-(.*)-spatial-filters.*\.csv$/)
+          const parsedFileName = fileInfo.name.match(/^WBG-REZoning-([A-Z]{3})-([^-]*)-(.*)-(spatial-filters|economic-parameters|zone-weights).*\.csv$/)
           console.log( parsedFileName );  
           const countryCode = parsedFileName[1];
           const selectedResource = parsedFileName[2];
