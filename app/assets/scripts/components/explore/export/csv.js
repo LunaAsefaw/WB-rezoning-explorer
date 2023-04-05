@@ -107,7 +107,7 @@ export async function exportZoneWeightsCsv(selectedArea, selectedResource, selec
   return stream.on('finish', () => {
     saveAs(
       stream.toBlob('text/plain;charset=utf-8'),
-      `WBG-REZoning-${selectedArea.id}-zone-weights-${getTimestamp()}.csv`
+      `WBG-REZoning-${selectedArea.id}-${selectedResource}-${selectedZoneType.name}-zone-weights-${getTimestamp()}.csv`
     );
   });
 }
