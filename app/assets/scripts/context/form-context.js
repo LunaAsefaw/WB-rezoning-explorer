@@ -46,10 +46,6 @@ export function FormProvider (props) {
     lcoeReducer,
     initialApiRequestState
   );
-  const visible_filter = selectedResource == RESOURCES.SOLAR ? "f_gsa_pvout" : "f_gwa_speed_100";
-  let defaultFiltersVisibility = {};
-  defaultFiltersVisibility[visible_filter] = true;
-  const [filtersVisibility, setFiltersVisibility] = useState(defaultFiltersVisibility);
 
   // this is lazy programming for fire off the filters fetch once
   let ff = false;
@@ -104,8 +100,6 @@ export function FormProvider (props) {
             setShowSelectAreaModal,
             showSelectResourceModal, setShowSelectResourceModal,
             showSelectZoneTypeModal, setShowSelectZoneTypeModal,
-            filtersVisibility,
-            setFiltersVisibility,
           }
         }
       >
