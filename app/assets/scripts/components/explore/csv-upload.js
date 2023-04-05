@@ -6,6 +6,8 @@ import {
   formatFileSize,
 } from 'react-papaparse';
 
+import { zoneTypesList } from "./panel-data";
+
 const GREY = '#CCC';
 const GREY_LIGHT = 'rgba(255, 255, 255, 0.4)';
 const DEFAULT_REMOVE_HOVER_COLOR = '#A01919';
@@ -77,7 +79,7 @@ const styles = {
   },
 };
 
-export default function CSVReader({handleImportCSV}) {
+export default function CSVReader({ setSelectedAreaId, setSelectedResource, setSelectedZoneType, handleImportCSV }) {
   const { CSVReader } = useCSVReader();
   const [zoneHover, setZoneHover] = useState(false);
   const [removeHoverColor, setRemoveHoverColor] = useState(
@@ -87,12 +89,22 @@ export default function CSVReader({handleImportCSV}) {
   return (
     <CSVReader
       onUploadAccepted={(results,fileInfo) => {
-        console.log('---------------------------');
-        console.log(results);
-        console.log(fileInfo);
-        console.log('---------------------------');
         setZoneHover(false);
-        handleImportCSV(results,fileInfo);
+        const successful = handleImportCSV(results,fileInfo);
+        if ( successful )
+        {
+          const parsedFileName = fileInfo.name.match(/^WBG-REZoning-([A-Z]{3})-([^-]*)-(.*)-spatial-filters.*\.csv$/)
+          console.log( parsedFileName );  
+          const countryCode = parsedFileName[1];
+          const selectedResource = parsedFileName[2];
+          const selectedZoneType = parsedFileName[3];
+          setSelectedAreaId( countryCode );
+          setSelectedResource( selectedResource );
+          let zoneTypeObj = zoneTypesList.find( zoneType => zoneType.name == selectedZoneType );
+          if ( !zoneTypeObj ) 
+            zoneTypeObj = zoneTypesList[2];
+          setSelectedZoneType( zoneTypeObj );
+        }
       }}
       onDragOver={(event) => {
         event.preventDefault();
