@@ -7,7 +7,8 @@ import {
   PanelBlock,
   PanelBlockHeader,
   PanelBlockBody,
-  PanelBlockFooter
+  PanelBlockFooter,
+  PanelBlockFooterRow
 } from '../common/panel-block';
 import TabbedBlockBody from '../common/tabbed-block-body';
 import Button from '../../styles/button/button';
@@ -28,6 +29,9 @@ import {
 
 import { exportSpatialFiltersCsv, exportEconomicParametersCsv, exportZoneWeightsCsv } from './export/csv';
 
+import ModalUpload from './modal-upload-files';
+import CSVReader from './csv-upload';
+
 const { GRID_OPTIONS } = INPUT_CONSTANTS;
 
 const Subheadingstrong = styled.strong`
@@ -45,10 +49,15 @@ export const EditButton = styled(Button).attrs({
 `;
 
 const SubmissionSection = styled(PanelBlockFooter)`
-  display: grid;
-  grid-template-columns: 0.5fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  grid-row-gap: 15px;
+`;
+
+const ButtonRow = styled(PanelBlockFooterRow)`
+  display: flex;
+  width: 100%; 
+  gap: 15px;
 `;
 
 const PreAnalysisMessage = styled(Prose)`
@@ -57,6 +66,11 @@ const PreAnalysisMessage = styled(Prose)`
 `;
 
 const ExportButton = styled(Button)`
+  grid-column-start: 1;
+  grid-column-end: 3;
+`;
+
+const ImportButton = styled(Button)`
   grid-column-start: 1;
   grid-column-end: 3;
 `;
@@ -79,6 +93,8 @@ function QueryForm(props) {
 
     firstLoad
   } = props;
+
+  const [showUploadModal, setShowUploadModal] = useState(false)
 
   /* Generate weights qs state variables
   */
@@ -216,6 +232,56 @@ function QueryForm(props) {
     }
   }, [resource]);
 
+  const handleImportCSV = (results,fileInfo) => {
+  
+    let indexDict = {}
+    results.data[0].map((i, index) => indexDict[i] = index)
+
+    if(fileInfo.name.includes("WBG-REZoning-AFG-spatial-filters")){
+
+      filtersInd.forEach(i => 
+        {
+         let reqArray = results.data.find(it => (it[indexDict["id"]] == i[0].id));
+        if (i[0].input.type == "multi-select"){
+            console.log(i[0].input.type);
+            i[0].input.value = reqArray[indexDict["value"]].split(",").map(num => +num);
+        }
+        else if(i[0].input.type == "boolean"){
+            i[0].input.value = reqArray[indexDict["value"]];
+        }
+        else {
+            i[0].input.value.max = reqArray[indexDict["max_value"]];
+            i[0].input.value.min = reqArray[indexDict["min_value"]];
+        }
+        }
+    ) 
+    } else if(fileInfo.name.includes("WBG-REZoning-AFG-economic-parameters")){
+      lcoeInd.forEach(i => 
+        {
+          let reqArray = results.data.find(it => (it[indexDict["id"]] == i[0].id));
+          if(i[0].input.type == "dropdown"){
+            let selectedOption = i[0].input.availableOptions.find(option => JSON.parse(reqArray[indexDict["value"]]).id == option.id)
+            if(selectedOption){
+              i[0].input.value = selectedOption.id
+            }
+          }else {
+            i[0].input.value = reqArray[indexDict["value"]];
+          }
+        }
+        )
+    } else if(fileInfo.name.includes("WBG-REZoning-AFG-zone-weights")){
+      weightsInd.forEach(i => 
+        {
+          let reqArray = results.data.find(it => (it[indexDict["id"]] == i[0].id));
+          i[0].input.value = reqArray[indexDict["value"]];
+        }
+    ) 
+    }else {
+      alert("invalid file")
+    }
+    setShowUploadModal(false)
+  }
+
   /* Wait until elements have mounted and been parsed to render the query form */
   if (firstLoad.current) {
     return (
@@ -278,7 +344,7 @@ function QueryForm(props) {
             Loading...
           </PreAnalysisMessage>
         </PanelBlockBody>
-        <SubmissionSection>
+        <SubmissionSection>     
           <Button
             size='small'
             type='reset'
@@ -304,7 +370,7 @@ function QueryForm(props) {
             }
           >
             Generate Zones
-          </Button>
+          </Button>     
         </SubmissionSection>
       </PanelBlock>
     );
@@ -397,23 +463,37 @@ function QueryForm(props) {
         />
       </TabbedBlockBody>
       <SubmissionSection>
+       <ButtonRow>
         <ExportButton
-            id="export-tour-target"
-            size='large'
-            style={{"width": "100%"}}
-            onClick={() => { 
-              exportSpatialFiltersCsv( area, filtersInd.map( f => f[0] ) ) 
-              exportEconomicParametersCsv( area, lcoeInd.map( f => f[0] ) )
-              exportZoneWeightsCsv( area, weightsInd.map( f => f[0] ) );
-            }}
-            variation='primary-raised-light'
-            useIcon='download'
-          >
+          id="import-tour-target"
+          size='small'
+          style={{"width": "50%", "white-space": "normal"}}
+          onClick={() => {setShowUploadModal(true)}}
+          variation='primary-raised-light'
+          useIcon='download'
+        >
+          Import parameters (.csv)
+        </ExportButton>
+        <ExportButton
+          id="export-tour-target"
+          size='small'
+          style={{ "width": "50%", "white-space": "normal" }}
+          onClick={() => {
+            exportSpatialFiltersCsv(area, filtersInd.map(f => f[0]))
+            exportEconomicParametersCsv(area, lcoeInd.map(f => f[0]))
+            exportZoneWeightsCsv(area, weightsInd.map(f => f[0]));
+          }}
+          variation='primary-raised-light'
+          useIcon='upload'
+        >
           Export parameters (.csv)
         </ExportButton>
+        </ButtonRow>
+        <ButtonRow>
         <Button
           size='small'
           type='reset'
+          style={{"width": "40%",}}
           disabled={!area || !resource}
           onClick={resetClick}
           variation='primary-raised-light'
@@ -425,6 +505,7 @@ function QueryForm(props) {
           id='generate-zones'
           size='small'
           type='submit'
+          style={{"width": "60%",}}
           disabled={!area || !resource}
           onClick={applyClick}
           variation='primary-raised-dark'
@@ -437,7 +518,19 @@ function QueryForm(props) {
         >
           Generate Zones
         </Button>
+        </ButtonRow>
       </SubmissionSection>
+      <ModalUpload
+        revealed={showUploadModal}
+        onOverlayClick={() => { setShowUploadModal(false) }}
+        onCloseClick={() => { setShowUploadModal(false) }}
+        data={[]}
+        renderHeadline={() => (
+          <h1>Add file to upload</h1>
+        )}
+      >
+        <CSVReader handleImportCSV={handleImportCSV} />
+      </ModalUpload>
     </PanelBlock>
   );
 }
