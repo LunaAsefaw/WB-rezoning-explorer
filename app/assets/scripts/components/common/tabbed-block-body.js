@@ -116,7 +116,7 @@ const ContentInner = styled.div`
 `;
 
 function TabbedBlock (props) {
-  const { children } = props;
+  const { children, setActivePanel } = props;
   const childArray = Children.toArray(children);
   const [activeTab, setActiveTab] = useState(0);
   const [activeContent, setActiveContent] = useState(childArray[activeTab]);
@@ -124,6 +124,7 @@ function TabbedBlock (props) {
 
   useEffect(() => {
     setActiveContent(childArray[activeTab]);
+    setActivePanel( activeTab );
   }, [activeTab]);
 
   return (
