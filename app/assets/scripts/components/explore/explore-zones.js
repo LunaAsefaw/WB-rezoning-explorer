@@ -187,8 +187,8 @@ function ExploreZones (props) {
     >
       <CardIcon color='white'>
         <img
-          alt='WBG Logo'
-          src='/assets/icons/warning-signs-svgrepo-com.svg'
+          alt='Warning'
+          src='/assets/graphics/meta/warning-signs-svgrepo-com.svg'
         />
       </CardIcon>
       <ErrorCardDetails>
