@@ -98,7 +98,8 @@ function QueryForm(props) {
     firstLoad
   } = props;
 
-  const [showUploadModal, setShowUploadModal] = useState(false)
+  const [showUploadModal, setShowUploadModal] = useState(false);
+  const [activePanel, setActivePanel] = useState(0);
 
   /* Generate weights qs state variables
   */
@@ -115,6 +116,8 @@ function QueryForm(props) {
     );
     return [filt, setFilt];
   });
+
+  
 
   const initialize = (baseList, destList, options) => {
     const { reset, apiRange } = options || {};
@@ -389,6 +392,8 @@ function QueryForm(props) {
     );
   }
 
+  const tabbedBlockBodyRef = React.createRef();
+
   return (
     <PanelBlock>
       <PanelBlockHeader>
@@ -445,7 +450,7 @@ function QueryForm(props) {
         </HeadOption>
       </PanelBlockHeader>
 
-      <TabbedBlockBody>
+      <TabbedBlockBody setActivePanel={setActivePanel} >
         <FiltersForm
           id='filters-tab'
           name='Filters'
@@ -484,9 +489,9 @@ function QueryForm(props) {
           style={{"width": "50%", "whiteSpace": "normal"}}
           onClick={() => {setShowUploadModal(true)}}
           variation='primary-raised-light'
-          useIcon='download'
+          useIcon='upload'
         >
-          Import parameters (.csv)
+          Import
         </ExportButton>
         <ExportButton
           id="export-tour-target"
@@ -494,14 +499,24 @@ function QueryForm(props) {
           size='small'
           style={{ "width": "50%", "whiteSpace": "normal" }}
           onClick={() => {
-            exportSpatialFiltersCsv(area, resource, selectedZoneType, filtersInd.map(f => f[0]))
-            exportEconomicParametersCsv(area, resource, selectedZoneType, lcoeInd.map(f => f[0]))
-            exportZoneWeightsCsv(area, resource, selectedZoneType, weightsInd.map(f => f[0]));
+            console.log( "activeTab:", activePanel );
+            switch (activePanel)
+            {
+              case 0:
+                exportSpatialFiltersCsv(area, resource, selectedZoneType, filtersInd.map(f => f[0]));
+                break;
+              case 1:
+                exportEconomicParametersCsv(area, resource, selectedZoneType, lcoeInd.map(f => f[0]));
+                break;
+              case 2:
+                exportZoneWeightsCsv(area, resource, selectedZoneType, weightsInd.map(f => f[0]));
+                break;
+            }
           }}
           variation='primary-raised-light'
-          useIcon='upload'
+          useIcon='download'
         >
-          Export parameters (.csv)
+          Export
         </ExportButton>
         </ButtonRow>
         <ButtonRow>
