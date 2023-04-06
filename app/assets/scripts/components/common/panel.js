@@ -19,7 +19,7 @@ export const PanelSelf = styled.section`
   flex-flow: column nowrap;
   max-width: 0;
   width: 100vw;
-  height: 100%;
+  height: 100vh;
   z-index: 10;
   transition: all 0.16s ease 0s;
 
@@ -82,7 +82,7 @@ const PanelBody = styled.div`
   ${({ revealed }) => revealed && css`
     max-width: 100vw;
     opacity: 1;
-    overflow: visible;
+    overflow: auto;
   `}
 `;
 

@@ -96,6 +96,7 @@ const CardListScroll = styled(ShadowScrollbar)`
 `;
 const CardListWrapper = styled(PanelBlockBody)`
   height: 100%;
+  min-height: 320px;
   ${({ nonScrolling }) => nonScrolling && css`
     display: flex;
     flex-direction: column;
