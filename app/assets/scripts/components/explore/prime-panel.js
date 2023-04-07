@@ -94,9 +94,9 @@ function ExpMapPrimePanel (props) {
 
     tourStep,
     setTourStep,
-    updateFilteredLayer
+    updateFilteredLayer,
+    currentZones,
   } = useContext(ExploreContext);
-
   const {
     showSelectAreaModal,
     setShowSelectAreaModal,
@@ -135,6 +135,12 @@ function ExpMapPrimePanel (props) {
     setShowSelectResourceModal(false);
     setShowSelectZoneTypeModal(true);
   };
+
+  React.useEffect(()=>{
+    if(!(Object.keys(currentZones?.data).length === 0)){
+      setShowRasterPanel(true)
+    }
+  },[currentZones?.data])
 
   return (
     <>
