@@ -357,6 +357,13 @@ const ExportZonesButton = (props) => {
               >
                 Score (GeoTIFF)
               </DropMenuItem>
+              <DropMenuItem
+                data-dropdown='click.close'
+                useIcon='globe'
+                onClick={() => onRawDataClick('suitable-areas')}
+              >
+                Suitable areas (GeoJSON)
+              </DropMenuItem>
             </>
           )}
         </DropMenu>
