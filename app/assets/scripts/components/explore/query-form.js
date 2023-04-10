@@ -499,7 +499,6 @@ function QueryForm(props) {
           size='small'
           style={{ "width": "50%", "whiteSpace": "normal" }}
           onClick={() => {
-            console.log( "activeTab:", activePanel );
             switch (activePanel)
             {
               case 0:
