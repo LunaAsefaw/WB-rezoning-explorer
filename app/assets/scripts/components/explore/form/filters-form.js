@@ -127,7 +127,7 @@ function FiltersForm (props) {
       const filterString = getLayerFilterString( filter );
       
       // Off-shore mask flag
-      const offshoreWindMask = resource === RESOURCES.OFFSHORE ? '&offshore=true' : '';
+      const offshoreWindMask = resource === RESOURCES.OFFSHORE ? '&offshore=true' : '&offshore=false';
 
       let newLayerSrcPath = `${config.apiEndpoint}/layers/${selectedArea.id}/${apiResourceNameMap[resource]}/${filter.layer}/{z}/{x}/{y}.png?colormap=viridis&${filterString}&${offshoreWindMask}`;
       
