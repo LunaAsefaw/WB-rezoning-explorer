@@ -347,7 +347,7 @@ const addInputLayersToMap = (map, layers, selectedArea, resource) => {
           id: layerId,
           type: 'symbol',
           source: `${layerId}_source`,
-          'source-layer': layer.id,
+          'source-layer': layer.id.endsWith('_vector') ? layer.id.substr( 0, layer.id.length - "_vector".length ) : layer.id,
           layout: {
             visibility: layer.visible ? 'visible' : 'none',
             'icon-image': symbol,
@@ -365,7 +365,7 @@ const addInputLayersToMap = (map, layers, selectedArea, resource) => {
           id: layerId,
           type: 'line',
           source: `${layerId}_source`,
-          'source-layer': layer.id,
+          'source-layer': layer.id.endsWith('_vector') ? layer.id.substr( 0, layer.id.length - "_vector".length ) : layer.id,
           layout: {
             visibility: layer.visible ? 'visible' : 'none'
           },

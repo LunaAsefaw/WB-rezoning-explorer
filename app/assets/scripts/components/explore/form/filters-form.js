@@ -149,9 +149,12 @@ function FiltersForm (props) {
   };
 
   const onFilterVisibilityToggle = ( toggledFilter ) => {    
+    const nonVectorMapLayers = mapLayers.filter( layer => !layer.id.endsWith('_vector') );
+    const vectorMapLayers = mapLayers.filter( layer => layer.id.endsWith('_vector') );
+
     const toggledLayerId = toggledFilter.layer;
-    const toggledLayerIndex = mapLayers.findIndex((layer) => layer.id === toggledLayerId);
-    let editedMapLayers = mapLayers.map( l => l );
+    const toggledLayerIndex = nonVectorMapLayers.findIndex((layer) => layer.id === toggledLayerId);
+    let editedMapLayers = nonVectorMapLayers.map( l => l );
     
     if ( editedMapLayers[toggledLayerIndex].visible )
     {
@@ -193,6 +196,13 @@ function FiltersForm (props) {
       } );
       editedMapLayers[toggledLayerIndex].visible = true;
     }
+
+    vectorMapLayers.map( layer => {
+      const rasterLayerName = layer.id.substr(0, layer.id.length - "_vector".length );
+      const indexInEdited = editedMapLayers.findIndex( raster => raster.id === rasterLayerName );
+      layer.visible = editedMapLayers[indexInEdited].visible;
+      editedMapLayers.push( layer );
+    } )
 
     setMapLayers( editedMapLayers );
   };
