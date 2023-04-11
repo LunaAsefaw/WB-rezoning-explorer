@@ -2306,6 +2306,18 @@
         ]
     },
     {
+        "gid": "RUS",
+        "alpha2": "RU",
+        "name": "Russia",
+        "type": "country",
+        "bounds": "-340.35749817,41.18886566,-169.65260315,81.85468292",
+        "available_resources": [
+            "Solar PV",
+            "Onshore Wind",
+            "Off-Shore Wind"
+        ]
+    },
+    {
         "gid": "RWA",
         "alpha2": "RW",
         "name": "Rwanda",
@@ -2810,11 +2822,35 @@
         ]
     },
     {
+        "gid": "UMI",
+        "alpha2": "UM",
+        "name": "United States Minor Outlying Islands",
+        "type": "country",
+        "bounds": "-178.304,-0.389,166.658,28.402",
+        "available_resources": [
+            "Solar PV",
+            "Onshore Wind",
+            "Off-Shore Wind"
+        ]
+    },
+    {
         "gid": "URY",
         "alpha2": "UY",
         "name": "Uruguay",
         "type": "country",
         "bounds": "-58.443,-34.974,-53.094,-30.08",
+        "available_resources": [
+            "Solar PV",
+            "Onshore Wind",
+            "Off-Shore Wind"
+        ]
+    },
+    {
+        "gid": "USA",
+        "alpha2": "US",
+        "name": "United States",
+        "type": "country",
+        "bounds": "-187.56388855,18.91027832,-66.94889069,72.68541718",
         "available_resources": [
             "Solar PV",
             "Onshore Wind",
@@ -2899,6 +2935,18 @@
         "name": "Vanuatu",
         "type": "country",
         "bounds": "166.541,-20.253,170.24,-13.072",
+        "available_resources": [
+            "Solar PV",
+            "Onshore Wind",
+            "Off-Shore Wind"
+        ]
+    },
+    {
+        "gid": "WLF",
+        "alpha2": "WF",
+        "name": "Wallis and Futuna",
+        "type": "country",
+        "bounds": "-178.182,-14.369,-176.124,-13.183",
         "available_resources": [
             "Solar PV",
             "Onshore Wind",
