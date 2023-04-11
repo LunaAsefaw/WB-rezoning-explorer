@@ -6,7 +6,6 @@ import InfoButton from '../common/info-button';
 import Prose from '../../styles/type/prose';
 import ShadowScrollbar from '../common/shadow-scrollbar';
 import SliderGroup from '../common/slider-group';
-import { Accordion, AccordionFold, AccordionFoldTrigger } from '../../components/accordion';
 import Heading from '../../styles/type/heading';
 import { makeTitleCase } from '../../styles/utils/general';
 import { apiResourceNameMap } from '../../components/explore/panel-data';
@@ -63,35 +62,24 @@ const LayersWrapper = styled.div`
   transition: opacity .16s ease 0s;
   padding: 0.5rem;
   overflow-x: hidden;
-  ${AccordionFold} {
-    padding-bottom: 1rem;
-
-    &:first-of-type {
-      padding-top: 2rem;
-    }
-  }
 `;
 
 function LayerControl (props) {
   const { id, type, name, onVisibilityToggle, visible } = props;
-  
+
   const {
     map,
     mapLayers, setMapLayers
-  } = useContext(MapContext);
+      } = useContext(MapContext);
 
   const [knobPos, setKnobPos] = useState( 75 );
 
-  useEffect(() => { 
+  useEffect(() => {
     // Check if changes are applied to zones layer, which
     // have conditional paint properties due to filters
-    if ( map && map.getLayer( id ) )
-    {
+    if (map && map.getLayer( id )) {
       if (id === ZONES_BOUNDARIES_LAYER_ID) {
-        const paintProperty = map.getPaintProperty(
-          id,
-          'fill-opacity'
-        );
+        const paintProperty = map.getPaintProperty(id, 'fill-opacity');
 
         // Zone boundaries layer uses a feature-state conditional
         // to detect hovering.
@@ -101,12 +89,15 @@ function LayerControl (props) {
         paintProperty[3] = knobPos / 100;
         map.setPaintProperty(id, 'fill-opacity', paintProperty);
       } else {
-        let property = type === 'vector' ? 'fill-opacity' : type == "line" ? 'line-opacity' : type == 'symbol' ? 'icon-opacity' : 'raster-opacity';
-        map.setPaintProperty(
-          id,
-          property,
-          knobPos / 100
-        );
+        let property =
+          type === 'vector'
+            ? 'fill-opacity'
+            : type == 'line'
+            ? 'line-opacity'
+            : type == 'symbol'
+            ? 'icon-opacity'
+            : 'raster-opacity';
+        map.setPaintProperty(id, property, knobPos / 100);
       }
     }
   });
@@ -116,25 +107,27 @@ function LayerControl (props) {
       <ControlHeadline>
         <Prose>{name}</Prose>
         <ControlTools>
-          {props.info &&
-            <InfoButton
-              id={`${id}-info`}
-              info={props.info || null}
-            >
+          {props.info && (
+            <InfoButton id={`${id}-info`} info={props.info || null}>
               <span>Open Tour</span>
-            </InfoButton>}
+            </InfoButton>
+          )}
           <Button
             id='layer-visibility'
             variation='base-plain'
             useIcon={visible ? 'eye' : 'eye-disabled'}
-            title={visible ? 'toggle layer visibiliity' : 'Generate zones to view output layers'}
+            title={
+              visible
+                ? 'toggle layer visibiliity'
+                : 'Generate zones to view output layers'
+            }
             hideText
             onClick={
               props.disabled
                 ? null
                 : () => {
-                  onVisibilityToggle(props, !visible);
-                }
+                    onVisibilityToggle(props, !visible);
+                  }
             }
             visuallyDisabled={props.disabled}
           >
@@ -166,17 +159,20 @@ LayerControl.propTypes = {
   visible: T.bool
 };
 
-function RasterTray (props) {
+function RasterTray(props) {
   const { show, layers, onVisibilityToggle, className, resource } = props;
 
   /*
    * Reduce layers into categories.
    * Layers with out a category will be stored under `undefined`
    * These layers are displayed outside of the accordion
-  */
+   */
   const categorizedLayers = layers.reduce((cats, layer) => {
-    if (!resource || !layer.energy_type ||
-    layer.energy_type.includes(apiResourceNameMap[resource])) {
+    if (
+      !resource ||
+      !layer.energy_type ||
+      layer.energy_type.includes(apiResourceNameMap[resource])
+    ) {
       if (!cats[layer.category]) {
         cats[layer.category] = [];
       }
@@ -186,63 +182,20 @@ function RasterTray (props) {
   }, {});
 
   return (
-    <TrayWrapper
-      className={className}
-    >
-      <LayersWrapper
-        show={show}
-      >
-        {
-          // Non categorized layers
-          categorizedLayers[undefined] && categorizedLayers[undefined].map(l => (
-            <LayerControl
-              key={l.name}
-              {...l}
-              onVisibilityToggle={onVisibilityToggle}
-            />
-
-          ))
-        }
-
-        <Accordion
-          allowMultiple
-        >
-          {({ checkExpanded, setExpanded }) => {
+    <TrayWrapper className={className}>
+      <LayersWrapper show={show}>
+        {Object.entries(categorizedLayers)
+          .map(([category, layers], idx) => {
             return (
-              Object.entries(categorizedLayers)
-                .filter(cat => cat !== 'undefined')
-                .map(([category, layers], idx) => {
-                  return (category !== 'undefined' &&
-                 <AccordionFold
-                   key={category}
-                   isFoldExpanded={checkExpanded(idx)}
-                   setFoldExpanded={v => setExpanded(idx, v)}
-                   renderHeader={({ isFoldExpanded, setFoldExpanded }) => (
-                     <AccordionFoldTrigger
-                       isExpanded={isFoldExpanded}
-                       onClick={() => setFoldExpanded(!isFoldExpanded)}
-                     >
-                       <Heading size='small' variation='primary'>
-                         {makeTitleCase(category.replace(/_/g, ' '))}
-                       </Heading>
-                     </AccordionFoldTrigger>
-                   )}
-                   renderBody={({ isFoldExpanded }) => (
-                     layers.map(l => (
-                       <LayerControl
-                         key={l.id}
-                         {...l}
-                         onVisibilityToggle={onVisibilityToggle}
-                       />
-                     )
-                     )
-                   )}
-                 />
-                  );
-                }));
-          }}
-
-        </Accordion>
+              layers.map((l) => (
+                <LayerControl
+                  key={l.id}
+                  {...l}
+                  onVisibilityToggle={onVisibilityToggle}
+                />
+              ))
+            );
+          })}
       </LayersWrapper>
     </TrayWrapper>
   );
