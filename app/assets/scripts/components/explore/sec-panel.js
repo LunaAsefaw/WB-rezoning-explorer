@@ -69,19 +69,18 @@ function ExpMapSecPanel (props) {
 
             </PanelBlockBody>
             <PanelBlockFooter>
-              <div style={{align: "center", display:'grid'}}>
+              <div style={{align: "center", display:'grid', backgroundColor: '#23a7f5'}}>
                 <hr /> 
                 { showSubmitIssuePanel ? <Button
                     id='toggle-feedback-tray'
-                    variation='primary-raised-dark'
                     type='submit'
                     width='100%'
-                    style={{align: "center"}}
+                    style={{align: "center", backgroundColor: '#125177',}}
                     onClick={() => {
                       setShowSubmitIssuePanel(!showSubmitIssuePanel);
                     }}
                   >
-                    <span>Hide Feedback Form</span>
+                    <span style={{color: '#fff'}}>Hide Feedback Form</span>
                   </Button> : null
                 }
                 <SubmitIssueTray 
@@ -90,10 +89,9 @@ function ExpMapSecPanel (props) {
                   />
                 { !showSubmitIssuePanel ? <Button
                     id='toggle-feedback-tray'
-                    variation='primary-raised-dark'
                     type='submit'
                     width='100%'
-                    style={{align: "center"}}
+                    style={{align: "center",  backgroundColor: '#125177', color: '#fff',}}
                     onClick={() => {
                       setShowSubmitIssuePanel(!showSubmitIssuePanel);
                     }}

@@ -16,6 +16,7 @@ import { FormGroup } from '../../styles/form/group';
 import FormLabel from '../../styles/form/label';
 import FormTextarea from '../../styles/form/textarea';
 import FormInput from '../../styles/form/input';
+import toasts from '../common/toasts';
 
 const TrayWrapper = styled(ShadowScrollbar)`
   padding: 0.25rem;
@@ -42,6 +43,7 @@ function SubmitIssueTray (props) {
   const [issueTitle, setIssueTitle] = useState("");
   const [issueDetails, setIssueDetails] = useState("");
   const [issueType, setIssueType] = useState("bug");
+  const [email,setEmail] = useState("")
 
   let handleSubmit = async (e) => {
     // Prevent the browser from reloading the page
@@ -60,10 +62,13 @@ function SubmitIssueTray (props) {
             "title": issueTitle,
             "body": issueDetails,
             "labels":[issueType],
+            "email": email,
           }
         )
       }
-    );
+    ).then( res =>
+      toasts.success('successfully submited')
+    ).catch(err => console.log(err))
   }
 
   let availableLabels = [
@@ -85,6 +90,11 @@ function SubmitIssueTray (props) {
               Title:
             </FormLabel>
             <FormInput defaultValue="" onChange={e => { setIssueTitle(e.target.value) }} />
+            <hr />
+            <FormLabel>
+              Email:
+            </FormLabel>
+            <FormInput defaultValue="" onChange={e => { setEmail(e.target.value) }} />
             <hr />
 
             <FormLabel>
