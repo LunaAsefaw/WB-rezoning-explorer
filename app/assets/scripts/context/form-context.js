@@ -88,6 +88,7 @@ export function FormProvider (props) {
       <FormContext.Provider
         value={
           {
+            filtersListReducerRes: filtersList,
             filtersLists: filtersList.isReady() ? filtersList.getData() : null,
             weightsList: weightsList.isReady() ? weightsList.getData() : null,
             lcoeList: lcoeList.isReady() ? lcoeList.getData() : null,

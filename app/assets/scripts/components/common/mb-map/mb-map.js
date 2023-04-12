@@ -426,7 +426,7 @@ function MbMap (props) {
     setFocusZone
   } = useContext(MapContext);
 
-  const { filtersLists, filterRanges } = useContext(FormContext);
+  const { filtersLists, filterRanges, filtersListReducerRes } = useContext(FormContext);
 
   // Initialize map on mount
   useEffect(() => {
@@ -439,7 +439,7 @@ function MbMap (props) {
    * Initialize map layers on receipt of input layers
   */
   useEffect(() => {
-    if (map && inputLayers.isReady() && selectedArea) {
+    if (map && inputLayers.isReady() && selectedArea && filtersListReducerRes.isReady()) {
       const layers = inputLayers.getData();
       const initializedLayers = [
         ...layers.map(l => ({
@@ -470,7 +470,7 @@ function MbMap (props) {
 
       setMapLayers(mLayers);
     }
-  }, [map, selectedArea, selectedResource, inputLayers]);
+  }, [map, selectedArea, selectedResource, inputLayers, filtersListReducerRes]);
 
   // Watch window size changes
 
