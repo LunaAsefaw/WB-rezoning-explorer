@@ -71,6 +71,7 @@ for country in $COUNTRIES_PATH/*.geojson; do
   countrycode="${filename%.*}"
   countryfile="$COUNTRIES_PATH/${countrycode}"
   echo "Parsing ${countryfile}"
+  python ./scripts/split_antimeridian_crossing.py $country
   cat $country | ./node_modules/.bin/simplify-geojson -t 0.01 > $COUNTRIES_PATH/simplified/${countrycode}.geojson
   ./node_modules/.bin/geo2topo $COUNTRIES_PATH/simplified/${countrycode}.geojson > $COUNTRIES_PATH/simplified/${countrycode}.topojson
   ./node_modules/.bin/topoquantize 1e5 < $COUNTRIES_PATH/simplified/${countrycode}.topojson > $COUNTRIES_PATH/quantized/${countrycode}.topojson
