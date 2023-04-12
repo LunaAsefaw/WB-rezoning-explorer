@@ -13,6 +13,7 @@ import { apiResourceNameMap } from '../../components/explore/panel-data';
 import { ZONES_BOUNDARIES_LAYER_ID } from '../common/mb-map/mb-map';
 
 import MapContext from '../../context/map-context'
+import ExploreContext from '../../context/explore-context';
 
 const TrayWrapper = styled(ShadowScrollbar)`
   padding: 0.25rem;
@@ -169,6 +170,20 @@ LayerControl.propTypes = {
 function RasterTray (props) {
   const { show, layers, onVisibilityToggle, className, resource } = props;
 
+  const{
+    currentZones
+    } = useContext(ExploreContext);
+  
+    const [isVisible,seIsVisible] = React.useState(false)
+  
+  
+    React.useEffect(()=>{
+      if(!(Object.keys(currentZones?.data).length === 0) || isVisible){
+        seIsVisible(true)
+      }
+    },[currentZones?.data])
+  
+
   /*
    * Reduce layers into categories.
    * Layers with out a category will be stored under `undefined`
@@ -215,12 +230,12 @@ function RasterTray (props) {
                   return (category !== 'undefined' &&
                  <AccordionFold
                    key={category}
-                   isFoldExpanded={checkExpanded(idx)}
+                   isFoldExpanded={isVisible? isVisible : checkExpanded(idx)}
                    setFoldExpanded={v => setExpanded(idx, v)}
                    renderHeader={({ isFoldExpanded, setFoldExpanded }) => (
                      <AccordionFoldTrigger
                        isExpanded={isFoldExpanded}
-                       onClick={() => setFoldExpanded(!isFoldExpanded)}
+                       onClick={() => {setFoldExpanded(!isFoldExpanded);seIsVisible(false)}}
                      >
                        <Heading size='small' variation='primary'>
                          {makeTitleCase(category.replace(/_/g, ' '))}

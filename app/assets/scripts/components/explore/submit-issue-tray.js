@@ -19,8 +19,7 @@ import FormInput from '../../styles/form/input';
 
 const TrayWrapper = styled(ShadowScrollbar)`
   padding: 0.25rem;
-  height: 20rem;
-  height: ${({ show }) => show ? 20 : 0}rem;
+  height: ${({ show }) => show ? 21 : 0}rem;
 `;
 
 const LayersWrapper = styled.div`
@@ -116,7 +115,8 @@ function SubmitIssueTray (props) {
                 cols={40}
                 onChange={e => { setIssueDetails(e.target.value) }}
               />
-            <Button style={{width: "100%"}} type="submit">Submit feedback</Button>
+            <Button style={{width: "100%",marginTop:'10px',border:'1px solid #dfe1e7','text-transform':'none'}} type="submit">Submit feedback</Button>
+            <hr />
           </form>
         </FormWrapper>
       </LayersWrapper>
