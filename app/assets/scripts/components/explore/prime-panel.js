@@ -258,7 +258,7 @@ function ExpMapPrimePanel (props) {
         onPanelChange={onPanelChange}
         initialState={isLargeViewport()}
         bodyContent={
-          filtersLists && weightsList && lcoeList ? (
+          filtersLists && weightsList && lcoeList && filterRanges ? (
             <QueryForm
               firstLoad={firstLoad}
               area={selectedArea}

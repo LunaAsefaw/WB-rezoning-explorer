@@ -92,7 +92,7 @@ export function FormProvider (props) {
             filtersLists: filtersList.isReady() ? filtersList.getData() : null,
             weightsList: weightsList.isReady() ? weightsList.getData() : null,
             lcoeList: lcoeList.isReady() ? lcoeList.getData() : null,
-            filterRanges,
+            filterRanges: filterRanges.isReady() ? filterRanges.getData() : null,
             inputTouched,
             setInputTouched,
             zonesGenerated,

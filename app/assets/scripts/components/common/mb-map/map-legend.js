@@ -126,13 +126,13 @@ function RasterLegendItem({ mapLayers, filterRanges, filtersLists, currentZones 
 
   let rasterRange;
 
-  if (filterRanges.getData()[visibleRaster[0].id]) {
-    rasterRange = filterRanges.getData()[visibleRaster[0].id];
+  if (filterRanges[visibleRaster[0].id]) {
+    rasterRange = filterRanges[visibleRaster[0].id];
   } else if (visibleRaster[0].id === LCOE_LAYER_LAYER_ID) {
     // CurrentZones will be defined at this point
     // LCOE layer can only be made visible after zones are generated
     try {
-      rasterRange = filterRanges.getData().lcoe;
+      rasterRange = filterRanges.lcoe;
     } catch {
       // Current zones has been invalidated
       // Visibility of lcoe layer not updated in this render cycle

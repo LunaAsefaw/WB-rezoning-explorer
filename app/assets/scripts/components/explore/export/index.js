@@ -190,7 +190,7 @@ const ExportZonesButton = (props) => {
         return zs && zl;
       }),
       filtersValues,
-      filterRanges: filterRanges.getData(),
+      filterRanges: filterRanges,
       weightsValues,
       lcoeValues,
       maxZoneScore,

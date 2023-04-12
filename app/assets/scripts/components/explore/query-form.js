@@ -112,7 +112,7 @@ function QueryForm(props) {
   /* Generate filters qs state variables */
   const filtersInd = filtersLists.map((f) => {
     const [filt, setFilt] = useQsState(
-      filterQsSchema(f, filterRanges.getData(), resource)
+      filterQsSchema(f, filterRanges, resource)
     );
     return [filt, setFilt];
   });
@@ -157,8 +157,8 @@ function QueryForm(props) {
   });
 
   const resetClick = () => {
-    if (filterRanges.isReady()) {
-      initialize(filtersLists, filtersInd, { reset: true, apiRange: filterRanges.getData() });
+    if (filterRanges) {
+      initialize(filtersLists, filtersInd, { reset: true, apiRange: filterRanges });
     } else {
       initialize(filtersLists, filtersInd, { reset: true });
     }
@@ -210,10 +210,10 @@ function QueryForm(props) {
       // On first load, we do not reset. Set values from url
       // On subsequent load, set values from range because ranges have changed
       reset: !firstLoad.current,
-      apiRange: filterRanges.getData()
+      apiRange: filterRanges
     });
 
-    if (firstLoad.current && filterRanges.isReady()) {
+    if (firstLoad.current && filterRanges) {
       firstLoad.current = false;
     }
   }, [filterRanges, resource]);
