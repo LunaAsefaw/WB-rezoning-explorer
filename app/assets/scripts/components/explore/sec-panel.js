@@ -37,61 +37,69 @@ const PreAnalysisMessage = styled(Prose)`
   text-align: center;
 `;
 
-function ExpMapSecPanel (props) {
+function ExpMapSecPanel(props) {
   const { onPanelChange } = props;
   const { currentZones } = useContext(ExploreContext);
   const { inputTouched } = useContext(FormContext);
   const [showSubmitIssuePanel, setShowSubmitIssuePanel] = useState(false);
 
-  return (
-    <SecPanel
-      collapsible
-      direction='right'
-      onPanelChange={onPanelChange}
-      initialState={isLargeViewport()}
-      bodyContent={
-        <>
-          <PanelBlock>
-            <PanelBlockHeader>
-              <Heading>
-                Zone Analysis
-              </Heading>
-            </PanelBlockHeader>
-            <PanelBlockBody>
-              {currentZones.isReady()
-                ? (
-                  <ZoneAnalysisPanel
-                    currentZones={currentZones.getData()}
-                    inputTouched={inputTouched}
-                  />) : (
-                  <PreAnalysisMessage>{currentZones.fetching ? 'Loading...' : 'Apply parameters (Spatial filters, Weights & LCOE Economic inputs) and click "Generate Zones" to load zone analysis.'}</PreAnalysisMessage>
-                )}
 
-            </PanelBlockBody>
-            <PanelBlockFooter>
-              <div style={{align: "center", display:'grid'}}>
-                <hr /> 
-                <Button
-                    id='toggle-feedback-tray'
-                    variation='primary-raised-dark'
-                    width='100%'
-                    style={{align: "center"}}
-                    onClick={() => {
-                      setShowSubmitIssuePanel(!showSubmitIssuePanel);
-                    }}
-                  >
-                    <span >{showSubmitIssuePanel ? "Hide" : "Show"} Feedback Form</span>
-                </Button>
-                <SubmitIssueTray 
-                    show={showSubmitIssuePanel}
-                    className='submit-issue-tray'
-                  />
-              </div>
-              </PanelBlockFooter>
-          </PanelBlock>
-        </>
-      }
-    />
+  return (
+    <>
+      {!(Object.keys(currentZones?.data).length === 0) && (
+        <SecPanel
+          collapsible
+          direction='right'
+          onPanelChange={onPanelChange}
+          initialState={isLargeViewport()}
+          bodyContent={
+            <>
+              <PanelBlock>
+                <PanelBlockHeader>
+                  <Heading>Zone Analysis</Heading>
+                </PanelBlockHeader>
+                <PanelBlockBody>
+                  {currentZones.isReady() ? (
+                    <ZoneAnalysisPanel
+                      currentZones={currentZones.getData()}
+                      inputTouched={inputTouched}
+                    />
+                  ) : (
+                    <PreAnalysisMessage>
+                      {currentZones.fetching
+                        ? 'Loading...'
+                        : 'Apply parameters (Spatial filters, Weights & LCOE Economic inputs) and click "Generate Zones" to load zone analysis.'}
+                    </PreAnalysisMessage>
+                  )}
+                </PanelBlockBody>
+                <PanelBlockFooter>
+                  <div style={{ align: 'center', display: 'grid' }}>
+                    <hr />
+                    <Button
+                      id='toggle-feedback-tray'
+                      variation='primary-raised-dark'
+                      width='100%'
+                      style={{ align: 'center' }}
+                      onClick={() => {
+                        setShowSubmitIssuePanel(!showSubmitIssuePanel);
+                      }}
+                    >
+                      <span>
+                        {showSubmitIssuePanel ? 'Hide' : 'Show'} Feedback Form
+                      </span>
+                    </Button>
+                    <SubmitIssueTray
+                      show={showSubmitIssuePanel}
+                      className='submit-issue-tray'
+                    />
+                  </div>
+                </PanelBlockFooter>
+              </PanelBlock>
+            </>
+          }
+        />
+      )}
+    </>
   );
 }
 
