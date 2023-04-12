@@ -201,63 +201,18 @@ function RasterTray (props) {
   }, {});
 
   return (
-    <TrayWrapper
-      className={className}
-    >
-      <LayersWrapper
-        show={show}
-      >
+    <TrayWrapper className={className}>
+      <LayersWrapper show={show}>
         {
-          // Non categorized layers
-          categorizedLayers[undefined] && categorizedLayers[undefined].map(l => (
+          layers.filter( layer => !layer.id.endsWith( '_vector' ) && ( !layer.energy_type || layer.energy_type.includes(apiResourceNameMap[resource]) ) )
+                .map((l) => (
             <LayerControl
-              key={l.name}
+              key={l.id}
               {...l}
               onVisibilityToggle={onVisibilityToggle}
             />
-
           ))
         }
-
-        <Accordion
-          allowMultiple
-        >
-          {({ checkExpanded, setExpanded }) => {
-            return (
-              Object.entries(categorizedLayers)
-                .filter(cat => cat !== 'undefined')
-                .map(([category, layers], idx) => {
-                  return (category !== 'undefined' &&
-                 <AccordionFold
-                   key={category}
-                   isFoldExpanded={isVisible? isVisible : checkExpanded(idx)}
-                   setFoldExpanded={v => setExpanded(idx, v)}
-                   renderHeader={({ isFoldExpanded, setFoldExpanded }) => (
-                     <AccordionFoldTrigger
-                       isExpanded={isFoldExpanded}
-                       onClick={() => {setFoldExpanded(!isFoldExpanded);seIsVisible(false)}}
-                     >
-                       <Heading size='small' variation='primary'>
-                         {makeTitleCase(category.replace(/_/g, ' '))}
-                       </Heading>
-                     </AccordionFoldTrigger>
-                   )}
-                   renderBody={({ isFoldExpanded }) => (
-                     layers.map(l => (
-                       <LayerControl
-                         key={l.id}
-                         {...l}
-                         onVisibilityToggle={onVisibilityToggle}
-                       />
-                     )
-                     )
-                   )}
-                 />
-                  );
-                }));
-          }}
-
-        </Accordion>
       </LayersWrapper>
     </TrayWrapper>
   );
