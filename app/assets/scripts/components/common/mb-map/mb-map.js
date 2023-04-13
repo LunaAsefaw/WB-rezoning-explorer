@@ -611,7 +611,7 @@ function MbMap (props) {
   }, [maxZoneScore, maxLCOE, currentZones]);
 
   const filterRangesWithMaxLcoe = (filterRanges, maxLCOE) => {
-    if ( !filterRanges || !maxLCOE || !maxLCOE.input )
+    if ( !filterRanges || !maxLCOE || !maxLCOE?.input?.value?.min || !maxLCOE?.input?.value?.max )
       return filterRanges;
     filterRanges.lcoe = {min: maxLCOE.input.value.min, max: maxLCOE.input.value.max};
     return filterRanges;
