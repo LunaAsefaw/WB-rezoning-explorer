@@ -535,6 +535,9 @@ function MbMap (props) {
     if (!outputLayerUrl || !map) return;
 
     const style = map.getStyle();
+    let lcoe_min = maxLCOE.input.value.min;
+    let lcoe_max = maxLCOE.input.value.max;
+    let lcoe_layer_path_extension = `&lcoe_min=${lcoe_min}&lcoe_max=${lcoe_max}`;
 
     map.setStyle({
       ...style,
@@ -542,12 +545,12 @@ function MbMap (props) {
         ...style.sources,
         [LCOE_LAYER_SOURCE_ID]: {
           ...style.sources[LCOE_LAYER_SOURCE_ID],
-          tiles: [`${config.apiEndpoint}/lcoe/${outputLayerUrl}`]
+          tiles: [`${config.apiEndpoint}/lcoe/${outputLayerUrl}${lcoe_layer_path_extension}`]
         }
 
       }
     });
-  }, [outputLayerUrl]);
+  }, [outputLayerUrl, maxLCOE]);
 
   // Update zone boundaries on change
 
@@ -606,6 +609,14 @@ function MbMap (props) {
     ]
     );
   }, [maxZoneScore, maxLCOE, currentZones]);
+
+  const filterRangesWithMaxLcoe = (filterRanges, maxLCOE) => {
+    if ( !filterRanges || !maxLCOE || !maxLCOE.input )
+      return filterRanges;
+    filterRanges.lcoe = {min: maxLCOE.input.value.min, max: maxLCOE.input.value.max};
+    return filterRanges;
+  };
+
   return (
     <MapsContainer>
       {
@@ -622,7 +633,7 @@ function MbMap (props) {
             selectedResource={selectedResource}
             filtersLists={filtersLists}
             mapLayers={mapLayers}
-            filterRanges={filterRanges}
+            filterRanges={filterRangesWithMaxLcoe(filterRanges, maxLCOE)}
             currentZones={currentZones}
           />
         )

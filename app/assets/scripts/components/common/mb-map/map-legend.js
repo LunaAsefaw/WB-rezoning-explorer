@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import T from 'prop-types';
 import styled, { css } from 'styled-components';
 import get from 'lodash.get';
@@ -19,7 +19,6 @@ import { scaleLinear } from '@visx/scale';
 import colormap from 'colormap';
 import MakiIcon from '../maki-icon';
 
-import FormContext from '../../../context/form-context'
 
 const MapLegendSelf = styled.div`
   ${cardSkin}
@@ -111,7 +110,7 @@ const LegendFoldTrigger = styled(AccordionFoldTrigger)`
   }
 `;
 
-function RasterLegendItem({ mapLayers, filterRanges, filtersLists, currentZones }) {
+function RasterLegendItem({ mapLayers, filterRanges, filtersLists }) {
   const visibleRaster = mapLayers.filter(
     (layer) =>
       layer.type === 'raster' &&
