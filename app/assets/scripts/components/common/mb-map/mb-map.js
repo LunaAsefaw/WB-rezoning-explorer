@@ -535,9 +535,13 @@ function MbMap (props) {
     if (!outputLayerUrl || !map) return;
 
     const style = map.getStyle();
-    let lcoe_min = maxLCOE.input.value.min;
-    let lcoe_max = maxLCOE.input.value.max;
-    let lcoe_layer_path_extension = `&lcoe_min=${lcoe_min}&lcoe_max=${lcoe_max}`;
+    let lcoe_layer_path_extension = "";
+    if ( maxLCOE?.input?.value?.min && maxLCOE?.input?.value?.max )
+    {
+      const lcoe_min = maxLCOE.input.value.min;
+      const lcoe_max = maxLCOE.input.value.max;
+      lcoe_layer_path_extension = `&lcoe_min=${lcoe_min}&lcoe_max=${lcoe_max}`;
+    }
 
     map.setStyle({
       ...style,
