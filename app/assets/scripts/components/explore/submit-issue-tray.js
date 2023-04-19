@@ -19,7 +19,7 @@ import FormInput from '../../styles/form/input';
 import toasts from '../common/toasts';
 
 const TrayWrapper = styled(ShadowScrollbar)`
-  padding: 0.25rem;
+  padding: 0rem;
   height: ${({ show }) => show ? 21 : 0}rem;
 `;
 
@@ -86,18 +86,18 @@ function SubmitIssueTray (props) {
       <LayersWrapper show={show}>
         <FormWrapper active={true} disabled={false}>
           <form method="post" onSubmit={handleSubmit}>
-            <FormLabel>
+            <FormLabel style={{color: '#fff'}}>
               Title:
             </FormLabel>
             <FormInput defaultValue="" onChange={e => { setIssueTitle(e.target.value) }} />
-            <hr />
-            <FormLabel>
+        
+            <FormLabel style={{color: '#fff'}}>
               Email:
             </FormLabel>
             <FormInput defaultValue="" onChange={e => { setEmail(e.target.value) }} />
-            <hr />
+           
 
-            <FormLabel>
+            <FormLabel style={{color: '#fff'}}>
               Feedback type:
             </FormLabel>
             <FormGroup>
@@ -114,9 +114,9 @@ function SubmitIssueTray (props) {
                 })}
               </FormSelect>
             </FormGroup>
-            <hr />
+         
 
-            <FormLabel>
+            <FormLabel style={{color: '#fff'}}>
               Feedback details
             </FormLabel>
             <FormTextarea
@@ -125,8 +125,8 @@ function SubmitIssueTray (props) {
                 cols={40}
                 onChange={e => { setIssueDetails(e.target.value) }}
               />
-            <Button style={{width: "100%",marginTop:'10px',border:'1px solid #dfe1e7','text-transform':'none'}} type="submit">Submit feedback</Button>
-            <hr />
+            <Button style={{width: "100%",marginTop:'10px',border:'1px solid #dfe1e7','text-transform':'none', background: '#fff'}} type="submit">Submit feedback</Button>
+            
           </form>
         </FormWrapper>
       </LayersWrapper>
