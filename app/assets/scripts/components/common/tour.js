@@ -57,6 +57,14 @@ const steps = [
     spotlightClicks: true
   },
   {
+    title: 'Import Tour',
+    target: '#import-tour-target',
+    content: 'Click here to Import CSV files representing the input parameters of the app',
+    disableBeacon: true,
+    placement: 'bottom',
+    spotlightClicks: true
+  },
+  {
     title: 'Guided Tour',
     target: '#open-tour-trigger',
     content: 'Click here to reopen this guided tour at any time.',
