@@ -44,8 +44,7 @@ function ExpMapSecPanel(props) {
   const [showSubmitIssuePanel, setShowSubmitIssuePanel] = useState(false);
 
   return (
-    <>
-      {!(Object.keys(currentZones?.data).length === 0) && (
+    <>    
         <SecPanel
           collapsible
           direction='right'
@@ -112,7 +111,6 @@ function ExpMapSecPanel(props) {
             </>
           }
         />
-      )}
     </>
   );
 }
