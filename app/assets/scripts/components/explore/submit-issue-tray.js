@@ -66,8 +66,15 @@ function SubmitIssueTray (props) {
           }
         )
       }
-    ).then( res =>
-      toasts.success('successfully submited')
+    ).then( res =>{
+      if(res.status===200){
+      toasts.success('Feedback successfully submitted')
+      setIssueTitle("");
+      setIssueDetails("");
+      setIssueType("bug");
+      setEmail("");
+    }
+  }
     ).catch(err => console.log(err))
   }
 
@@ -89,12 +96,12 @@ function SubmitIssueTray (props) {
             <FormLabel style={{color: '#fff'}}>
               Title:
             </FormLabel>
-            <FormInput defaultValue="" onChange={e => { setIssueTitle(e.target.value) }} />
+            <FormInput defaultValue="" value={issueTitle} onChange={e => { setIssueTitle(e.target.value) }} />
         
             <FormLabel style={{color: '#fff'}}>
               Email:
             </FormLabel>
-            <FormInput defaultValue="" onChange={e => { setEmail(e.target.value) }} />
+            <FormInput defaultValue="" value={email} onChange={e => { setEmail(e.target.value) }} />
            
 
             <FormLabel style={{color: '#fff'}}>
@@ -104,6 +111,7 @@ function SubmitIssueTray (props) {
               <FormSelect
                 id={"submit-issue-form-select"}
                 onChange={e => { setIssueType(e.target.value) }}
+                value={issueType}
               >
                 {availableLabels.map(({title, value}) => {
                   return (
@@ -124,6 +132,7 @@ function SubmitIssueTray (props) {
                 rows={4}
                 cols={40}
                 onChange={e => { setIssueDetails(e.target.value) }}
+                value={issueDetails}
               />
             <Button style={{width: "100%",marginTop:'10px',border:'1px solid #dfe1e7','text-transform':'none', background: '#fff'}} type="submit">Submit feedback</Button>
             
