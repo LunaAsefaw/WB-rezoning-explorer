@@ -19,7 +19,7 @@ import FormInput from '../../styles/form/input';
 import toasts from '../common/toasts';
 
 const TrayWrapper = styled(ShadowScrollbar)`
-  padding: 0rem;
+  padding: 0.25rem;
   height: ${({ show }) => show ? 21 : 0}rem;
 `;
 
@@ -135,7 +135,6 @@ function SubmitIssueTray (props) {
                 value={issueDetails}
               />
             <Button style={{width: "100%",marginTop:'10px',border:'1px solid #dfe1e7','text-transform':'none', background: '#fff'}} type="submit">Submit feedback</Button>
-            
           </form>
         </FormWrapper>
       </LayersWrapper>
