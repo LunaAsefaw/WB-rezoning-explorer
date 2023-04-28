@@ -37,7 +37,7 @@ const PreAnalysisMessage = styled(Prose)`
   text-align: center;
 `;
 
-function ExpMapSecPanel (props) {
+function ExpMapSecPanel(props) {
   const { onPanelChange } = props;
   const { currentZones } = useContext(ExploreContext);
   const { inputTouched } = useContext(FormContext);
