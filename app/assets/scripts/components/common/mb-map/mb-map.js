@@ -197,25 +197,6 @@ const initializeMap = ({
       maxzoom: 22
     });
 
-    map.addSource(LCOE_LAYER_SOURCE_ID, {
-      type: 'raster',
-      tiles: ['https://placeholder.url/{z}/{x}/{y}.png'],
-      tileSize: 256
-    });
-    map.addLayer({
-      id: LCOE_LAYER_LAYER_ID,
-      type: 'raster',
-      source: LCOE_LAYER_SOURCE_ID,
-      layout: {
-        visibility: 'none'
-      },
-      paint: {
-        'raster-opacity': 0.75
-      },
-      minzoom: 0,
-      maxzoom: 22
-    });
-
     map.addSource(EEZ_BOUNDARIES_SOURCE_ID, {
       type: 'geojson',
       data: {
@@ -235,6 +216,25 @@ const initializeMap = ({
         'fill-opacity': 0.75,
         'fill-outline-color': '#232323'
       }
+    });
+
+    map.addSource(LCOE_LAYER_SOURCE_ID, {
+      type: 'raster',
+      tiles: ['https://placeholder.url/{z}/{x}/{y}.png'],
+      tileSize: 256
+    });
+    map.addLayer({
+      id: LCOE_LAYER_LAYER_ID,
+      type: 'raster',
+      source: LCOE_LAYER_SOURCE_ID,
+      layout: {
+        visibility: 'none'
+      },
+      paint: {
+        'raster-opacity': 0.75
+      },
+      minzoom: 0,
+      maxzoom: 22
     });
 
     // Zone boundaries source
