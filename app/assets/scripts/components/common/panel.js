@@ -84,6 +84,7 @@ const PanelBody = styled.div`
     max-width: 100vw;
     opacity: 1;
     overflow: visible;
+    overflow-y: scroll !important;
   `}
 `;
 
