@@ -141,7 +141,7 @@ function Panel(props) {
     additionalControls,
     onPanelChange
   } = props;
-  const { currentZones,selectedResource } = useContext(ExploreContext);
+  const { currentZones,selectedResource,tourStep } = useContext(ExploreContext);
   const [prevSelectedResource,setPrevSelectedResource] = useState(selectedResource)
 
   const onCollapseClick=()=> {
@@ -163,9 +163,17 @@ function Panel(props) {
     }
     if(selectedResource != prevSelectedResource && props.direction === 'right'){
       setRevealed(false)
-    }
+    }  
   },[currentZones?.data, selectedResource])
 
+  useEffect(()=>{
+    if(tourStep === 7 || tourStep === 9){
+      setRevealed(true)
+    }
+    else if(tourStep != 8 && props.direction === 'right'){
+      setRevealed(false)
+    }
+  },[tourStep])
   
 
   const icon =

@@ -51,7 +51,7 @@ const steps = [
   {
     title: 'Contextual Layers',
     target: '#toggle-raster-tray',
-    content: 'Toggle contextual layers to visualize relevant spatial data and resulting output on the map. Additional contextual layers, such as roads, grid, location of airports, etc. can be activated in order to create a meaningful visual output.',
+    content: 'Toggle contextual layers to visualize the resulting output on the map and additional relevant spatial data',
     disableBeacon: true,
     placement: 'right',
     spotlightClicks: true
@@ -59,7 +59,7 @@ const steps = [
   {
     title: 'Export Tour',
     target: '#export-tour-target',
-    content: 'Click here to download 3 CSV files representing the input parameters of the app',
+    content: 'Click here to download the input parameters and associated thresholds in CSV format',
     disableBeacon: true,
     placement: 'bottom',
     spotlightClicks: true
@@ -67,9 +67,17 @@ const steps = [
   {
     title: 'Import Tour',
     target: '#import-tour-target',
-    content: 'Click here to Import CSV files containing the input parameters of the app',
+    content: 'You can import previously saved input parameters in CSV format',
     disableBeacon: true,
     placement: 'bottom',
+    spotlightClicks: true
+  },
+  {
+    title: 'Feedback Tour',
+    target: '#toggle-feedback-tray',
+    content: 'Click here to send us your feedback',
+    disableBeacon: true,
+    placement: 'right',
     spotlightClicks: true
   },
   {
@@ -80,14 +88,6 @@ const steps = [
     placement: 'right',
     spotlightClicks: true
   },
-  {
-    title: 'Feedback Tour',
-    target: '#toggle-feedback-tray',
-    content: 'Click here to send us your feedback',
-    disableBeacon: true,
-    placement: 'right',
-    spotlightClicks: true
-  }
 ];
 
 const Inner = styled.div`
@@ -181,6 +181,7 @@ TourTooltip.propTypes = {
 
 function Tour (props) {
   const { tourStep, setTourStep, ready } = props;
+
   return (
     <>
       <Joyride
