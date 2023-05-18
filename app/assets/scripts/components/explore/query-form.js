@@ -554,20 +554,7 @@ function QueryForm(props) {
       </TabbedBlockBody>
       <SubmissionSection>
         <ButtonRow>
-          <ExportButton
-            id='import-tour-target'
-            key='import-button'
-            size='small'
-            style={{ width: '50%', whiteSpace: 'normal' }}
-            onClick={() => {
-              setShowUploadModal(true);
-            }}
-            variation='primary-raised-light'
-            useIcon='upload'
-          >
-            Import
-          </ExportButton>
-          <ExportButton
+        <ExportButton
             id='export-tour-target'
             key='export-button'
             size='small'
@@ -604,6 +591,19 @@ function QueryForm(props) {
             useIcon='download'
           >
             Export
+          </ExportButton>
+          <ExportButton
+            id='import-tour-target'
+            key='import-button'
+            size='small'
+            style={{ width: '50%', whiteSpace: 'normal' }}
+            onClick={() => {
+              setShowUploadModal(true);
+            }}
+            variation='primary-raised-light'
+            useIcon='upload'
+          >
+            Import
           </ExportButton>
         </ButtonRow>
         <ButtonRow>
