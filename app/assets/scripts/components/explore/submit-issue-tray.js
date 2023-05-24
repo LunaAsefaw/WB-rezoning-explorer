@@ -67,12 +67,15 @@ function SubmitIssueTray (props) {
         )
       }
     ).then( res =>{
-      if(res.status===200){
+      if(res.status===201){
       toasts.success('Feedback successfully submitted')
       setIssueTitle("");
       setIssueDetails("");
       setIssueType("bug");
       setEmail("");
+    }
+    else{
+      toasts.error('Please try again later')
     }
   }
     ).catch(err => console.log(err))
