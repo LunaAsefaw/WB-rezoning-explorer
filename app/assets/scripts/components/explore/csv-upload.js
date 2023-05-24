@@ -97,21 +97,23 @@ export default function CSVReader({ setSelectedAreaId, setSelectedResource, setS
         const successful = handleImportCSV(results, fileInfo);
         await timeout(200);
         if (successful) {
-          const parsedFileName = fileInfo.name.match(/^WBG-REZoning-([A-Z]{3})-([^-]*)-(.*)-(spatial-filters|economic-parameters|zone-weights).*\.csv$/);
+          const parsedFileName = fileInfo.name.match(/^WBG-REZoning-([A-Z]{3})-(.*?)\s(.*?)-(.*?)-(.*)-(spatial-filters|economic-parameters|zone-weights).*\.csv$/);
+          if(parsedFileName) {
           const countryCode = parsedFileName[1];
-          const selectedResource = parsedFileName[2];
-          const _selectedZoneType = parsedFileName[3];
+          const selectedResource = parsedFileName[2] + " " + parsedFileName[3];
+          const _selectedZoneType =parsedFileName[4] + "-" + parsedFileName[5];
           setSelectedAreaId(countryCode);
           setSelectedResource(selectedResource);
           let zoneTypeObj = zoneTypesList.find(zoneType => zoneType.name === _selectedZoneType);
           if (!zoneTypeObj) { zoneTypeObj = zoneTypesList[2]; }
           try {
-            if (zoneTypeObj.name !== selectedZoneType.name) {
+            if (zoneTypeObj.name !== _selectedZoneType.name) {
               setSelectedZoneType(zoneTypeObj);
             }
           } catch (e) {
           }
         }
+      }
       }}
       onDragOver={(event) => {
         event.preventDefault();
