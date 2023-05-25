@@ -568,13 +568,13 @@
     {
         "gid": "CIV",
         "alpha2": "CI",
-        "name": "C\u00f4te d'Ivoire",
+        "name": "Côte d'Ivoire",
         "type": "country",
-        "bounds": "-8.599,4.362,-2.495,10.737",
+        "bounds": "25.237,-22.42,33.056,-15.609",
         "available_resources": [
-            "Solar PV",
-            "Onshore Wind",
-            "Off-Shore Wind"
+        "Solar PV",
+        "Onshore Wind",
+        "Off-Shore Wind"
         ]
     },
     {
@@ -1511,6 +1511,18 @@
             "Solar PV",
             "Onshore Wind",
             "Off-Shore Wind"
+        ]
+    },
+    {
+        "gid": "KOS",
+        "alpha2": "XK",
+        "name": "Kosovo",
+        "type": "country",
+        "bounds": "25.237,-22.42,33.056,-15.609",
+        "available_resources": [
+        "Solar PV",
+        "Onshore Wind",
+        "Off-Shore Wind"
         ]
     },
     {
@@ -2512,13 +2524,13 @@
     {
         "gid": "STP",
         "alpha2": "ST",
-        "name": "S\u00e3o Tom\u00e9 and Pr\u00edncipe",
+        "name": "São Tomé and Príncipe",
         "type": "country",
-        "bounds": "6.46,-0.014,7.463,1.702",
+        "bounds": "25.237,-22.42,33.056,-15.609",
         "available_resources": [
-            "Solar PV",
-            "Onshore Wind",
-            "Off-Shore Wind"
+        "Solar PV",
+        "Onshore Wind",
+        "Off-Shore Wind"
         ]
     },
     {
