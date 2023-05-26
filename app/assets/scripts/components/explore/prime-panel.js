@@ -121,6 +121,7 @@ function ExpMapPrimePanel (props) {
 
   const [showRasterPanel, setShowRasterPanel] = useState(false);
   const [showSubmitIssuePanel, setShowSubmitIssuePanel] = useState(false);
+  const [prevSelectedResource,setPrevSelectedResource] = useState(selectedResource)
 
   const onAreaEdit = () => {
     setShowSelectAreaModal(true);
@@ -139,6 +140,7 @@ function ExpMapPrimePanel (props) {
   };
 
   React.useEffect(() => {
+    setPrevSelectedResource(selectedResource)
     if (!(Object.keys(currentZones?.data).length === 0)) {
       setShowRasterPanel(true);
       
@@ -154,7 +156,13 @@ function ExpMapPrimePanel (props) {
       })
       );
     }
-  }, [currentZones?.data]);
+    else {
+      setShowRasterPanel(false);
+    }
+    if(selectedResource != prevSelectedResource ){
+      setShowRasterPanel(false);
+    }  
+  }, [currentZones?.data,selectedResource]);
 
   React.useEffect(() => {
     const availableZone = availableZoneTypes.filter(
