@@ -231,8 +231,8 @@ class PageHeader extends React.Component {
                   <span>About</span>
                 </GlobalMenuLink>
               </li>
-               <li style={{marginTop:'auto', textAlign:'center'}}>
-                <FeedbackForm/>
+              <li style={{ marginTop: 'auto', textAlign: 'center' }}>
+                <FeedbackForm />
               </li>
               <li>
                 <ShareOptions />
