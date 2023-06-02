@@ -263,6 +263,7 @@ function ExploreZones (props) {
         :
         <>
           <CardList
+            minHeight={true}
             numColumns={1}
             data={
               currentZones.sort((a, b) => {

@@ -86,6 +86,7 @@ function ExpMapSecPanel(props) {
                 <SubmitIssueTray 
                     show={showSubmitIssuePanel}
                     className='submit-issue-tray'
+                    height='200'
                     style={{padding: '0'}}
                   />
                 { !showSubmitIssuePanel ? <Button

@@ -20,7 +20,7 @@ import toasts from '../common/toasts';
 
 const TrayWrapper = styled(ShadowScrollbar)`
   padding: 0.25rem 0;
-  height: ${({ show }) => show ? 400 : 0}px;
+  height: ${({ show, height}) => show ? height : 0}px;
 `;
 
 const LayersWrapper = styled.div`
@@ -38,7 +38,7 @@ const LayersWrapper = styled.div`
 `;
 
 function SubmitIssueTray (props) {
-  const { show, className } = props;
+  const { show, className, height } = props;
 
   const [issueTitle, setIssueTitle] = useState("");
   const [issueDetails, setIssueDetails] = useState("");
@@ -92,6 +92,7 @@ function SubmitIssueTray (props) {
     <TrayWrapper
       className={className}
       show={show}
+      height={height}
     >
       <LayersWrapper show={show}>
         <FormWrapper active={true} disabled={false}>

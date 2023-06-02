@@ -49,14 +49,14 @@ function FeedbackForm() {
     >
       <span style={{color:'white'}}>Feedback Form</span>
       <Button
-          title='Close Feedback Form'
-          hideText
-          useIcon='xmark'
-          onClick={()=>Dropdown.closeAll()}
-          style={{color:'white', marginLeft: '45px'}}
-        >
-          <span>Feedback Form</span>
-        </Button>
+        title='Close Feedback Form'
+        hideText
+        useIcon='xmark'
+        onClick={()=>Dropdown.closeAll()}
+        style={{color:'white', marginLeft: '45px'}}
+      >
+        <span>Feedback Form</span>
+      </Button>
       <FeedbackFormBlock>
         <div
           style={{
@@ -68,6 +68,7 @@ function FeedbackForm() {
           <SubmitIssueTray
             show={true}
             className='submit-issue-tray'
+            height='400'
             style={{ padding: '0' }}
           />
         </div>
