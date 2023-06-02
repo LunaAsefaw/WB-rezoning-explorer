@@ -95,7 +95,7 @@ function SubmitIssueTray (props) {
     >
       <LayersWrapper show={show}>
         <FormWrapper active={true} disabled={false}>
-          <form method="post" onSubmit={handleSubmit}>
+          <form method="post" onSubmit={handleSubmit} style={{padding:'10px'}}>
             <FormLabel style={{color: '#fff'}}>
               Title:
             </FormLabel>

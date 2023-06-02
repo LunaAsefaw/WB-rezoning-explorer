@@ -1,9 +1,18 @@
 import React, { useContext, useState } from 'react';
-import { PanelBlockFooter } from '../common/panel-block';
 import { withRouter } from 'react-router-dom';
-import Dropdown, { DropTitle } from './dropdown';
+import Dropdown from './dropdown';
 import Button from '../../styles/button/button';
 import SubmitIssueTray from '../explore/submit-issue-tray';
+import styled from 'styled-components';
+import { tint } from 'polished';
+import { stylizeFunction, themeVal } from '../../styles/utils/general';
+
+const _tint = stylizeFunction(tint);
+
+const FeedbackFormBlock = styled.footer`
+  background: ${_tint(0.02, themeVal('color.surface'))};
+  position: relative;
+`;
 
 function FeedbackForm() {
   return (
@@ -24,7 +33,16 @@ function FeedbackForm() {
       }
     >
       <span style={{color:'white'}}>Feedback Form</span>
-      <PanelBlockFooter>
+      <Button
+          title='Close Feedback Form'
+          hideText
+          useIcon='xmark'
+          onClick={()=>Dropdown.closeAll()}
+          style={{color:'white', marginLeft: '45px'}}
+        >
+          <span>Feedback Form</span>
+        </Button>
+      <FeedbackFormBlock>
         <div
           style={{
             align: 'center',
@@ -38,7 +56,7 @@ function FeedbackForm() {
             style={{ padding: '0' }}
           />
         </div>
-      </PanelBlockFooter>
+      </FeedbackFormBlock>
     </Dropdown>
   );
 }
