@@ -9,6 +9,19 @@ import { stylizeFunction, themeVal } from '../../styles/utils/general';
 
 const _tint = stylizeFunction(tint);
 
+const ButtonDiv = styled.span`
+  width: 3rem;
+  height: 3rem;
+  button {
+    width: 3rem;
+    height: 3rem;
+  }
+  button::before {
+    margin-top: -5px;
+    margin-left: -5px;
+  }
+`;
+
 const FeedbackFormBlock = styled.footer`
   background: ${_tint(0.02, themeVal('color.surface'))};
   position: relative;
@@ -21,15 +34,17 @@ function FeedbackForm() {
       alignment='right'
       direction='down'
       triggerElement={
-        <Button
-          id='toggle-feedback-tray'
-          variation='achromic-plain'
-          title='Toggle Feedback Form'
-          hideText
-          useIcon='feedback'
-        >
-          <span>Feedback Form</span>
-        </Button>
+        <ButtonDiv>
+          <Button
+            id='toggle-feedback-tray'
+            variation='achromic-plain'
+            title='Toggle Feedback Form'
+            hideText
+            useIcon='feedback'
+          >
+            <span>Feedback Form</span>
+          </Button>
+        </ButtonDiv>
       }
     >
       <span style={{color:'white'}}>Feedback Form</span>
