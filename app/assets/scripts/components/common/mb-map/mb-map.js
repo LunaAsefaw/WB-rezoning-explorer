@@ -258,8 +258,8 @@ const initializeMap = ({
         'fill-opacity': [
           'case',
           ['boolean', ['feature-state', 'hover'], false],
+          1,
           0.75,
-          0.25
         ]
       }
     });
