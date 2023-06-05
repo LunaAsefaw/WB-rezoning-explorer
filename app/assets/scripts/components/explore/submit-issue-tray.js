@@ -53,10 +53,6 @@ function SubmitIssueTray (props) {
       config.githubIssuesApi,
       {
         method: 'POST',
-        headers: {
-          'Accept': 'application/vnd.github+json' , 
-          "Authorization": config.githubIssuesAccessToken,
-        },
         body: JSON.stringify(
           {
             "title": issueTitle,
