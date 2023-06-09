@@ -24,7 +24,7 @@ function Carto (props) {
     zoneData
   } = props;
   const { setFocusZone, setHoveredFeature, hoveredFeature } = useContext(MapContext);
-  const { selectedResource } = useContext(ExploreContext);
+  const { selectedResource,currentZones } = useContext(ExploreContext);
   const [prevSelectedResource,setPrevSelectedResource] = useState(selectedResource)
   const [isHistogramVisible,setIsHistogramVisible] = useState(true);
 
@@ -36,7 +36,8 @@ function Carto (props) {
     else{
       setIsHistogramVisible(true)
     }
-  },[selectedResource])
+  },[selectedResource,currentZones?.data])
+  
 
   /*
    * Disable filtering temporarily
