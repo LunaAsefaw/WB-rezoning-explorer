@@ -202,6 +202,7 @@
         "alpha2": "TF",
         "name": "French Southern Territories",
         "type": "country",
+        "area": 100,
         "bounds": "40.328,-50.019,77.603,-11.514",
         "available_resources": [
             "Solar PV",
@@ -531,6 +532,7 @@
         "alpha2": "CC",
         "name": "Cocos Islands",
         "type": "country",
+        "area": 170,
         "bounds": "96.817,-12.209,96.929,-11.815",
         "available_resources": [
             "Solar PV",
@@ -1323,6 +1325,7 @@
         "gid": "IOT",
         "alpha2": "IO",
         "name": "British Indian Ocean Territory",
+        "area": 60,
         "type": "country",
         "bounds": "71.237,-7.445,72.496,-5.236",
         "available_resources": [
@@ -1773,6 +1776,7 @@
         "gid": "MDV",
         "alpha2": "MV",
         "name": "Maldives",
+        "area": 297.8,
         "type": "country",
         "bounds": "72.638,-0.703,73.76,7.107",
         "available_resources": [
@@ -1797,6 +1801,7 @@
         "gid": "MHL",
         "alpha2": "MH",
         "name": "Marshall Islands",
+        "area": 181,
         "type": "country",
         "bounds": "160.795,4.573,172.173,14.723",
         "available_resources": [
@@ -2432,6 +2437,7 @@
         "gid": "SGS",
         "alpha2": "GS",
         "name": "South Georgia and the South Sandwich Islands",
+        "area": 150,
         "type": "country",
         "bounds": "-41.816,-59.484,-26.229,-53.647",
         "available_resources": [
@@ -2457,6 +2463,7 @@
         "gid": "SJM",
         "alpha2": "SJ",
         "name": "Svalbard and Jan Mayen",
+        "area": 377,
         "type": "country",
         "bounds": "-9.077,70.825,36.808,82.537",
         "available_resources": [
@@ -2737,6 +2744,7 @@
         "gid": "TKL",
         "alpha2": "TK",
         "name": "Tokelau",
+        "area": 12,
         "type": "country",
         "bounds": "-172.521,-9.444,-171.181,-8.532",
         "available_resources": [
@@ -2822,6 +2830,7 @@
         "gid": "TUV",
         "alpha2": "TV",
         "name": "Tuvalu",
+        "area": 26,
         "type": "country",
         "bounds": "176.059,-10.792,179.871,-5.642",
         "available_resources": [
@@ -2882,6 +2891,7 @@
         "gid": "UMI",
         "alpha2": "UM",
         "name": "United States Minor Outlying Islands",
+        "area": 40,
         "type": "country",
         "bounds": "-178.304,-0.389,166.658,28.402",
         "available_resources": [
