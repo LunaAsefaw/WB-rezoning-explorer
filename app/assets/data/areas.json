@@ -1481,6 +1481,7 @@
         "gid": "KIR",
         "alpha2": "KI",
         "name": "Kiribati",
+        "area": 30,
         "type": "country",
         "bounds": "-174.543,-17.852,176.849,4.699",
         "available_resources": [
