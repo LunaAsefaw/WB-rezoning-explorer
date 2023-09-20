@@ -84,7 +84,6 @@ export function FormProvider (props) {
       setInputTouched(false);
     }
   }, [currentZones]);
-
   return (
     <>
       <FormContext.Provider

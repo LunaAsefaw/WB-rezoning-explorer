@@ -66,6 +66,7 @@
         "alpha2": "AW",
         "name": "Aruba",
         "type": "country",
+        "area": 193,
         "bounds": "-70.2809842,12.8102998,-69.6409842,12.1702998",
         "available_resources": [
             "Solar PV",
@@ -101,6 +102,7 @@
         "gid": "AIA",
         "alpha2": "AI",
         "name": "Anguilla",
+        "area": 91,
         "type": "country",
         "bounds": "-63.43,18.154,-62.924,18.595",
         "available_resources": [
@@ -174,6 +176,7 @@
         "gid": "ASM",
         "alpha2": "AS",
         "name": "American Samoa",
+        "area": 199,
         "type": "country",
         "bounds": "-171.09,-14.549,-168.143,-11.048",
         "available_resources": [
@@ -199,6 +202,7 @@
         "alpha2": "TF",
         "name": "French Southern Territories",
         "type": "country",
+        "area": 100,
         "bounds": "40.328,-50.019,77.603,-11.514",
         "available_resources": [
             "Solar PV",
@@ -210,6 +214,7 @@
         "gid": "ATG",
         "alpha2": "AG",
         "name": "Antigua and Barbuda",
+        "area": 440,
         "type": "country",
         "bounds": "-62.349,16.932,-61.657,17.73",
         "available_resources": [
@@ -366,6 +371,7 @@
         "gid": "BLM",
         "alpha2": "BL",
         "name": "Saint-Barth\u00e9lemy",
+        "area":21,
         "type": "country",
         "bounds": "-62.948,17.87,-62.788,17.962",
         "available_resources": [
@@ -402,6 +408,7 @@
         "gid": "BMU",
         "alpha2": "BM",
         "name": "Bermuda",
+        "area": 53,
         "type": "country",
         "bounds": "-64.888,32.247,-64.646,32.477",
         "available_resources": [
@@ -438,6 +445,7 @@
         "gid": "BRB",
         "alpha2": "BB",
         "name": "Barbados",
+        "area": 430,
         "type": "country",
         "bounds": "-59.651,13.045,-59.419,13.335",
         "available_resources": [
@@ -474,6 +482,7 @@
         "gid": "BVT",
         "alpha2": "BV",
         "name": "Bouvet Island",
+        "area": 41,
         "type": "country",
         "bounds": "3.284,-54.465,3.487,-54.386",
         "available_resources": [
@@ -523,6 +532,7 @@
         "alpha2": "CC",
         "name": "Cocos Islands",
         "type": "country",
+        "area": 170,
         "bounds": "96.817,-12.209,96.929,-11.815",
         "available_resources": [
             "Solar PV",
@@ -619,6 +629,7 @@
         "alpha2": "CK",
         "name": "Cook Islands",
         "type": "country",
+        "area": 240,
         "bounds": "-165.879,-21.959,-157.321,-8.915",
         "available_resources": [
             "Solar PV",
@@ -690,6 +701,7 @@
         "gid": "CUW",
         "alpha2": "CW",
         "name": "Cura\u00e7ao",
+        "area":444,
         "type": "country",
         "bounds": "-69.163,11.978,-68.639,12.393",
         "available_resources": [
@@ -703,6 +715,7 @@
         "alpha2": "CX",
         "name": "Christmas Island",
         "type": "country",
+        "area": 131,
         "bounds": "105.533,-10.571,105.713,-10.412",
         "available_resources": [
             "Solar PV",
@@ -714,6 +727,7 @@
         "gid": "CYM",
         "alpha2": "KY",
         "name": "Cayman Islands",
+        "area": 264,
         "type": "country",
         "bounds": "-81.42,19.263,-79.723,19.757",
         "available_resources": [
@@ -968,6 +982,7 @@
         "gid": "FSM",
         "alpha2": "FM",
         "name": "Micronesia",
+        "area": 430,
         "type": "country",
         "bounds": "137.425,1.025,163.036,10.091",
         "available_resources": [
@@ -1016,6 +1031,7 @@
         "gid": "GGY",
         "alpha2": "GG",
         "name": "Guernsey",
+        "area": 71,
         "type": "country",
         "bounds": "-2.678,49.4,-2.156,49.736",
         "available_resources": [
@@ -1124,6 +1140,7 @@
         "gid": "GRD",
         "alpha2": "GD",
         "name": "Grenada",
+        "area": 433,
         "type": "country",
         "bounds": "-61.802,11.984,-61.378,12.54",
         "available_resources": [
@@ -1172,6 +1189,7 @@
         "gid": "GUM",
         "alpha2": "GU",
         "name": "Guam",
+        "area": 48.55,
         "type": "country",
         "bounds": "144.618,13.234,144.957,13.654",
         "available_resources": [
@@ -1208,6 +1226,7 @@
         "gid": "HMD",
         "alpha2": "HM",
         "name": "Heard Island and McDonald Islands",
+        "area": 372,
         "type": "country",
         "size": "xs",
         "bounds": "72.583,-53.195,73.873,-52.902",
@@ -1281,6 +1300,7 @@
         "gid": "IMN",
         "alpha2": "IM",
         "name": "Isle of Man",
+        "area": 572,
         "type": "country",
         "bounds": "-4.841,54.036,-4.306,54.418",
         "available_resources": [
@@ -1305,6 +1325,7 @@
         "gid": "IOT",
         "alpha2": "IO",
         "name": "British Indian Ocean Territory",
+        "area": 60,
         "type": "country",
         "bounds": "71.237,-7.445,72.496,-5.236",
         "available_resources": [
@@ -1401,6 +1422,7 @@
         "gid": "JEY",
         "alpha2": "JE",
         "name": "Jersey",
+        "area": 118,
         "type": "country",
         "bounds": "-2.255,49.147,-1.925,49.293",
         "available_resources": [
@@ -1485,6 +1507,7 @@
         "gid": "KIR",
         "alpha2": "KI",
         "name": "Kiribati",
+        "area": 30,
         "type": "country",
         "bounds": "-179.1645388,-7.0516717,-164.1645388,7.9483283",
         "offshore_bounds": "172.9,-20.6,208.2,12",
@@ -1498,6 +1521,7 @@
         "gid": "KNA",
         "alpha2": "KN",
         "name": "Saint Kitts and Nevis",
+        "area": 260,
         "type": "country",
         "bounds": "-62.864,17.093,-62.539,17.418",
         "available_resources": [
@@ -1606,6 +1630,7 @@
         "gid": "LIE",
         "alpha2": "LI",
         "name": "Liechtenstein",
+        "area": 160,
         "type": "country",
         "bounds": "9.472,47.047,9.637,47.272",
         "available_resources": [
@@ -1678,6 +1703,7 @@
         "gid": "MAC",
         "alpha2": "MO",
         "name": "Macao",
+        "area": 33,
         "type": "country",
         "bounds": "113.529,22.109,113.599,22.217",
         "available_resources": [
@@ -1690,6 +1716,7 @@
         "gid": "MAF",
         "alpha2": "MF",
         "name": "Saint-Martin",
+        "area": 87,
         "type": "country",
         "bounds": "-63.154,18.045,-62.97,18.126",
         "available_resources": [
@@ -1750,6 +1777,7 @@
         "gid": "MDV",
         "alpha2": "MV",
         "name": "Maldives",
+        "area": 297.8,
         "type": "country",
         "bounds": "72.638,-0.703,73.76,7.107",
         "available_resources": [
@@ -1774,6 +1802,7 @@
         "gid": "MHL",
         "alpha2": "MH",
         "name": "Marshall Islands",
+        "area": 181,
         "type": "country",
         "bounds": "160.795,4.573,172.173,14.723",
         "available_resources": [
@@ -1810,6 +1839,7 @@
         "gid": "MLT",
         "alpha2": "MT",
         "name": "Malta",
+        "area": 316,
         "type": "country",
         "bounds": "14.184,35.786,14.577,36.082",
         "available_resources": [
@@ -1858,6 +1888,7 @@
         "gid": "MNP",
         "alpha2": "MP",
         "name": "Northern Mariana Islands",
+        "area": 475.26,
         "type": "country",
         "bounds": "144.885,14.11,146.066,20.555",
         "available_resources": [
@@ -1894,6 +1925,7 @@
         "gid": "MSR",
         "alpha2": "MS",
         "name": "Montserrat",
+        "area": 100,
         "type": "country",
         "bounds": "-62.242,16.675,-62.145,16.824",
         "available_resources": [
@@ -1954,6 +1986,7 @@
         "gid": "MYT",
         "alpha2": "YT",
         "name": "Mayotte",
+        "area": 374,
         "type": "country",
         "bounds": "45.018,-13.006,45.3,-12.636",
         "available_resources": [
@@ -2002,6 +2035,7 @@
         "gid": "NFK",
         "alpha2": "NF",
         "name": "Norfolk Island",
+        "area": 35,
         "type": "country",
         "bounds": "167.914,-29.133,167.998,-28.994",
         "available_resources": [
@@ -2038,6 +2072,7 @@
         "gid": "NIU",
         "alpha2": "NU",
         "name": "Niue",
+        "area":260,
         "type": "country",
         "bounds": "-169.951,-19.156,-169.774,-18.952",
         "available_resources": [
@@ -2086,6 +2121,7 @@
         "gid": "NRU",
         "alpha2": "NR",
         "name": "Nauru",
+        "area": 21,
         "type": "country",
         "bounds": "166.91,-0.554,166.959,-0.502",
         "available_resources": [
@@ -2148,6 +2184,7 @@
         "gid": "PCN",
         "alpha2": "PN",
         "name": "Pitcairn Islands",
+        "area":47,
         "type": "country",
         "bounds": "-130.756,-25.08,-124.772,-23.908",
         "available_resources": [
@@ -2184,6 +2221,7 @@
         "gid": "PLW",
         "alpha2": "PW",
         "name": "Palau",
+        "area": 459,
         "type": "country",
         "bounds": "131.12,2.971,134.721,8.094",
         "available_resources": [
@@ -2400,6 +2438,7 @@
         "gid": "SGS",
         "alpha2": "GS",
         "name": "South Georgia and the South Sandwich Islands",
+        "area": 150,
         "type": "country",
         "bounds": "-41.816,-59.484,-26.229,-53.647",
         "available_resources": [
@@ -2412,6 +2451,7 @@
         "gid": "SHN",
         "alpha2": "SH",
         "name": "Saint Helena",
+        "area": 122,
         "type": "country",
         "bounds": "-14.421,-40.371,-5.631,-7.889",
         "available_resources": [
@@ -2424,6 +2464,7 @@
         "gid": "SJM",
         "alpha2": "SJ",
         "name": "Svalbard and Jan Mayen",
+        "area": 377,
         "type": "country",
         "bounds": "-9.077,70.825,36.808,82.537",
         "available_resources": [
@@ -2472,6 +2513,7 @@
         "gid": "SMR",
         "alpha2": "SM",
         "name": "San Marino",
+        "area": 61,
         "type": "country",
         "bounds": "12.401,43.895,12.514,43.996",
         "available_resources": [
@@ -2496,6 +2538,7 @@
         "gid": "SPM",
         "alpha2": "PM",
         "name": "Saint Pierre and Miquelon",
+        "area": 242,
         "type": "country",
         "bounds": "-56.406,46.749,-56.126,47.145",
         "available_resources": [
@@ -2605,6 +2648,7 @@
         "alpha2": "SX",
         "name": "Sint Maarten",
         "type": "country",
+        "area":34,
         "bounds": "-63.139,18,-63,18.064",
         "available_resources": [
             "Solar PV",
@@ -2616,6 +2660,7 @@
         "gid": "SYC",
         "alpha2": "SC",
         "name": "Seychelles",
+        "area":460,
         "type": "country",
         "bounds": "46.204,-10.227,56.296,-3.713",
         "available_resources": [
@@ -2700,6 +2745,7 @@
         "gid": "TKL",
         "alpha2": "TK",
         "name": "Tokelau",
+        "area": 12,
         "type": "country",
         "bounds": "-172.521,-9.444,-171.181,-8.532",
         "available_resources": [
@@ -2736,6 +2782,7 @@
         "gid": "TON",
         "alpha2": "TO",
         "name": "Tonga",
+        "area": 430,
         "type": "country",
         "bounds": "-176.214,-22.35,-173.735,-15.566",
         "available_resources": [
@@ -2784,6 +2831,7 @@
         "gid": "TUV",
         "alpha2": "TV",
         "name": "Tuvalu",
+        "area": 26,
         "type": "country",
         "bounds": "176.059,-10.792,179.871,-5.642",
         "available_resources": [
@@ -2844,6 +2892,7 @@
         "gid": "UMI",
         "alpha2": "UM",
         "name": "United States Minor Outlying Islands",
+        "area": 40,
         "type": "country",
         "bounds": "-178.304,-0.389,166.658,28.402",
         "available_resources": [
@@ -2893,6 +2942,7 @@
         "gid": "VCT",
         "alpha2": "VC",
         "name": "Saint Vincent and the Grenadines",
+        "area": 390,
         "type": "country",
         "bounds": "-61.461,12.579,-61.114,13.383",
         "available_resources": [
@@ -2917,6 +2967,7 @@
         "gid": "VGB",
         "alpha2": "VG",
         "name": "British Virgin Islands",
+        "area": 151,
         "type": "country",
         "bounds": "-64.85,18.306,-64.27,18.75",
         "available_resources": [
@@ -2929,6 +2980,7 @@
         "gid": "VIR",
         "alpha2": "VI",
         "name": "Virgin Islands, U.S.",
+        "area": 346.36,
         "type": "country",
         "bounds": "-65.087,17.673,-64.565,18.416",
         "available_resources": [
@@ -2965,6 +3017,7 @@
         "gid": "WLF",
         "alpha2": "WF",
         "name": "Wallis and Futuna",
+        "area": 141.2,
         "type": "country",
         "bounds": "-178.182,-14.369,-176.124,-13.183",
         "available_resources": [
