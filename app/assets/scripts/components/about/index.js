@@ -247,10 +247,10 @@ function About () {
                 </li>
                 <li>
                   <strong>Select a 5 km grid zone (new feature):</strong> 5 km solution for countries smaller than 625 km<sup>2</sup> that 
-                    cannot support the 25 and 50 km grids zones.
+                    cannot support the 25 and 50 km grid zones.
                 </li>
                 <li>
-                  <strong>Grid zone (amended feature):</strong> Grid zone labels accurately reflect length and width of zones at 25 km (625 km2<sup>2</sup>) 
+                  <strong>Grid zone (amended feature):</strong> Grid zone labels accurately reflect the length and width of zones at 25 km (625 km<sup>2</sup>) 
                       and 50 km (2500 km<sup>2</sup>) respectively.
                 </li>
                 <li>
