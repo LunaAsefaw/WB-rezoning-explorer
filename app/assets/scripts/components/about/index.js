@@ -238,7 +238,7 @@ function About () {
                 </li>
               </ul>
               <h3>Release Notes</h3>
-              <p>This section lists the features that were added or amended by Kartoza (Pty) Ltd on REZoning 1.1. 
+              <p>This section lists the features that were added or amended by Kartoza (Pty) Ltd on REZoning 1.2. 
                   The sections are discussed in greater detail in the user guide.</p>
               <ol>
                 <li>
